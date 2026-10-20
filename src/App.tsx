@@ -17,13 +17,70 @@ import { ContactChain } from './components/ContactChain';
 import { FooterTicker } from './components/FooterTicker';
 import { ProgressRail } from './components/ProgressRail';
 import { VectorDiamond } from './components/VectorDiamond';
+import { BottomDock } from './components/BottomDock';
+import { ImageLightbox, LightboxItem } from './components/ImageLightbox';
+import { WorkCardStack } from './components/WorkCardStack';
 
 export const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [currentStage, setCurrentStage] = useState<DiamondStage>(0);
   const [activeSection, setActiveSection] = useState('story');
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [hideTopNavbar, setHideTopNavbar] = useState(false);
+  const lastScrollY = useRef(0);
   const audioCtxRef = useRef<AudioContext | null>(null);
+
+  // Scroll direction detection: hide top navbar on scroll down
+  useEffect(() => {
+    const handleScroll = () => {
+      const current = window.scrollY;
+      if (current <= 30) {
+        setHideTopNavbar(false);
+      } else if (current > lastScrollY.current && current > 50) {
+        setHideTopNavbar(true);
+      } else if (current < lastScrollY.current - 12) {
+        setHideTopNavbar(false);
+      }
+      if (current <= 200) {
+        setActiveSection('story');
+      }
+      lastScrollY.current = current;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Unified Lightbox State
+  const [lightboxState, setLightboxState] = useState<{
+    isOpen: boolean;
+    items: LightboxItem[];
+    initialIndex: number;
+  }>({
+    isOpen: false,
+    items: [],
+    initialIndex: 0,
+  });
+
+  const handleOpenSingleImage = (item: LightboxItem) => {
+    setLightboxState({
+      isOpen: true,
+      items: [item],
+      initialIndex: 0,
+    });
+  };
+
+  const handleOpenGallery = (items: LightboxItem[], initialIndex = 0) => {
+    setLightboxState({
+      isOpen: true,
+      items,
+      initialIndex,
+    });
+  };
+
+  const handleCloseLightbox = () => {
+    setLightboxState((prev) => ({ ...prev, isOpen: false }));
+  };
 
   // Play subtle synthetic crystalline chime when sound is enabled
   const playChime = (freq = 880) => {
@@ -62,10 +119,11 @@ export const App: React.FC = () => {
   // Scroll stage & active section tracking via IntersectionObserver
   useEffect(() => {
     const stageElements = [
-      { id: 'chapter-01', stage: 0 as DiamondStage, section: 'story' },
-      { id: 'chapter-02', stage: 1 as DiamondStage, section: 'story' },
-      { id: 'chapter-03', stage: 2 as DiamondStage, section: 'story' },
-      { id: 'chapter-04', stage: 3 as DiamondStage, section: 'story' },
+      { id: 'story', stage: 0 as DiamondStage, section: 'story' },
+      { id: 'chapter-01', stage: 0 as DiamondStage, section: 'work' },
+      { id: 'chapter-02', stage: 1 as DiamondStage, section: 'work' },
+      { id: 'chapter-03', stage: 2 as DiamondStage, section: 'work' },
+      { id: 'chapter-04', stage: 3 as DiamondStage, section: 'work' },
       { id: 'chapter-05', stage: 4 as DiamondStage, section: 'work' },
       { id: 'chapter-06', stage: 5 as DiamondStage, section: 'work' },
       { id: 'services', stage: 5 as DiamondStage, section: 'services' },
@@ -90,7 +148,7 @@ export const App: React.FC = () => {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.05, rootMargin: '-80px 0px 0px 0px' }
     );
 
     stageElements.forEach((item) => {
@@ -122,7 +180,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#05060A] text-[#F4FBFF] selection:bg-[#6FD8FF]/20 selection:text-[#BDE7FF]">
+    <div className="relative min-h-screen bg-[#050608] text-[#F8FAFC] selection:bg-[#6FD8FF]/20 selection:text-[#BDE7FF]">
       {/* 1.8s Stone Cutting Intro Loader */}
       {loading && <Loader onComplete={() => setLoading(false)} />}
 
@@ -135,17 +193,19 @@ export const App: React.FC = () => {
         }}
       />
 
-      {/* Sticky Top Navigation */}
+      {/* Sticky Top Navigation (Hides when user scrolls down) */}
       <Navbar
         soundEnabled={soundEnabled}
         onToggleSound={handleToggleSound}
         activeSection={activeSection}
+        hidden={hideTopNavbar}
       />
 
       {/* Progress Diamond Rail (Vertical on Desktop, Horizontal on Mobile) */}
       <ProgressRail
         currentStage={currentStage}
         onSelectStage={handleSelectStage}
+        navbarHidden={hideTopNavbar}
       />
 
       {/* Main Content Stream */}
@@ -153,75 +213,104 @@ export const App: React.FC = () => {
         {/* 1. Hero */}
         <Hero onWatchCut={handleWatchCut} />
 
-        {/* 2. Who is The Fundraiser */}
+        {/* 2. Story: Who is The Fundraiser (Story starts here) */}
         <WhoIsFundraiser />
 
-        {/* 3. The Story Chapters ("The Cut") */}
-        <div id="story">
-          {/* Chapter 01: Rough - The Trenches */}
-          <ChapterSection chapter={STORY_CHAPTERS[0]} reverse={false} />
+        {/* 3. Work Section — stacked chapter reveals, then sub-content below */}
+        <section id="work" className="relative scroll-mt-20 sm:scroll-mt-24">
 
-          {/* Chapter 02: Cleave - Pleased Devs */}
-          <ChapterSection chapter={STORY_CHAPTERS[1]} reverse={true} />
-
-          {/* Chapter 03: Facet - The Fundraiser */}
-          <ChapterSection chapter={STORY_CHAPTERS[2]} reverse={false} />
-
-          {/* Chapter 04: Polish - The Comeback */}
-          <div id="chapter-04" className="relative">
-            <ChapterSection chapter={STORY_CHAPTERS[3]} reverse={true} />
-            <div className="max-w-[1240px] mx-auto px-4 sm:px-6 -mt-8 mb-12">
-              <PnlCarousel />
-            </div>
+          {/* === STACKED CARD REVEAL: one ChapterSection per card === */}
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+            <WorkCardStack>
+              {/* Card 01 — The Trenches */}
+              <ChapterSection
+                chapter={STORY_CHAPTERS[0]}
+                reverse={false}
+                onOpenLightbox={handleOpenSingleImage}
+                cardMode
+              />
+              {/* Card 02 — Pleased Devs */}
+              <ChapterSection
+                chapter={STORY_CHAPTERS[1]}
+                reverse={true}
+                onOpenLightbox={handleOpenSingleImage}
+                cardMode
+              />
+              {/* Card 03 — The Fundraiser */}
+              <ChapterSection
+                chapter={STORY_CHAPTERS[2]}
+                reverse={false}
+                onOpenLightbox={handleOpenSingleImage}
+                cardMode
+              />
+              {/* Card 04 — The Comeback */}
+              <ChapterSection
+                chapter={STORY_CHAPTERS[3]}
+                reverse={true}
+                onOpenLightbox={handleOpenSingleImage}
+                cardMode
+              />
+              {/* Card 05 — Fundraisers Web */}
+              <ChapterSection
+                chapter={STORY_CHAPTERS[4]}
+                reverse={false}
+                onOpenLightbox={handleOpenSingleImage}
+                cardMode
+              />
+              {/* Card 06 — Set: Partners */}
+              <ChapterSection
+                chapter={STORY_CHAPTERS[5]}
+                reverse={true}
+                onOpenLightbox={handleOpenSingleImage}
+                cardMode
+              />
+            </WorkCardStack>
           </div>
-        </div>
 
-        {/* 4. Chapter 05: Brilliant - Fundraisers Web (Agency Work) */}
-        <div id="work" className="relative">
-          <div id="chapter-05">
-            <ChapterSection chapter={STORY_CHAPTERS[4]} reverse={false} />
-            <div className="max-w-[1240px] mx-auto px-4 sm:px-6 -mt-6 mb-16">
-              {/* Case Study A: Clover Boys */}
-              <CaseStudyClover />
+          {/* === NORMAL FLOW: sub-content that belongs to the work section === */}
+          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 mt-16">
+            {/* PnL Receipts (belongs to Chapter 04) */}
+            <PnlCarousel onOpenLightbox={handleOpenGallery} />
 
-              {/* Case Study B: Wojak Meter with Before & After Slider */}
-              <CaseStudyWojak />
-            </div>
+            {/* Case Study A: Clover Boys (belongs to Chapter 05) */}
+            <CaseStudyClover onOpenLightbox={handleOpenSingleImage} />
+
+            {/* Case Study B: Wojak Meter (belongs to Chapter 05) */}
+            <CaseStudyWojak onOpenLightbox={handleOpenSingleImage} />
+
+            {/* Ether Archive Alliance (belongs to Chapter 06) */}
+            <PartnerEtherArchive onOpenLightbox={handleOpenSingleImage} />
           </div>
 
-          {/* 5. Chapter 06: Set - Partners */}
-          <div id="chapter-06">
-            <ChapterSection chapter={STORY_CHAPTERS[5]} reverse={true} />
-            <div className="max-w-[1240px] mx-auto px-4 sm:px-6 -mt-6 mb-16">
-              <PartnerEtherArchive />
-            </div>
-          </div>
-        </div>
+        </section>
 
-        {/* 6. Agency Services */}
+        {/* 4. Agency Services */}
         <ServicesGrid />
 
         {/* 7. Client & Founder Reviews */}
         <Reviews />
 
         {/* 8. The Historical Archive */}
-        <ArchiveMasonry />
+        <ArchiveMasonry onOpenLightbox={handleOpenGallery} />
 
         {/* 9. Contact Chain Section */}
         <ContactChain />
       </main>
 
+      {/* Floating Bottom Navigation Dock (OpenCircle Signature) */}
+      <BottomDock activeSection={activeSection} />
+
       {/* Sticky Companion Diamond (Desktop Floating Stage Visualizer) */}
       <aside
         aria-label="Current cut stage visualizer"
-        className="hidden xl:flex fixed bottom-8 left-8 z-30 pointer-events-none items-center gap-3 p-3 rounded-2xl bg-[#0E1226]/75 backdrop-blur-md border border-[#BDE7FF]/15 shadow-2xl transition-all duration-500"
+        className="hidden xl:flex fixed bottom-8 left-8 z-30 pointer-events-none items-center gap-3 p-3 rounded-2xl bg-[#080B14]/85 backdrop-blur-xl border border-white/12 shadow-2xl transition-all duration-500"
       >
         <VectorDiamond stage={currentStage} size={54} interactive={false} />
         <div className="pr-2">
           <div className="font-mono text-[9px] uppercase tracking-wider text-[#6FD8FF]">
             STAGE 0{currentStage + 1}
           </div>
-          <div className="font-display font-bold text-xs text-[#F4FBFF]">
+          <div className="font-display font-bold text-xs text-[#F8FAFC]">
             {STORY_CHAPTERS[currentStage]?.stageName || 'Brilliant Cut'}
           </div>
         </div>
@@ -229,6 +318,14 @@ export const App: React.FC = () => {
 
       {/* 10. Footer with GM Ticker & 7-Click Easter Egg */}
       <FooterTicker />
+
+      {/* Universal Touch-Native Lightbox & Zoom Viewer */}
+      <ImageLightbox
+        isOpen={lightboxState.isOpen}
+        onClose={handleCloseLightbox}
+        items={lightboxState.items}
+        initialIndex={lightboxState.initialIndex}
+      />
     </div>
   );
 };
