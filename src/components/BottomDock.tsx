@@ -81,7 +81,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({ activeSection }) => {
             className="w-full h-full object-cover"
           />
         </div>
-        <span className="hidden sm:inline">Fundraiser</span>
+        <span className="hidden sm:inline">The Fundraiser</span>
       </a>
 
       {/* Vertical Divider */}

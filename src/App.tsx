@@ -16,7 +16,6 @@ import { ArchiveMasonry } from './components/ArchiveMasonry';
 import { ContactChain } from './components/ContactChain';
 import { FooterTicker } from './components/FooterTicker';
 import { ProgressRail } from './components/ProgressRail';
-import { VectorDiamond } from './components/VectorDiamond';
 import { BottomDock } from './components/BottomDock';
 import { ImageLightbox, LightboxItem } from './components/ImageLightbox';
 import { WorkCardStack } from './components/WorkCardStack';
@@ -299,22 +298,6 @@ export const App: React.FC = () => {
 
       {/* Floating Bottom Navigation Dock (OpenCircle Signature) */}
       <BottomDock activeSection={activeSection} />
-
-      {/* Sticky Companion Diamond (Desktop Floating Stage Visualizer) */}
-      <aside
-        aria-label="Current cut stage visualizer"
-        className="hidden xl:flex fixed bottom-8 left-8 z-30 pointer-events-none items-center gap-3 p-3 rounded-2xl bg-[#080B14]/85 backdrop-blur-xl border border-white/12 shadow-2xl transition-all duration-500"
-      >
-        <VectorDiamond stage={currentStage} size={54} interactive={false} />
-        <div className="pr-2">
-          <div className="font-mono text-[9px] uppercase tracking-wider text-[#6FD8FF]">
-            STAGE 0{currentStage + 1}
-          </div>
-          <div className="font-display font-bold text-xs text-[#F8FAFC]">
-            {STORY_CHAPTERS[currentStage]?.stageName || 'Brilliant Cut'}
-          </div>
-        </div>
-      </aside>
 
       {/* 10. Footer with GM Ticker & 7-Click Easter Egg */}
       <FooterTicker />
