@@ -21,10 +21,10 @@ export const TestimonialsSection: React.FC = () => {
         {/* Section Header */}
         <div className="mb-16">
           <span className="font-mono text-xs uppercase tracking-widest text-[#A7A69F] block mb-3">
-            Client & Community Feedback
+            Their words
           </span>
           <h2 className="text-section-title text-[#F0EEE7]">
-            In their words.
+            From the people we worked with.
           </h2>
         </div>
 
@@ -43,9 +43,17 @@ export const TestimonialsSection: React.FC = () => {
                 <span className="font-display font-bold text-lg uppercase tracking-tight text-[#F0EEE7] block">
                   {current.author}
                 </span>
-                <span className="font-mono text-xs text-[#A7A69F]">
+                <span className="font-mono text-xs text-[#A7A69F] block">
                   {current.role} · {current.context}
                 </span>
+                <a
+                  href={current.verifiedSource || "https://t.me/thefundraiserweb"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-mono text-xs text-[#A7A69F] hover:text-[#F0EEE7] underline mt-2 transition-colors"
+                >
+                  Read the original message ↗
+                </a>
               </div>
 
               {/* Navigation Controls */}

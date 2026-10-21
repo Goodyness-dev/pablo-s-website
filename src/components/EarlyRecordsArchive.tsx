@@ -1,24 +1,8 @@
 import React, { useState } from 'react';
 import { HISTORICAL_PNL_ARCHIVE, RETRO_ARCHIVE } from '../data/projects';
-import { LightboxItem } from './ImageLightbox';
 
-interface EarlyRecordsArchiveProps {
-  onOpenLightbox?: (item: LightboxItem) => void;
-}
-
-export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpenLightbox }) => {
+export const EarlyRecordsArchive: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'multipliers' | 'genesis'>('multipliers');
-
-  const handleInspect = (src: string, title: string, caption?: string, date?: string) => {
-    if (!onOpenLightbox) return;
-    onOpenLightbox({
-      src,
-      title,
-      caption: caption || '',
-      date: date || '',
-      alt: title,
-    });
-  };
 
   return (
     <section id="archive" className="relative py-24 md:py-36 border-b border-[#33332F]">
@@ -28,13 +12,15 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
             <span className="font-mono text-xs uppercase tracking-widest text-[#A7A69F] block mb-3">
-              Historical Vault
+              {activeTab === 'multipliers' ? 'From the early days' : 'Before the polish'}
             </span>
             <h2 className="text-section-title text-[#F0EEE7] mb-4">
-              Early records & call receipts.
+              {activeTab === 'multipliers' ? 'The first calls. The original records.' : 'The early pieces.'}
             </h2>
             <p className="font-body text-[#B8B6AD] text-base sm:text-lg max-w-[620px]">
-              Archival trading calls, sniper receipts, and community milestones from 2025 to 2026. Preserved as original records.
+              {activeTab === 'multipliers'
+                ? 'A look back at the channel before Fundraisers Web.'
+                : 'First messages, old identities, and the records that trace the journey.'}
             </p>
           </div>
 
@@ -49,7 +35,7 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
                   : 'text-[#B8B6AD] hover:text-[#F0EEE7]'
               }`}
             >
-              Token Multipliers ({HISTORICAL_PNL_ARCHIVE.length})
+              Early Records ({HISTORICAL_PNL_ARCHIVE.length})
             </button>
             <button
               type="button"
@@ -60,7 +46,7 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
                   : 'text-[#B8B6AD] hover:text-[#F0EEE7]'
               }`}
             >
-              Genesis Artifacts ({RETRO_ARCHIVE.length})
+              Early Pieces ({RETRO_ARCHIVE.length})
             </button>
           </div>
         </div>
@@ -95,20 +81,14 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
                       </div>
                     </div>
 
-                    {/* Receipt Image Frame — Edge to edge for mobile readability */}
-                    <button
-                      type="button"
-                      onClick={() => handleInspect(receipt.imageSrc, `${receipt.ticker} — ${receipt.multiplier}`, receipt.caption, receipt.date)}
-                      className="w-full text-left group cursor-zoom-in block"
-                    >
-                      <div className="relative aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-3 flex items-center justify-center">
-                        <img
-                          src={receipt.imageSrc}
-                          alt={`${receipt.ticker} PNL Multiple`}
-                          className="w-full h-full object-contain filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
-                        />
-                      </div>
-                    </button>
+                    {/* Receipt Image Frame — full width edge-to-edge */}
+                    <div className="relative aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-3 flex items-center justify-center">
+                      <img
+                        src={receipt.imageSrc}
+                        alt={`${receipt.ticker} PNL Multiple`}
+                        className="w-full h-full object-contain filter contrast-105"
+                      />
+                    </div>
 
                     <p className="font-body text-xs text-[#B8B6AD] leading-relaxed mb-4">
                       {receipt.caption}
@@ -118,20 +98,21 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
                   {/* Metadata Footer */}
                   <div className="pt-3 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
                     <span>Called: {receipt.calledAt}</span>
-                    <button
-                      type="button"
-                      onClick={() => handleInspect(receipt.imageSrc, `${receipt.ticker} — ${receipt.multiplier}`, receipt.caption, receipt.date)}
-                      className="underline hover:text-[#F0EEE7]"
+                    <a
+                      href="https://t.me/thefundraiserweb"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-[#F0EEE7] transition-colors"
                     >
-                      Inspect ↗
-                    </button>
+                      Open original record ↗
+                    </a>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="mt-8 p-4 border border-[#33332F] bg-[#0A0A09] text-xs text-[#A7A69F] font-mono">
-              Note: Historical trading multiples reflect calls logged in public telegram channels during 2025–2026. They document trading origin and are not forward-looking promises of returns.
+              Historical results are not a promise of future returns.
             </div>
           </div>
         )}
@@ -154,19 +135,13 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
                     </h3>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleInspect(artifact.imageSrc, artifact.title, artifact.description, artifact.date)}
-                    className="w-full text-left group cursor-zoom-in block"
-                  >
-                    <div className="relative aspect-[4/3] bg-[#080808] border border-[#222220] overflow-hidden mb-3 flex items-center justify-center">
-                      <img
-                        src={artifact.imageSrc}
-                        alt={artifact.alt || artifact.title}
-                        className="w-full h-full object-contain filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
-                      />
-                    </div>
-                  </button>
+                  <div className="relative aspect-[4/3] bg-[#080808] border border-[#222220] overflow-hidden mb-3 flex items-center justify-center">
+                    <img
+                      src={artifact.imageSrc}
+                      alt={artifact.alt || artifact.title}
+                      className="w-full h-full object-contain filter contrast-105"
+                    />
+                  </div>
 
                   <p className="font-body text-xs text-[#B8B6AD] leading-relaxed mb-4">
                     {artifact.description}
@@ -175,13 +150,18 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
 
                 <div className="pt-3 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
                   <span>{artifact.source}</span>
-                  <button
-                    type="button"
-                    onClick={() => handleInspect(artifact.imageSrc, artifact.title, artifact.description, artifact.date)}
-                    className="underline hover:text-[#F0EEE7]"
+                  <a
+                    href="https://t.me/thefundraiserweb"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-[#F0EEE7] transition-colors"
                   >
-                    Inspect ↗
-                  </button>
+                    {artifact.title.toLowerCase().includes('message') || artifact.title.toLowerCase().includes('genesis')
+                      ? 'View the message ↗'
+                      : artifact.title.toLowerCase().includes('art') || artifact.title.toLowerCase().includes('logo') || artifact.title.toLowerCase().includes('mascot')
+                      ? 'View the artwork ↗'
+                      : 'Open the record ↗'}
+                  </a>
                 </div>
               </div>
             ))}

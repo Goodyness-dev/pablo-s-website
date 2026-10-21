@@ -70,7 +70,7 @@ export const Hero: React.FC<HeroProps> = ({ onReadStory, onExploreWork }) => {
             <div className="mb-6 flex items-center gap-3">
               <span className="w-2 h-2 bg-[#F0EEE7] rounded-[1px]" />
               <span className="font-mono text-xs uppercase tracking-widest text-[#B8B6AD]">
-                Web3 growth / Built in the trenches
+                Web3 growth & community
               </span>
             </div>
 
@@ -90,7 +90,7 @@ export const Hero: React.FC<HeroProps> = ({ onReadStory, onExploreWork }) => {
 
             {/* Humanist Subcopy */}
             <p className="font-body text-[#B8B6AD] text-lg sm:text-xl md:text-2xl max-w-[620px] leading-relaxed mb-10 font-normal">
-              I started with a channel. Now we build communities, host conversations, and put Web3 projects in front of people.
+              We help Web3 projects get seen and build a community. Through campaigns, live X Spaces, and work you can inspect.
             </p>
 
             {/* Clear Primary & Secondary Actions */}
@@ -100,7 +100,7 @@ export const Hero: React.FC<HeroProps> = ({ onReadStory, onExploreWork }) => {
                 onClick={handleExploreWork}
                 className="btn-primary text-sm tracking-wide"
               >
-                <span>Explore the work</span>
+                <span>See the work</span>
                 <span>↗</span>
               </a>
 
@@ -109,7 +109,7 @@ export const Hero: React.FC<HeroProps> = ({ onReadStory, onExploreWork }) => {
                 onClick={handleReadStory}
                 className="link-editorial text-sm font-medium"
               >
-                <span>Read the story</span>
+                <span>How it started</span>
                 <span>↓</span>
               </a>
             </div>

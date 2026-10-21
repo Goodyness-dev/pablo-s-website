@@ -10,34 +10,10 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { EarlyRecordsArchive } from './components/EarlyRecordsArchive';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { ImageLightbox, LightboxItem } from './components/ImageLightbox';
 
 export const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState('story');
   const [motionPaused, setMotionPaused] = useState(false);
-
-  // Unified Lightbox State for high-resolution inspection
-  const [lightboxState, setLightboxState] = useState<{
-    isOpen: boolean;
-    items: LightboxItem[];
-    initialIndex: number;
-  }>({
-    isOpen: false,
-    items: [],
-    initialIndex: 0,
-  });
-
-  const handleOpenLightbox = (item: LightboxItem) => {
-    setLightboxState({
-      isOpen: true,
-      items: [item],
-      initialIndex: 0,
-    });
-  };
-
-  const handleCloseLightbox = () => {
-    setLightboxState((prev) => ({ ...prev, isOpen: false }));
-  };
 
   const handleToggleMotion = () => {
     setMotionPaused((prev) => !prev);
@@ -84,22 +60,22 @@ export const App: React.FC = () => {
         <Hero />
 
         {/* 01 / Origins Story: 4-Milestone Chronology + Typewriter + Pinned Evidence */}
-        <OriginStory onOpenLightbox={handleOpenLightbox} />
+        <OriginStory />
 
         {/* 02 / Selected Work: Clover Boys (Counters & Evidence) + Wojak Meter (Before/After) */}
-        <SelectedWork onOpenLightbox={handleOpenLightbox} />
+        <SelectedWork />
 
         {/* Partnerships & Collaborations Ledger */}
-        <PartnerLedger onOpenLightbox={handleOpenLightbox} />
+        <PartnerLedger />
 
         {/* 03 / How We Work: 5 Numbered Rows & Deliverables + Process Strip */}
-        <ServicesSection onOpenLightbox={handleOpenLightbox} />
+        <ServicesSection />
 
         {/* In Their Words: Editorial Testimonial Quotations */}
         <TestimonialsSection />
 
         {/* Historical Vault: Multipliers & Genesis Artifacts */}
-        <EarlyRecordsArchive onOpenLightbox={handleOpenLightbox} />
+        <EarlyRecordsArchive />
 
         {/* 04 / Your Next Chapter: Direct Telegram + Project Brief */}
         <ContactSection />
@@ -109,14 +85,6 @@ export const App: React.FC = () => {
       <Footer
         motionPaused={motionPaused}
         onToggleMotion={handleToggleMotion}
-      />
-
-      {/* Touch-Native Image Lightbox */}
-      <ImageLightbox
-        isOpen={lightboxState.isOpen}
-        onClose={handleCloseLightbox}
-        items={lightboxState.items}
-        initialIndex={lightboxState.initialIndex}
       />
 
     </div>

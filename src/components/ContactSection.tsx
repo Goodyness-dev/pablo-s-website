@@ -47,7 +47,7 @@ export const ContactSection: React.FC = () => {
           {/* Left Column: Direct Outreach */}
           <div className="lg:col-span-5">
             <span className="font-mono text-xs uppercase tracking-widest text-[#A7A69F] block mb-3">
-              04 / Your next chapter
+              The next chapter
             </span>
 
             <h2 className="text-section-title text-[#F0EEE7] mb-6">
@@ -55,24 +55,27 @@ export const ContactSection: React.FC = () => {
             </h2>
 
             <p className="font-body text-[#B8B6AD] text-lg sm:text-xl leading-relaxed mb-8">
-              Tell us the project, the stage, and what needs to move.
+              Tell us where your project stands—and what you want to work on next.
             </p>
 
             {/* Direct Instant Action */}
-            <div className="border border-[#33332F] bg-[#111110] p-6 rounded-[2px] mb-8">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#A7A69F] block mb-2">
-                Fastest Response
-              </span>
-              <p className="text-sm text-[#F0EEE7] mb-4">
-                Message Senor Izyche directly on Telegram to discuss immediate availability or schedule a voice discussion.
-              </p>
+            <div className="border border-[#33332F] bg-[#111110] p-6 rounded-[2px] mb-8 space-y-4">
               <a
                 href="https://t.me/Senor_Izyche"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary w-full text-center justify-center text-sm"
               >
-                <span>Message @Senor_Izyche on Telegram</span>
+                <span>Let's talk on Telegram</span>
+                <span>↗</span>
+              </a>
+              <a
+                href="https://x.com/IZYCHE_"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary w-full text-center justify-center text-sm"
+              >
+                <span>Find us on X</span>
                 <span>↗</span>
               </a>
             </div>
@@ -100,11 +103,8 @@ export const ContactSection: React.FC = () => {
               
               <div className="border-b border-[#33332F] pb-4 mb-6">
                 <h3 className="font-display font-bold text-2xl uppercase tracking-tight text-[#F0EEE7] mb-1">
-                  Send a project brief
+                  Start with a short brief.
                 </h3>
-                <p className="text-xs text-[#A7A69F]">
-                  Fill in your project context. We’ll generate a pre-formatted Telegram draft for your review.
-                </p>
               </div>
 
               <form onSubmit={handlePrepareTelegram} className="space-y-6">
@@ -112,87 +112,69 @@ export const ContactSection: React.FC = () => {
                 {/* Field 1: Project Name */}
                 <div>
                   <label htmlFor="projectName" className="block text-xs font-mono uppercase text-[#A7A69F] mb-2">
-                    Project Name or Ticker
+                    Project name
                   </label>
                   <input
                     id="projectName"
                     name="projectName"
                     type="text"
                     required
-                    placeholder="e.g. Clover Boys / $CLOVR"
+                    placeholder="Your project"
                     value={formData.projectName}
                     onChange={handleChange}
                     className="w-full bg-[#0A0A09] border border-[#33332F] focus:border-[#F0EEE7] text-[#F0EEE7] px-4 py-3 text-sm rounded-[2px] outline-none transition-colors"
                   />
                 </div>
 
-                {/* Field 2 & 3: Stage and Service */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="stage" className="block text-xs font-mono uppercase text-[#A7A69F] mb-2">
-                      Current Stage
-                    </label>
-                    <select
-                      id="stage"
-                      name="stage"
-                      value={formData.stage}
-                      onChange={handleChange}
-                      className="w-full bg-[#0A0A09] border border-[#33332F] focus:border-[#F0EEE7] text-[#F0EEE7] px-4 py-3 text-sm rounded-[2px] outline-none transition-colors"
-                    >
-                      <option value="Pre-launch / Preparing">Pre-launch / Preparing</option>
-                      <option value="Recently Launched">Recently Launched</option>
-                      <option value="Live Token / Scaling">Live Token / Scaling</option>
-                      <option value="Utility / Product Launch">Utility / Product Launch</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="service" className="block text-xs font-mono uppercase text-[#A7A69F] mb-2">
-                      Primary Interest
-                    </label>
-                    <select
-                      id="service"
-                      name="service"
-                      value={formData.service}
-                      onChange={handleChange}
-                      className="w-full bg-[#0A0A09] border border-[#33332F] focus:border-[#F0EEE7] text-[#F0EEE7] px-4 py-3 text-sm rounded-[2px] outline-none transition-colors"
-                    >
-                      <option value="Community campaigns & raids">Community campaigns & raids</option>
-                      <option value="X Spaces & live audio">X Spaces & live audio</option>
-                      <option value="Ambassador representation">Ambassador representation</option>
-                      <option value="Content & utility positioning">Content & utility positioning</option>
-                      <option value="Full campaign scope">Full campaign scope</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Field 4: Contact Handle */}
+                {/* Field 2: Contact Handle */}
                 <div>
                   <label htmlFor="handle" className="block text-xs font-mono uppercase text-[#A7A69F] mb-2">
-                    Your Telegram or X Handle
+                    Your contact
                   </label>
                   <input
                     id="handle"
                     name="handle"
                     type="text"
                     required
-                    placeholder="@YourHandle"
+                    placeholder="Telegram or X handle"
                     value={formData.handle}
                     onChange={handleChange}
                     className="w-full bg-[#0A0A09] border border-[#33332F] focus:border-[#F0EEE7] text-[#F0EEE7] px-4 py-3 text-sm rounded-[2px] outline-none transition-colors"
                   />
                 </div>
 
-                {/* Field 5: Details / Message */}
+                {/* Field 3: Service */}
+                <div>
+                  <label htmlFor="service" className="block text-xs font-mono uppercase text-[#A7A69F] mb-2">
+                    Service
+                  </label>
+                  <select
+                    id="service"
+                    name="service"
+                    value={formData.service}
+                    onChange={handleChange}
+                    className="w-full bg-[#0A0A09] border border-[#33332F] focus:border-[#F0EEE7] text-[#F0EEE7] px-4 py-3 text-sm rounded-[2px] outline-none transition-colors"
+                  >
+                    <option value="" disabled>Choose a service</option>
+                    <option value="Raid campaigns">Raid campaigns</option>
+                    <option value="Community building & moderation">Community building & moderation</option>
+                    <option value="Ambassador representation">Ambassador representation</option>
+                    <option value="X Spaces & live conversations">X Spaces & live conversations</option>
+                    <option value="Trending & scanner campaigns">Trending & scanner campaigns</option>
+                    <option value="Full campaign scope">Full campaign scope</option>
+                  </select>
+                </div>
+
+                {/* Field 4: Details / Message */}
                 <div>
                   <label htmlFor="message" className="block text-xs font-mono uppercase text-[#A7A69F] mb-2">
-                    Project Context & Objectives
+                    Project details
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     rows={4}
-                    placeholder="Briefly describe what you are launching, what milestones you need to achieve, and your preferred timeline."
+                    placeholder="Where are you now? What do you need?"
                     value={formData.message}
                     onChange={handleChange}
                     className="w-full bg-[#0A0A09] border border-[#33332F] focus:border-[#F0EEE7] text-[#F0EEE7] px-4 py-3 text-sm rounded-[2px] outline-none transition-colors resize-none"
@@ -219,7 +201,7 @@ export const ContactSection: React.FC = () => {
                 </div>
 
                 <p className="text-[11px] font-mono text-[#A7A69F] pt-2">
-                  * Clicking will open Telegram with your filled brief. You review and send it yourself. No automatic messages are dispatched.
+                  Review and send your message in Telegram.
                 </p>
 
               </form>

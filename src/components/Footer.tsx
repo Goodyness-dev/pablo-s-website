@@ -53,10 +53,10 @@ export const Footer: React.FC<FooterProps> = ({
 
             <div>
               <span className="font-display font-bold text-lg text-[#F0EEE7] uppercase tracking-tight block leading-none">
-                The Fundraiser
+                The Fundraiser / Fundraisers Web
               </span>
-              <span className="font-body text-xs text-[#A7A69F] block mt-1">
-                Fundraisers Web · Web3 Growth Agency & Evidence Archive
+              <span className="font-body text-xs text-[#A7A69F] block mt-1.5">
+                Web3 campaigns, community & conversations.
               </span>
             </div>
           </div>
@@ -68,7 +68,7 @@ export const Footer: React.FC<FooterProps> = ({
                 onClick={onToggleMotion}
                 className="text-[#A7A69F] hover:text-[#F0EEE7] transition-colors py-1 px-2 border border-[#33332F] rounded-[2px]"
               >
-                Motion: {motionPaused ? 'Reduced (Toggle)' : 'Standard (Toggle)'}
+                Motion: {motionPaused ? 'Reduced' : 'Standard'}
               </button>
             )}
 
@@ -86,35 +86,30 @@ export const Footer: React.FC<FooterProps> = ({
 
         {/* Bottom Tier: Links & Copyright */}
         <div className="pt-8 flex flex-col md:flex-row md:items-center justify-between gap-6 text-xs font-mono text-[#A7A69F]">
-          <div className="flex flex-wrap gap-6">
-            <a
-              href="https://t.me/Senor_Izyche"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#F0EEE7] transition-colors"
-            >
-              Telegram @Senor_Izyche ↗
-            </a>
+          <div className="flex flex-wrap gap-6 items-center">
             <a
               href="https://x.com/IZYCHE_"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[#F0EEE7] transition-colors"
             >
-              X @IZYCHE_ ↗
+              X ↗
             </a>
             <a
-              href="#work"
+              href="https://t.me/thefundraiserweb"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-[#F0EEE7] transition-colors"
             >
-              Selected Work
+              Telegram ↗
             </a>
-            <a
-              href="#archive"
+            <button
+              type="button"
+              onClick={scrollToTop}
               className="hover:text-[#F0EEE7] transition-colors"
             >
-              Historical Vault
-            </a>
+              Back to top ↑
+            </button>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">

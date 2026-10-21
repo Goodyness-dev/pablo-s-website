@@ -43,8 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { name: 'Story', href: '#story' },
     { name: 'Work', href: '#work' },
     { name: 'Services', href: '#services' },
-    { name: 'Archive', href: '#archive' },
-    { name: 'In their words', href: '#testimonials' },
+    { name: 'Reviews', href: '#testimonials' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -125,7 +124,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={(e) => handleLinkClick(e, '#contact')}
             className="btn-primary text-xs tracking-wide"
           >
-            <span>Start a conversation</span>
+            <span>Let's talk</span>
             <span>↗</span>
           </a>
         </div>
@@ -137,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={(e) => handleLinkClick(e, '#contact')}
             className="text-xs font-medium bg-[#F0EEE7] text-[#000000] px-3 py-1.5 rounded-[2px]"
           >
-            Contact ↗
+            Let's talk ↗
           </a>
 
           <button
@@ -187,7 +186,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={(e) => handleLinkClick(e, '#contact')}
               className="btn-primary text-center justify-center py-3.5"
             >
-              Start a conversation ↗
+              Let's talk ↗
             </a>
 
             {onToggleMotion && (

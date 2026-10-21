@@ -1,47 +1,31 @@
 import React, { useState } from 'react';
 import { SERVICES, PROCESS_STEPS } from '../data/services';
-import { LightboxItem } from './ImageLightbox';
 
-interface ServicesSectionProps {
-  onOpenLightbox?: (item: LightboxItem) => void;
-}
-
-export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenLightbox }) => {
+export const ServicesSection: React.FC = () => {
   const [expandedId, setExpandedId] = useState<string | null>('campaigns');
 
   const toggleRow = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  const handleInspectImage = (src?: string, alt?: string, title?: string) => {
-    if (!src || !onOpenLightbox) return;
-    onOpenLightbox({
-      src,
-      title: title || 'Service Capability',
-      alt: alt || 'Service Artwork',
-      caption: 'Campaign execution asset',
-    });
-  };
-
   return (
     <section id="services" className="relative py-24 md:py-36 border-b border-[#33332F]">
       <div className="max-w-[1312px] mx-auto px-4 sm:px-6 md:px-8">
         
-        {/* Section Header */}
+        {/* 10. Services Section Header */}
         <div className="mb-20">
           <div className="flex items-center gap-3 mb-4">
             <span className="font-mono text-xs uppercase tracking-widest text-[#A7A69F]">
-              03 / How we work
+              What we do
             </span>
           </div>
 
           <h2 className="text-section-title text-[#F0EEE7] mb-6">
-            Attention is the start.<br />
-            Community is the work.
+            Give your project a sharper cut.
           </h2>
 
           <p className="font-body text-[#B8B6AD] text-lg sm:text-xl max-w-[640px]">
-            Choose the work your project needs. We define the scope before the campaign starts.
+            Choose the work you need. We'll agree on the scope before we start.
           </p>
         </div>
 
@@ -69,7 +53,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenLightbox
                   </div>
 
                   <div className="flex items-center justify-between md:justify-end gap-6 pl-12 md:pl-0">
-                    <span className="font-body text-sm text-[#B8B6AD] hidden lg:inline max-w-[320px] text-right truncate">
+                    <span className="font-body text-sm text-[#B8B6AD] hidden lg:inline max-w-[340px] text-right truncate">
                       {service.summary}
                     </span>
                     <span className="w-8 h-8 rounded-[2px] border border-[#33332F] bg-[#111110] flex items-center justify-center text-sm font-mono text-[#F0EEE7] group-hover:border-[#77776F] transition-colors">
@@ -85,44 +69,51 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenLightbox
                       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
                         
                         {/* Scope Summary & Deliverables */}
-                        <div className="md:col-span-8">
-                          <p className="font-body text-base sm:text-lg text-[#F0EEE7] leading-relaxed mb-6 font-medium">
-                            {service.summary}
-                          </p>
+                        <div className="md:col-span-8 flex flex-col justify-between">
+                          <div>
+                            <p className="font-body text-base sm:text-lg text-[#F0EEE7] leading-relaxed mb-6 font-medium">
+                              {service.summary}
+                            </p>
 
-                          <span className="font-mono text-xs uppercase tracking-wider text-[#A7A69F] block mb-3">
-                            Scope Deliverables
-                          </span>
-                          <ul className="space-y-2.5 text-sm text-[#B8B6AD]">
-                            {service.deliverables?.map((item, dIdx) => (
-                              <li key={dIdx} className="flex items-start gap-3">
-                                <span className="text-[#F0EEE7] font-bold">—</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
+                            <span className="font-mono text-xs uppercase tracking-wider text-[#A7A69F] block mb-3">
+                              Included Deliverables
+                            </span>
+                            <ul className="space-y-2.5 text-sm text-[#B8B6AD] mb-8">
+                              {service.deliverables?.map((item, dIdx) => (
+                                <li key={dIdx} className="flex items-start gap-3">
+                                  <span className="text-[#F0EEE7] font-bold">—</span>
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          <div>
+                            <a
+                              href={`https://t.me/Senor_Izyche?text=${encodeURIComponent(`Hi @Senor_Izyche, I would like to discuss: ${service.title}`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn-primary text-xs"
+                            >
+                              <span>Discuss this service</span>
+                              <span>↗</span>
+                            </a>
+                          </div>
                         </div>
 
-                        {/* Preserved Capability Artwork */}
+                        {/* Preserved Capability Artwork (Full Width, No Inspect Option) */}
                         {service.imageSrc && (
                           <div className="md:col-span-4">
-                            <button
-                              type="button"
-                              onClick={() => handleInspectImage(service.imageSrc, service.imageAlt, service.title)}
-                              className="w-full text-left group cursor-zoom-in block border border-[#33332F] bg-[#0A0A09] p-3 rounded-[2px]"
-                            >
-                              <div className="relative aspect-[16/10] overflow-hidden mb-2">
+                            <div className="border border-[#33332F] bg-[#0A0A09] p-2 rounded-[2px]">
+                              <div className="relative aspect-[16/10] overflow-hidden rounded-[2px]">
                                 <img
                                   src={service.imageSrc}
                                   alt={service.imageAlt || service.title}
-                                  className="w-full h-full object-cover filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
+                                  className="w-full h-full object-cover filter contrast-105"
+                                  loading="lazy"
                                 />
                               </div>
-                              <div className="flex items-center justify-between text-[11px] text-[#A7A69F]">
-                                <span>Execution Reference</span>
-                                <span className="underline group-hover:text-[#F0EEE7]">Inspect ↗</span>
-                              </div>
-                            </button>
+                            </div>
                           </div>
                         )}
 
@@ -136,11 +127,15 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenLightbox
           })}
         </div>
 
-        {/* Process Strip (M12) */}
+        {/* Working Process */}
         <div>
-          <span className="font-mono text-xs uppercase tracking-widest text-[#A7A69F] block mb-6">
-            Working Process
+          <span className="font-mono text-xs uppercase tracking-widest text-[#A7A69F] block mb-3">
+            Process
           </span>
+
+          <h3 className="font-display font-bold text-3xl sm:text-4xl uppercase tracking-tight text-[#F0EEE7] mb-8">
+            From the first brief to the final report.
+          </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t border-[#33332F]">
             {PROCESS_STEPS.map((step) => (
