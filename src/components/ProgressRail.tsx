@@ -11,10 +11,8 @@ const STAGES_META: { stage: DiamondStage; label: string; name: string }[] = [
   { stage: 0, label: '01', name: 'Rough: The Trenches' },
   { stage: 1, label: '02', name: 'Cleave: Pleased Devs' },
   { stage: 2, label: '03', name: 'Facet: The Fundraiser' },
-  { stage: 3, label: '04', name: 'Polish: The Comeback' },
-  { stage: 4, label: '05', name: 'Brilliant: Fundraisers Web' },
-  { stage: 5, label: '06', name: 'Set: Partners' },
-  { stage: 6, label: '07', name: 'Chain: Contact' },
+  { stage: 3, label: '04', name: 'Brilliant: Fundraisers Web' },
+  { stage: 4, label: '05', name: 'Chain: Contact' },
 ];
 
 export const ProgressRail: React.FC<ProgressRailProps> = ({

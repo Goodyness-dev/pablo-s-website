@@ -123,11 +123,9 @@ export const App: React.FC = () => {
       { id: 'chapter-02', stage: 1 as DiamondStage, section: 'work' },
       { id: 'chapter-03', stage: 2 as DiamondStage, section: 'work' },
       { id: 'chapter-04', stage: 3 as DiamondStage, section: 'work' },
-      { id: 'chapter-05', stage: 4 as DiamondStage, section: 'work' },
-      { id: 'chapter-06', stage: 5 as DiamondStage, section: 'work' },
-      { id: 'services', stage: 5 as DiamondStage, section: 'services' },
-      { id: 'reviews', stage: 5 as DiamondStage, section: 'reviews' },
-      { id: 'contact', stage: 6 as DiamondStage, section: 'contact' },
+      { id: 'services', stage: 3 as DiamondStage, section: 'services' },
+      { id: 'reviews', stage: 3 as DiamondStage, section: 'reviews' },
+      { id: 'contact', stage: 4 as DiamondStage, section: 'contact' },
     ];
 
     const observer = new IntersectionObserver(
@@ -170,9 +168,7 @@ export const App: React.FC = () => {
     else if (stage === 1) targetId = 'chapter-02';
     else if (stage === 2) targetId = 'chapter-03';
     else if (stage === 3) targetId = 'chapter-04';
-    else if (stage === 4) targetId = 'chapter-05';
-    else if (stage === 5) targetId = 'chapter-06';
-    else if (stage === 6) targetId = 'contact';
+    else if (stage === 4) targetId = 'contact';
 
     const el = document.getElementById(targetId);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -242,23 +238,9 @@ export const App: React.FC = () => {
                 onOpenLightbox={handleOpenSingleImage}
                 cardMode
               />
-              {/* Card 04 — The Comeback */}
+              {/* Card 04 — Fundraisers Web */}
               <ChapterSection
                 chapter={STORY_CHAPTERS[3]}
-                reverse={true}
-                onOpenLightbox={handleOpenSingleImage}
-                cardMode
-              />
-              {/* Card 05 — Fundraisers Web */}
-              <ChapterSection
-                chapter={STORY_CHAPTERS[4]}
-                reverse={false}
-                onOpenLightbox={handleOpenSingleImage}
-                cardMode
-              />
-              {/* Card 06 — Set: Partners */}
-              <ChapterSection
-                chapter={STORY_CHAPTERS[5]}
                 reverse={true}
                 onOpenLightbox={handleOpenSingleImage}
                 cardMode
