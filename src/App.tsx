@@ -10,6 +10,7 @@ import { CaseStudyClover } from './components/CaseStudyClover';
 import { CaseStudyWojak } from './components/CaseStudyWojak';
 import { PartnerEtherArchive } from './components/PartnerEtherArchive';
 import { PnlCarousel } from './components/PnlCarousel';
+import { FundraiserEraHeader } from './components/FundraiserEraHeader';
 import { ServicesGrid } from './components/ServicesGrid';
 import { Reviews } from './components/Reviews';
 import { ArchiveMasonry } from './components/ArchiveMasonry';
@@ -250,10 +251,13 @@ export const App: React.FC = () => {
 
           {/* === NORMAL FLOW: sub-content that belongs to the work section === */}
           <div className="max-w-[1240px] mx-auto px-4 sm:px-6 mt-16">
-            {/* PnL Receipts (belongs to Chapter 04) */}
+            {/* Section 1: Pleasing Devs Era Records */}
             <PnlCarousel onOpenLightbox={handleOpenGallery} />
 
-            {/* Case Study A: Clover Boys (belongs to Chapter 05) */}
+            {/* Section 2: The Fundraiser Era (Diamond-Inspired Theme Header) */}
+            <FundraiserEraHeader />
+
+            {/* Case Study A: Clover Boys */}
             <CaseStudyClover onOpenLightbox={handleOpenSingleImage} />
 
             {/* Case Study B: Wojak Meter (belongs to Chapter 05) */}
