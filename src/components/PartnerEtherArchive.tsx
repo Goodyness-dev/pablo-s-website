@@ -99,11 +99,8 @@ export const PartnerEtherArchive: React.FC<PartnerEtherArchiveProps> = ({ onOpen
                 <img
                   src="/assets/ether-archive-poster.jpg"
                   alt="Official Ether Archive x The Fundraiser Partnership Poster"
-                  className="w-full h-auto object-contain block"
+                  className="w-full h-auto object-cover block"
                 />
-                <div className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-[#05060A]/85 backdrop-blur-md border border-white/20 text-[9px] font-mono text-[#F8FAFC]">
-                  🔍 Tap to zoom
-                </div>
               </div>
               {/* Chrome Star Flares */}
               <div className="absolute -top-3 -right-3 text-[#BDE7FF] animate-pulse">✦</div>

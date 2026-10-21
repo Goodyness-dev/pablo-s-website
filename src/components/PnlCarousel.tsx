@@ -37,7 +37,7 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
           </h3>
         </div>
         <p className="font-mono text-xs text-[#64748B]">
-          Verified bot timestamps &amp; multiples · Tap card to inspect &amp; zoom
+          Verified bot timestamps &amp; multiples · Tap card to view full screen
         </p>
       </div>
 
@@ -50,7 +50,7 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
             className="metallic-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl cursor-pointer group hover:border-[#6FD8FF]/40 transition-all w-[85vw] max-w-[320px] md:w-auto md:max-w-none snap-center shrink-0 md:shrink shadow-lg"
           >
             {/* Screenshot Frame with Ambient Backdrop & Exact 16:9 Aspect Ratio */}
-            <div className="relative w-full rounded-xl overflow-hidden aspect-[16/9] bg-[#07090F] mb-3.5 border border-white/10 p-1 flex items-center justify-center">
+            <div className="relative w-full rounded-xl overflow-hidden aspect-[16/9] bg-[#07090F] mb-3.5 border border-white/10 flex items-center justify-center">
               
               {/* Ambient Glow Clone */}
               <div
@@ -65,7 +65,7 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
               <img
                 src={receipt.imageSrc}
                 alt={`${receipt.ticker} Call Receipt`}
-                className="max-w-full max-h-full w-auto h-auto object-contain relative z-10"
+                className="w-full h-full object-cover relative z-10"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-[#2FA8E6]/10 mix-blend-multiply pointer-events-none z-10" />
@@ -75,11 +75,6 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
                 <span className="font-display font-extrabold text-xs gold-text">
                   {receipt.multiplier}
                 </span>
-              </div>
-
-              {/* Tap to Zoom Hint */}
-              <div className="absolute bottom-2 left-2 z-20 px-2 py-0.5 rounded-full bg-[#05060A]/80 backdrop-blur-md border border-white/15 text-[9px] font-mono text-[#A8B4C8] opacity-80 group-hover:opacity-100 transition-opacity">
-                🔍 Tap to zoom
               </div>
             </div>
 

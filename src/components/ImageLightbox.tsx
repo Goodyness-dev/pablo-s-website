@@ -22,23 +22,14 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
   initialIndex = 0,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const [zoomLevel, setZoomLevel] = useState(1);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
-  // Touch gesture refs
+  // Touch gesture refs for navigation and dismiss
   const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
-  const initialPinchDistRef = useRef<number | null>(null);
-  const initialZoomOnPinchRef = useRef<number>(1);
-  const lastTapRef = useRef<number>(0);
 
   // Sync index when initialIndex changes or modal opens
   useEffect(() => {
     if (isOpen) {
       setCurrentIndex(initialIndex);
-      setZoomLevel(1);
-      setPan({ x: 0, y: 0 });
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -50,15 +41,11 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
 
   const handleNext = useCallback(() => {
     if (items.length <= 1) return;
-    setZoomLevel(1);
-    setPan({ x: 0, y: 0 });
     setCurrentIndex((prev) => (prev + 1) % items.length);
   }, [items.length]);
 
   const handlePrev = useCallback(() => {
     if (items.length <= 1) return;
-    setZoomLevel(1);
-    setPan({ x: 0, y: 0 });
     setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
   }, [items.length]);
 
@@ -72,17 +59,6 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
         handleNext();
       } else if (e.key === 'ArrowLeft') {
         handlePrev();
-      } else if (e.key === '+' || e.key === '=') {
-        setZoomLevel((z) => Math.min(3.5, z + 0.5));
-      } else if (e.key === '-' || e.key === '_') {
-        setZoomLevel((z) => {
-          const next = Math.max(1, z - 0.5);
-          if (next === 1) setPan({ x: 0, y: 0 });
-          return next;
-        });
-      } else if (e.key === '0') {
-        setZoomLevel(1);
-        setPan({ x: 0, y: 0 });
       }
     };
 
@@ -94,94 +70,21 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
 
   const currentItem = items[currentIndex] || items[0];
 
-  // Mouse pan / drag handlers
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (zoomLevel > 1) {
-      setIsDragging(true);
-      setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging && zoomLevel > 1) {
-      setPan({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y,
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  // Double-tap or double-click to toggle zoom
-  const handleDoubleTap = () => {
-    if (zoomLevel > 1) {
-      setZoomLevel(1);
-      setPan({ x: 0, y: 0 });
-    } else {
-      setZoomLevel(1.8);
-      setPan({ x: 0, y: 0 });
-    }
-  };
-
-  // Mobile Touch Gestures (Pinch to zoom, pan, swipe navigate, swipe down dismiss)
+  // Mobile Touch Gestures (swipe navigate, swipe down dismiss)
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches.length === 1) {
       const touch = e.touches[0];
       const now = Date.now();
-      // Double tap detection (< 300ms)
-      if (now - lastTapRef.current < 300) {
-        handleDoubleTap();
-        lastTapRef.current = 0;
-        return;
-      }
-      lastTapRef.current = now;
-
       touchStartRef.current = { x: touch.clientX, y: touch.clientY, time: now };
-      if (zoomLevel > 1) {
-        setIsDragging(true);
-        setDragStart({ x: touch.clientX - pan.x, y: touch.clientY - pan.y });
-      }
-    } else if (e.touches.length === 2) {
-      // Pinch start
-      const dist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      initialPinchDistRef.current = dist;
-      initialZoomOnPinchRef.current = zoomLevel;
     }
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length === 1 && zoomLevel > 1 && isDragging) {
-      const touch = e.touches[0];
-      setPan({
-        x: touch.clientX - dragStart.x,
-        y: touch.clientY - dragStart.y,
-      });
-    } else if (e.touches.length === 2 && initialPinchDistRef.current) {
-      // Pinch zoom
-      const dist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      const scale = dist / initialPinchDistRef.current;
-      const nextZoom = Math.min(3.5, Math.max(1, initialZoomOnPinchRef.current * scale));
-      setZoomLevel(nextZoom);
-      if (nextZoom === 1) {
-        setPan({ x: 0, y: 0 });
-      }
-    }
+  const handleTouchMove = () => {
+    // Passive tracking
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    setIsDragging(false);
-    initialPinchDistRef.current = null;
-
-    if (e.touches.length === 0 && touchStartRef.current && zoomLevel === 1) {
+    if (e.touches.length === 0 && touchStartRef.current) {
       const touch = e.changedTouches[0];
       const deltaX = touch.clientX - touchStartRef.current.x;
       const deltaY = touch.clientY - touchStartRef.current.y;
@@ -231,68 +134,45 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
           )}
         </div>
 
-        {/* Zoom Controls Pill */}
-        <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#121626]/90 border border-white/12 backdrop-blur-md shadow-lg">
+        {/* Top Action Buttons */}
+        <div className="flex items-center gap-2">
+          {/* Native Fullscreen Toggle Button */}
           <button
             type="button"
             onClick={() => {
-              setZoomLevel((z) => Math.max(1, z - 0.5));
-              if (zoomLevel <= 1.5) setPan({ x: 0, y: 0 });
+              if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(() => {});
+              } else {
+                document.exitFullscreen().catch(() => {});
+              }
             }}
-            disabled={zoomLevel <= 1}
-            aria-label="Zoom out"
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition-all font-mono text-base"
+            aria-label="Toggle full screen"
+            className="px-3.5 py-2 rounded-full bg-[#121626]/90 border border-white/12 text-[#6FD8FF] hover:text-white hover:bg-white/10 active:scale-95 font-mono text-xs flex items-center gap-1.5 transition-all shadow-md"
           >
-            −
+            <span>⛶</span>
+            <span className="hidden sm:inline">Fullscreen</span>
           </button>
+
+          {/* Close Button Pill */}
           <button
             type="button"
-            onClick={() => {
-              setZoomLevel(1);
-              setPan({ x: 0, y: 0 });
-            }}
-            aria-label="Reset zoom"
-            className="px-2.5 py-1 rounded-full text-xs font-mono text-[#6FD8FF] hover:bg-white/10 transition-colors"
+            onClick={onClose}
+            aria-label="Close image viewer"
+            className="px-4 py-2 rounded-full bg-[#161B2B]/90 border border-white/15 text-white/90 hover:text-white hover:bg-white/15 active:scale-95 font-mono text-xs flex items-center gap-1.5 transition-all shadow-md"
           >
-            {Math.round(zoomLevel * 100)}%
-          </button>
-          <button
-            type="button"
-            onClick={() => setZoomLevel((z) => Math.min(3.5, z + 0.5))}
-            disabled={zoomLevel >= 3.5}
-            aria-label="Zoom in"
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition-all font-mono text-base"
-          >
-            +
+            <span>✕</span>
+            <span className="hidden sm:inline">Close</span>
           </button>
         </div>
-
-        {/* Close Button Pill */}
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close image viewer"
-          className="px-4 py-2 rounded-full bg-[#161B2B]/90 border border-white/15 text-white/90 hover:text-white hover:bg-white/15 active:scale-95 font-mono text-xs flex items-center gap-1.5 transition-all shadow-md"
-        >
-          <span>✕</span>
-          <span className="hidden sm:inline">Close</span>
-        </button>
       </div>
 
       {/* Main Viewport Stage */}
       <div
-        className="relative flex-1 w-full max-w-[1200px] mx-auto flex items-center justify-center overflow-hidden my-3 sm:my-4"
+        className="relative flex-1 w-full max-w-full mx-auto flex items-center justify-center overflow-hidden my-2 sm:my-3"
         onClick={(e) => e.stopPropagation()}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onDoubleClick={() => handleDoubleTap()}
-        style={{
-          cursor: zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in',
-        }}
       >
         {/* Dual-Layer Ambient Glow Underlay */}
         <div
@@ -304,18 +184,12 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
           }}
         />
 
-        {/* Sharp Scaled Foreground Image Container */}
-        <div
-          className="relative transition-transform duration-100 ease-out flex items-center justify-center max-w-full max-h-[75vh]"
-          style={{
-            transform: `translate3d(${pan.x}px, ${pan.y}px, 0) scale(${zoomLevel})`,
-            transformOrigin: 'center center',
-          }}
-        >
+        {/* Sharp Fullscreen Foreground Image Container */}
+        <div className="relative flex items-center justify-center w-full h-full p-2 sm:p-4">
           <img
             src={currentItem.src}
             alt={currentItem.alt || currentItem.title || 'Enlarged proof artifact'}
-            className="max-w-[90vw] max-h-[68vh] sm:max-h-[72vh] object-contain rounded-xl sm:rounded-2xl border border-white/12 shadow-[0_20px_60px_rgba(0,0,0,0.85)] pointer-events-none"
+            className="w-auto h-auto max-w-[96vw] max-h-[82vh] sm:max-h-[86vh] object-contain rounded-xl sm:rounded-2xl border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.9)]"
             loading="eager"
             draggable={false}
           />
@@ -365,8 +239,8 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
           </div>
 
           <div className="flex items-center justify-between sm:justify-end gap-3 pt-1 sm:pt-0 border-t sm:border-t-0 border-white/10 font-mono text-xs text-[#64748B]">
-            <span className="hidden sm:inline">Double-tap or pinch to zoom</span>
-            <span className="sm:hidden">Pinch to zoom · Swipe down to exit</span>
+            <span className="hidden sm:inline">Press Esc or click outside to exit</span>
+            <span className="sm:hidden">Swipe or tap outside to exit</span>
           </div>
         </div>
       </div>

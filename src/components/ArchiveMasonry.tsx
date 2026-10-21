@@ -48,7 +48,7 @@ export const ArchiveMasonry: React.FC<ArchiveMasonryProps> = ({ onOpenLightbox }
               onClick={() => handleItemClick(idx)}
               className="metallic-card p-3 sm:p-3.5 rounded-xl sm:rounded-2xl cursor-pointer group hover:border-[#6FD8FF]/40 transition-all opacity-85 hover:opacity-100 shadow-md"
             >
-              <div className="relative aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden bg-[#07090F] mb-2.5 border border-white/10 p-1.5 flex items-center justify-center">
+              <div className="relative aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden bg-[#07090F] mb-2.5 border border-white/10">
                 {/* Ambient Glow Clone */}
                 <div
                   className="absolute inset-0 pointer-events-none opacity-20 filter blur-md scale-110"
@@ -61,12 +61,9 @@ export const ArchiveMasonry: React.FC<ArchiveMasonryProps> = ({ onOpenLightbox }
                 <img
                   src={item.imageSrc}
                   alt={item.title}
-                  className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-300 relative z-10"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300 relative z-10"
                   loading="lazy"
                 />
-                <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-[#05060A]/85 border border-white/10 text-[9px] font-mono text-[#A8B4C8] opacity-0 group-hover:opacity-100 transition-opacity z-20">
-                  🔍 Zoom
-                </div>
               </div>
 
               <div className="space-y-0.5">

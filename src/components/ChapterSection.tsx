@@ -95,7 +95,7 @@ export const ChapterSection: React.FC<ChapterSectionProps> = ({
                 onClick={handleImageClick}
                 className="metallic-card p-3 sm:p-4 rounded-2xl sm:rounded-3xl cursor-pointer group-hover:border-[#6FD8FF]/40 transition-all shadow-[0_16px_48px_rgba(0,0,0,0.7)]"
               >
-                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[16/10] bg-[#07090F] flex items-center justify-center border border-white/10 p-2 sm:p-3">
+                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/3] sm:aspect-[16/10] bg-[#07090F] flex items-center justify-center border border-white/10">
 
                   {/* Ambient Glow Underlay */}
                   <div
@@ -111,15 +111,9 @@ export const ChapterSection: React.FC<ChapterSectionProps> = ({
                   <img
                     src={chapter.imageSrc}
                     alt={chapter.imageAlt || chapter.title}
-                    className="max-w-full max-h-full object-contain relative z-10 drop-shadow-lg"
+                    className="w-full h-full object-cover relative z-10"
                     loading="lazy"
                   />
-
-                  {/* Floating Zoom / Inspect Pill */}
-                  <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-full bg-[#05060A]/85 backdrop-blur-md border border-white/20 text-[10px] font-mono text-[#F8FAFC] opacity-90 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 shadow-md">
-                    <span>🔍</span>
-                    <span>Tap to zoom</span>
-                  </div>
 
                   {/* Glint Sweep Effect on Hover */}
                   <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-20">

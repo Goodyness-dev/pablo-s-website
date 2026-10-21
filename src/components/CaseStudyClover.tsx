@@ -138,7 +138,7 @@ export const CaseStudyClover: React.FC<CaseStudyCloverProps> = ({ onOpenLightbox
           {/* Minimalist Visual Container */}
           <div
             onClick={handleMediaClick}
-            className="relative rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-[4/3] lg:aspect-[4/5] bg-[#05070D] border border-white/10 cursor-pointer group shadow-2xl flex items-center justify-center p-2"
+            className="relative rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-[4/3] lg:aspect-[4/5] bg-[#05070D] border border-white/10 cursor-pointer group shadow-2xl"
           >
             {/* Ambient Neon Clover Backlight */}
             <div
@@ -154,15 +154,9 @@ export const CaseStudyClover: React.FC<CaseStudyCloverProps> = ({ onOpenLightbox
             <img
               src={mediaOptions[activeMedia].src}
               alt={mediaOptions[activeMedia].title}
-              className="w-full h-full object-contain relative z-10 transition-transform duration-500 group-hover:scale-105 drop-shadow-xl"
+              className="w-full h-full object-cover relative z-10 transition-transform duration-500 group-hover:scale-105 drop-shadow-xl"
               loading="lazy"
             />
-
-            {/* Floating Zoom Receipt Badge */}
-            <div className="absolute top-3 right-3 z-20 px-2.5 py-1 rounded-full bg-[#05060A]/85 backdrop-blur-md border border-white/15 text-[10px] font-mono text-[#F8FAFC] flex items-center gap-1.5 shadow-md">
-              <span>🔍</span>
-              <span>Zoom</span>
-            </div>
 
             {/* Caption Overlay */}
             <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-[#05070D] via-[#05070D]/80 to-transparent z-20">
