@@ -59,13 +59,13 @@ export const STORY_CHAPTERS: Chapter[] = [
     title: 'The Comeback',
     sheenWord: 'Comeback',
     lead: 'The wallet got drained. The drive did not.',
-    body: 'We went quiet for 24 hours. The next morning: "We start tomorrow." Within days, the new launch achieved 2x, WISH ran to a 7.7x multiple past 503K market cap, and the community hit 60 members. Pressure didn\'t break us — it cut us sharp.',
+    body: 'We went quiet for 24 hours. The next morning: "We start tomorrow." The calls that followed delivered record runs: MEMMERZ ran to a 26.8x multiple, and AESOP rocketed to 32.8x reaching an eight-figure market cap. Pressure didn\'t break us — it cut us sharp.',
     quote: 'Wallet was drained guys. We start tomorrow God willing.',
-    tagline: '7.7x WISH ATH · 60 Family Milestone',
-    imageSrc: '/assets/pnl-wish-7x.jpg',
-    imageAlt: 'RickBurpBot WISH 7.7x PNL call reaching 503.0K',
-    badgeLabel: 'WISH 7.7X · RETARD 4.7X · NAMECOIN 3.9X',
-    verifiedNotes: ['WISH 7.7x reached 503.0K (RickBurp)', 'Community reached 60 members (17 Jan 2026)']
+    tagline: '32.8X AESOP · 26.8X MEMMERZ ATH',
+    imageSrc: '/assets/pnl-aesop-32x.png',
+    imageAlt: 'PhanesBot AESOP 32.8x PNL call reaching 12.2M ATH',
+    badgeLabel: 'AESOP 32.8X · MEMMERZ 26.8X · MEMMERZ 18.1X',
+    verifiedNotes: ['AESOP 32.8x called at 372.6K', 'MEMMERZ 26.8x called at 49.0K']
   },
   {
     id: 5,

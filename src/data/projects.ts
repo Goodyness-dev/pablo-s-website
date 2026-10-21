@@ -69,40 +69,40 @@ export const CASE_STUDIES: CaseStudy[] = [
 
 export const PNL_RECEIPTS: PnlReceipt[] = [
   {
-    id: 'wish',
-    ticker: '$WISH',
-    calledAt: '65.4K MCap',
-    result: '7.7x Multiple',
-    multiplier: '7.7x',
-    reached: '503.0K ATH',
-    timeframe: '13 Days',
-    date: 'JANUARY 2026',
+    id: 'aesop',
+    ticker: '$AESOP',
+    calledAt: '372.6K MCap',
+    result: '32.8x Multiple',
+    multiplier: '32.8X',
+    reached: '12.2M ATH',
+    timeframe: '9d, 8h',
+    date: 'CALL RECEIPT',
     isCommunityTrade: false,
-    imageSrc: '/assets/pnl-wish-7x.jpg'
+    imageSrc: '/assets/pnl-aesop-32x.png'
   },
   {
-    id: 'retard',
-    ticker: '$RETARD',
-    calledAt: '137.0K MCap',
-    result: '4.7x Multiple',
-    multiplier: '4.7x',
-    reached: '643.6K ATH',
-    timeframe: 'Trench Run',
-    date: '15-16 JAN 2026',
-    isCommunityTrade: true,
-    imageSrc: '/assets/pnl-retard-4x.jpg'
+    id: 'memmerz-26x',
+    ticker: '$MEMMERZ',
+    calledAt: '49.0K MCap',
+    result: '26.8x Multiple',
+    multiplier: '26.8X',
+    reached: '1.31M ATH',
+    timeframe: '2h, 56m',
+    date: 'CALL RECEIPT',
+    isCommunityTrade: false,
+    imageSrc: '/assets/pnl-memmerz-26x.png'
   },
   {
-    id: 'namecoin',
-    ticker: '$NAMECOIN',
-    calledAt: '241.8K MCap',
-    result: '3.9x Multiple',
-    multiplier: '3.9x',
-    reached: '949.7K ATH',
-    timeframe: 'Trench Run',
-    date: '16 JAN 2026',
-    isCommunityTrade: true,
-    imageSrc: '/assets/pnl-namecoin-3x.jpg'
+    id: 'memmerz-18x',
+    ticker: '$MEMMERZ',
+    calledAt: '49.0K MCap',
+    result: '18.1x Multiple',
+    multiplier: '18.1X',
+    reached: '886.9K ATH',
+    timeframe: '32m, 11s',
+    date: 'CALL RECEIPT',
+    isCommunityTrade: false,
+    imageSrc: '/assets/pnl-memmerz-18x.png'
   }
 ];
 

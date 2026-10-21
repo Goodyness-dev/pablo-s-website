@@ -97,16 +97,10 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
                 <span className="text-[#FFE49A] font-semibold">{receipt.reached}</span>
               </div>
               <div className="flex items-center justify-between text-[#64748B] pt-2 border-t border-white/5">
-                <span>{receipt.date}</span>
-                {receipt.isCommunityTrade ? (
-                  <span className="text-[10px] text-[#A8B4C8] bg-white/5 px-2.5 py-0.5 rounded-full border border-white/10">
-                    Community Trade
-                  </span>
-                ) : (
-                  <span className="text-[10px] text-[#6FD8FF] bg-[#6FD8FF]/10 px-2.5 py-0.5 rounded-full border border-[#6FD8FF]/20">
-                    Promoted Run
-                  </span>
-                )}
+                <span className="text-[#94A3B8]">⏱ {receipt.timeframe}</span>
+                <span className="text-[10px] text-[#22C55E] bg-[#22C55E]/10 px-2.5 py-0.5 rounded-full border border-[#22C55E]/20">
+                  ✓ Verified Call
+                </span>
               </div>
             </div>
           </div>
