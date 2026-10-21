@@ -76,7 +76,7 @@ export const PNL_RECEIPTS: PnlReceipt[] = [
     multiplier: '32.8X',
     reached: '12.2M ATH',
     timeframe: '9d, 8h',
-    date: 'CALL RECEIPT',
+    date: 'PLEASING DEVS ERA',
     isCommunityTrade: false,
     imageSrc: '/assets/pnl-aesop-32x.png'
   },
@@ -88,7 +88,7 @@ export const PNL_RECEIPTS: PnlReceipt[] = [
     multiplier: '26.8X',
     reached: '1.31M ATH',
     timeframe: '2h, 56m',
-    date: 'CALL RECEIPT',
+    date: 'PLEASING DEVS ERA',
     isCommunityTrade: false,
     imageSrc: '/assets/pnl-memmerz-26x.png'
   },
@@ -100,7 +100,7 @@ export const PNL_RECEIPTS: PnlReceipt[] = [
     multiplier: '18.1X',
     reached: '886.9K ATH',
     timeframe: '32m, 11s',
-    date: 'CALL RECEIPT',
+    date: 'PLEASING DEVS ERA',
     isCommunityTrade: false,
     imageSrc: '/assets/pnl-memmerz-18x.png'
   }

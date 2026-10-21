@@ -28,15 +28,16 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
         {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-2">
         <div>
-          <span className="font-mono text-xs uppercase tracking-widest text-[#6FD8FF]">
-            PROVEN TRACK RECORD
-          </span>
-          <h3 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#F8FAFC] mt-1 tracking-tight">
-            Curated PNL Receipts
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0E1526] border border-[#6FD8FF]/30 text-[#6FD8FF] font-mono text-[11px] uppercase tracking-wider mb-2.5 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#6FD8FF] animate-pulse" />
+            <span>Pleasing Devs Era · Track Record</span>
+          </div>
+          <h3 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl text-[#F8FAFC] tracking-tight">
+            The Pleasing Devs Records
           </h3>
         </div>
         <p className="font-mono text-xs text-[#64748B]">
-          Verified bot timestamps · Tap card to inspect &amp; zoom
+          Verified bot timestamps &amp; multiples · Tap card to inspect &amp; zoom
         </p>
       </div>
 
