@@ -1,93 +1,85 @@
 import React from 'react';
 import { SERVICES } from '../data/services';
+import { LightboxItem } from './ImageLightbox';
 
-export const ServicesGrid: React.FC = () => {
+interface ServicesGridProps {
+  onOpenLightbox?: (item: LightboxItem) => void;
+}
+
+export const ServicesGrid: React.FC<ServicesGridProps> = ({ onOpenLightbox }) => {
   return (
-    <section id="services" className="py-20 md:py-32 border-b border-white/5 relative scroll-mt-20 sm:scroll-mt-24">
+    <section id="services" className="py-20 md:py-28 border-b border-white/5 relative scroll-mt-20 sm:scroll-mt-24">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="text-center max-w-[680px] mx-auto mb-14">
+        <div className="text-center max-w-[680px] mx-auto mb-12">
           <span className="font-mono text-xs uppercase tracking-widest text-[#6FD8FF]">
             WHAT WE DO
           </span>
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-[#F8FAFC] mt-2 mb-4 tracking-tight">
+          <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-[#F8FAFC] mt-2 mb-3 tracking-tight">
             Agency Services &amp; Firepower
           </h2>
-          <p className="font-body text-[#94A3B8] text-base sm:text-lg">
+          <p className="font-body text-[#94A3B8] text-sm sm:text-base">
             Built for token launches, DeFi protocols, and Web3 utilities that need real eyes, active hands, and community momentum.
           </p>
         </div>
 
-        {/* 5-Card Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        {/* Minimalist Thin Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {SERVICES.map((service, idx) => (
             <div
               key={service.id}
-              className={`metallic-card p-6 md:p-8 rounded-2xl sm:rounded-3xl flex flex-col justify-between group hover:border-[#6FD8FF]/40 transition-all ${
-                idx === 0 ? 'lg:col-span-2' : ''
-              }`}
+              className="bg-[#06080F]/95 border border-white/[0.08] hover:border-[#6FD8FF]/40 rounded-2xl p-4 sm:p-5 flex flex-col justify-between group transition-all duration-300 shadow-md hover:shadow-[0_10px_30px_rgba(0,0,0,0.8)]"
             >
               <div>
-                {/* Header with Icon & Index */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-[#121626] border border-white/12 flex items-center justify-center text-[#6FD8FF] group-hover:scale-110 group-hover:border-[#6FD8FF]/50 transition-all shadow-inner">
-                    {service.icon === 'raid' && (
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                      </svg>
-                    )}
-                    {service.icon === 'community' && (
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                      </svg>
-                    )}
-                    {service.icon === 'ambassador' && (
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="12" cy="8" r="7"></circle>
-                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                      </svg>
-                    )}
-                    {service.icon === 'spaces' && (
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                        <line x1="12" y1="19" x2="12" y2="23"></line>
-                        <line x1="8" y1="23" x2="16" y2="23"></line>
-                      </svg>
-                    )}
-                    {service.icon === 'trending' && (
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-                        <polyline points="17 6 23 6 23 12"></polyline>
-                      </svg>
-                    )}
+                {/* 1 Matching Generated Image Per Card */}
+                {service.imageSrc && (
+                  <div
+                    onClick={() => {
+                      if (onOpenLightbox && service.imageSrc) {
+                        onOpenLightbox({
+                          src: service.imageSrc,
+                          alt: service.title,
+                          title: service.title,
+                          subtitle: service.punchline,
+                          badge: `SERVICE 0${idx + 1}`,
+                        });
+                      }
+                    }}
+                    className="relative w-full aspect-[16/10] rounded-xl overflow-hidden mb-4 bg-[#030408] border border-white/[0.06] cursor-pointer"
+                  >
+                    <img
+                      src={service.imageSrc}
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#06080F] via-transparent to-transparent opacity-60 pointer-events-none" />
+                    <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-[#04060A]/85 backdrop-blur-md border border-white/10 font-mono text-[10px] text-[#6FD8FF]">
+                      0{idx + 1}
+                    </div>
                   </div>
-                  <span className="font-mono text-xs text-[#64748B]">0{idx + 1}</span>
-                </div>
+                )}
 
                 {/* Service Title */}
-                <h3 className="font-display font-bold text-xl sm:text-2xl text-[#F8FAFC] mb-2 group-hover:text-[#BDE7FF] transition-colors">
+                <h3 className="font-display font-bold text-lg sm:text-xl text-[#F8FAFC] mb-1 group-hover:text-[#BDE7FF] transition-colors">
                   {service.title}
                 </h3>
 
-                <p className="font-mono text-xs text-[#6FD8FF] uppercase tracking-wider mb-3">
+                <p className="font-mono text-[11px] text-[#6FD8FF] uppercase tracking-wider mb-2.5">
                   "{service.punchline}"
                 </p>
 
-                <p className="font-body text-[#94A3B8] text-sm sm:text-base leading-relaxed mb-6">
+                <p className="font-body text-[#94A3B8] text-xs sm:text-sm leading-relaxed mb-4">
                   {service.description}
                 </p>
               </div>
 
-              {/* Highlights */}
-              <div className="space-y-2 pt-4 border-t border-white/5">
+              {/* Minimalist Highlights */}
+              <div className="space-y-1.5 pt-3 border-t border-white/[0.06]">
                 {service.highlights.map((h, i) => (
-                  <div key={i} className="flex items-center gap-2 font-mono text-xs text-[#F8FAFC]">
-                    <span className="w-1.5 h-1.5 rotate-45 bg-[#6FD8FF]" />
+                  <div key={i} className="flex items-center gap-2 font-mono text-[11px] text-[#CBD5E1]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#6FD8FF]/80 shrink-0" />
                     <span>{h}</span>
                   </div>
                 ))}
@@ -97,7 +89,7 @@ export const ServicesGrid: React.FC = () => {
         </div>
 
         {/* Pricing Notice Capsule */}
-        <div className="mt-12 text-center p-4 rounded-full metallic-well max-w-[640px] mx-auto border border-white/10 shadow-sm">
+        <div className="mt-12 text-center p-3 sm:p-3.5 rounded-full bg-[#06080F]/80 max-w-[620px] mx-auto border border-white/10 shadow-sm">
           <p className="font-mono text-xs text-[#94A3B8]">
             Rates depend on project scope and deliverables.{' '}
             <a
