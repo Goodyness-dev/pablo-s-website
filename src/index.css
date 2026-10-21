@@ -1,97 +1,378 @@
 @import "tailwindcss";
 
 @theme {
-  --color-black-000: #000000;
-  --color-ink-950: #04070C;
-  --color-ink-900: #070B12;
-  --color-ink-800: #0B121D;
-  --color-ink-700: #121C2E;
+  --color-obsidian-950: #050608;
+  --color-obsidian-900: #080A0F;
+  --color-midnight-850: #0B0E1A;
+  --color-midnight-800: #0E1226;
+  --color-midnight-700: #161B36;
 
-  --color-brand-blue: #5589C2;
-  --color-brand-green: #C1E9C2;
-  --color-white-100: #FFFFFF;
+  --color-surface-metallic-1: rgba(18, 23, 36, 0.85);
+  --color-surface-metallic-2: rgba(11, 14, 23, 0.90);
+  --color-surface-floating: rgba(16, 21, 33, 0.92);
 
-  --color-blue-200: #C5DAF0;
-  --color-blue-300: #9DBFE3;
-  --color-blue-700: #3F6EA3;
-  --color-blue-900: #1B3556;
+  --color-diamond-white: #F8FAFC;
+  --color-diamond-ice: #BDE7FF;
+  --color-diamond-cyan: #6FD8FF;
+  --color-diamond-deep: #2FA8E6;
+  --color-chrome-silver: #D5DFEB;
+  --color-chrome-shadow: #7A8699;
 
-  --color-green-300: #DDF3DE;
-  --color-green-700: #8FC993;
+  --color-prism-violet: #9B7CFF;
+  --color-prism-pink: #FF7AD9;
+  --color-prism-mint: #7CFFD9;
 
-  --font-display: "Dela Gothic One", "Sora", sans-serif;
-  --font-body: "Sora", sans-serif;
-  --font-mono: "Sora", monospace;
+  --color-gold-light: #FFE49A;
+  --color-gold-coin: #F2C14E;
+  --color-gold-deep: #B8862B;
+
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+
+  --font-display: "Sora", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-street: "Permanent Marker", cursive;
 }
 
 :root {
   color-scheme: dark;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+  
+  /* Pure Dark Metallic Chrome / Titanium Specular Gradient (No Rainbow) */
+  --gradient-metallic-sheen: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(189, 231, 255, 0.25) 35%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  --gradient-metal-body: linear-gradient(
+    180deg,
+    #252E42 0%,
+    #151B29 50%,
+    #0C0F17 100%
+  );
+  --gradient-metal-hover: linear-gradient(
+    180deg,
+    #323D56 0%,
+    #1C2335 50%,
+    #101420 100%
+  );
 }
 
-::selection {
-  background-color: #C1E9C2;
-  color: #000000;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
   font-family: var(--font-body);
-  background-color: #000000;
-  color: #FFFFFF;
+  background-color: #050608;
+  color: #F8FAFC;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Typography Utility Classes */
 .font-display {
   font-family: var(--font-display);
-  letter-spacing: 0.02em;
 }
 .font-body {
   font-family: var(--font-body);
 }
 .font-mono {
-  font-family: var(--font-body);
-  font-feature-settings: "tnum" 1;
+  font-family: var(--font-mono);
+}
+.font-street {
+  font-family: var(--font-street);
 }
 
-/* Hard Offset Block Shadow for LAROF Display Headlines */
-.headline-shadow {
-  text-shadow: 4px 4px 0px #5589C2;
+/* ==========================================================================
+   DARK METALLIC GLOSSY CARDS & SURFACES
+   ========================================================================== */
+
+/* Primary Metallic Card */
+.metallic-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(26, 33, 52, 0.82) 0%, rgba(12, 16, 26, 0.92) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.65),
+    0 16px 48px -8px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (min-width: 768px) {
-  .headline-shadow {
-    text-shadow: 6px 6px 0px #5589C2;
-  }
+.metallic-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+  pointer-events: none;
+  border-radius: 9999px;
 }
 
-.headline-shadow-green {
-  text-shadow: 4px 4px 0px #C1E9C2;
+.metallic-card:hover {
+  border-color: rgba(189, 231, 255, 0.38);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.50),
+    0 20px 52px -8px rgba(111, 216, 255, 0.16);
+  transform: translateY(-2px);
 }
 
-/* Glass Card Base Recipe with Brand Blue Tint */
+/* Backwards-compatible glass-card updated to rich dark metallic */
 .glass-card {
-  background-color: rgba(11, 18, 29, 0.85);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(85, 137, 194, 0.25);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 32px -4px rgba(0, 0, 0, 0.8);
-  transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  background: linear-gradient(180deg, rgba(24, 31, 48, 0.80) 0%, rgba(11, 15, 24, 0.90) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.6),
+    0 12px 40px -6px rgba(0, 0, 0, 0.8);
+  border-radius: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(85, 137, 194, 0.55);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 14px 44px -4px rgba(85, 137, 194, 0.2);
-  transform: translateY(-4px);
+  border-color: rgba(111, 216, 255, 0.40);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 18px 46px -6px rgba(111, 216, 255, 0.16);
+  transform: translateY(-2px);
 }
 
-/* Signature Cut-Corner Chamfer */
-.cut-corner {
-  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+/* Recessed Metallic Well (for images, stats, media frames) */
+.metallic-well {
+  background: linear-gradient(180deg, rgba(8, 10, 16, 0.95) 0%, rgba(13, 17, 26, 0.85) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow: 
+    inset 0 2px 8px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 0 rgba(255, 255, 255, 0.06);
+  border-radius: 0.875rem;
 }
 
+/* Smooth organic curved corners */
+.cut-corner,
 .cut-corner-small {
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  clip-path: none !important;
+  border-radius: 1.25rem;
+}
+
+/* ==========================================================================
+   METALLIC GLOSSY BUTTONS & PILLS (No Rainbow)
+   ========================================================================== */
+
+/* Primary Metallic Glossy Pill Button (Pure Liquid Chrome & Gunmetal) */
+.iridescent-pill,
+.metallic-pill-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--gradient-metal-body);
+  color: #F8FAFC;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.50),
+    inset 0 2px 4px rgba(255, 255, 255, 0.12),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.8),
+    0 4px 16px rgba(0, 0, 0, 0.65);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+  z-index: 1;
+}
+
+.iridescent-pill::after,
+.metallic-pill-primary::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  background: var(--gradient-metallic-sheen);
+  z-index: -1;
+  opacity: 0.45;
+  filter: blur(5px);
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.iridescent-pill:hover::after,
+.iridescent-pill:focus-visible::after,
+.metallic-pill-primary:hover::after {
+  opacity: 0.85;
+  filter: blur(8px);
+}
+
+.iridescent-pill:hover,
+.metallic-pill-primary:hover {
+  background: var(--gradient-metal-hover);
+  border-color: rgba(255, 255, 255, 0.38);
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 2px 6px rgba(255, 255, 255, 0.18),
+    0 8px 24px -4px rgba(111, 216, 255, 0.25);
+}
+
+.iridescent-pill:active,
+.metallic-pill-primary:active {
+  transform: scale(0.96);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Secondary Glossy Metallic Pill (Smoked Titanium & Silver) */
+.metallic-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 4px 14px rgba(0, 0, 0, 0.45);
+  color: #F8FAFC;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+}
+
+.metallic-pill:hover {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 100%);
+  border-color: rgba(189, 231, 255, 0.45);
+  transform: translateY(-1.5px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    0 8px 22px -4px rgba(111, 216, 255, 0.20);
+}
+
+.metallic-pill:active {
+  transform: scale(0.97);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Dark Metallic Glossy Social Pill */
+.metallic-social-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #242C3E 0%, #141926 50%, #0A0D15 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.50),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.80),
+    0 4px 14px rgba(0, 0, 0, 0.60);
+  color: #F8FAFC;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+  overflow: hidden;
+}
+
+.metallic-social-pill::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: 9999px 9999px 0 0;
+  pointer-events: none;
+}
+
+.metallic-social-pill:hover {
+  background: linear-gradient(180deg, #303A52 0%, #1A2132 50%, #0E121D 100%);
+  border-color: rgba(111, 216, 255, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.70),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.80),
+    0 8px 24px -2px rgba(111, 216, 255, 0.30);
+  color: #FFFFFF;
+}
+
+.metallic-social-pill:active {
+  transform: scale(0.96);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Floating Bottom Navigation Dock */
+.floating-bottom-dock {
+  position: fixed;
+  bottom: calc(1rem + var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(24, 30, 46, 0.94) 0%, rgba(10, 13, 20, 0.96) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 20px 52px -8px rgba(0, 0, 0, 0.9);
+  border-radius: 9999px;
+  padding: 0.35rem 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  max-width: calc(100vw - 2rem);
+}
+
+@media (min-width: 640px) {
+  .floating-bottom-dock {
+    bottom: calc(1.5rem + var(--safe-bottom));
+    padding: 0.45rem 0.85rem;
+    gap: 0.5rem;
+  }
+}
+
+/* Gold Gradient Text */
+.gold-text {
+  background: linear-gradient(160deg, #FFE49A 0%, #F2C14E 50%, #B8862B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* Diamond Sheen Gradient Text */
+.diamond-sheen {
+  background: linear-gradient(135deg, #F8FAFC 0%, #BDE7FF 28%, #8FB8FF 52%, #C9A8FF 76%, #FFD6F1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* Gold Button Background */
+.bg-gold-gradient {
+  background: linear-gradient(160deg, #FFE49A 0%, #F2C14E 50%, #B8862B 100%);
+  color: #050608;
+}
+
+/* Safe padding utility classes */
+.pb-safe {
+  padding-bottom: calc(5rem + var(--safe-bottom));
 }
 
 /* Glint Sweep Effect */
@@ -105,10 +386,30 @@ body {
 }
 
 .animate-glint {
-  animation: glint-sweep 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  animation: glint-sweep 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
-/* Marquee for Brand Flash Band and Footer Ticker */
+/* Star Dust Floating */
+@keyframes dust-float {
+  0% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-12px) translateX(6px);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.2;
+  }
+}
+
+.dust-particle {
+  animation: dust-float 6s ease-in-out infinite;
+}
+
+/* Marquee for Footer Ticker */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -121,31 +422,20 @@ body {
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 25s linear infinite;
+  animation: marquee 35s linear infinite;
 }
 
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
-/* Rotating Seal (40s per turn) */
-@keyframes spin-slow {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
-
-.animate-spin-slow {
-  animation: spin-slow 40s linear infinite;
-}
-
-/* Diamond Caustics & Reflection Ground Effect */
-.ground-reflection {
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%);
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Accessibility: Respect Reduced Motion */
@@ -156,10 +446,11 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .animate-marquee, .animate-spin-slow {
+  .animate-marquee {
     animation: none !important;
   }
-  .glass-card:hover {
+  .glass-card:hover,
+  .metallic-card:hover {
     transform: none !important;
   }
 }
@@ -167,15 +458,16 @@ body {
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #050608;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1B3556;
+  background: #161B2B;
   border-radius: 9999px;
-  border: 1px solid rgba(85, 137, 194, 0.2);
+  border: 1px solid rgba(189, 231, 255, 0.12);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5589C2;
+  background: #2FA8E6;
 }

@@ -6,15 +6,13 @@ interface VectorDiamondProps {
   className?: string;
   size?: number;
   interactive?: boolean;
-  usePhotorealistic?: boolean;
 }
 
 export const VectorDiamond: React.FC<VectorDiamondProps> = ({
   stage,
   className = '',
-  size = 340,
+  size = 320,
   interactive = true,
-  usePhotorealistic = false,
 }) => {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
@@ -22,14 +20,14 @@ export const VectorDiamond: React.FC<VectorDiamondProps> = ({
     if (!interactive) return;
 
     const handleMouseMove = (e: MouseEvent) => {
-      // Subtle jewelry tilt (max 8 degrees as per Patch spec)
+      // Calculate normalized cursor tilt (-12deg to +12deg)
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       const dx = (e.clientX - cx) / cx;
       const dy = (e.clientY - cy) / cy;
       setTilt({
-        x: -dy * 8,
-        y: dx * 8,
+        x: -dy * 12,
+        y: dx * 12,
       });
     };
 
@@ -37,235 +35,330 @@ export const VectorDiamond: React.FC<VectorDiamondProps> = ({
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [interactive]);
 
+  // Stage-specific visual parameters
   const isRough = stage === 0;
   const isCleave = stage === 1;
-
-  if (usePhotorealistic) {
-    return (
-      <div
-        className={`relative select-none flex flex-col items-center justify-center transition-transform duration-500 ease-out ${className}`}
-        style={{
-          width: size,
-          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-        }}
-      >
-        {/* Soft Spotlight Cone from Top Left */}
-        <div
-          className="absolute -top-24 -left-20 w-[420px] h-[420px] pointer-events-none rounded-full"
-          style={{
-            background: 'radial-gradient(circle at 30% 30%, rgba(193,233,194,0.15) 0%, rgba(85,137,194,0.12) 40%, rgba(0,0,0,0) 70%)',
-            filter: 'blur(36px)',
-          }}
-        />
-
-        {/* Real Cut Diamond Jewelry Piece */}
-        <div className="relative rounded-2xl overflow-hidden border border-[#5589C2]/30 shadow-[0_24px_60px_rgba(0,0,0,0.9)] bg-[#04070C]">
-          <img
-            src="/assets/image 2.jpg"
-            alt="Real Cut Brilliant Diamonds"
-            className="w-full h-auto object-cover transform transition-transform duration-700 hover:scale-105"
-          />
-
-          {/* Specular Glint Flares */}
-          <div className="absolute top-1/4 left-1/3 w-3 h-3 bg-white rounded-full blur-[1px] animate-pulse" />
-          <div className="absolute top-1/3 right-1/4 w-2 h-2 bg-[#C1E9C2] rounded-full blur-[1px] animate-pulse" style={{ animationDelay: '1.2s' }} />
-        </div>
-
-        {/* Ground Reflection & Shadow */}
-        <div className="w-3/4 h-6 mt-2 rounded-full bg-black/80 blur-md pointer-events-none" />
-      </div>
-    );
-  }
+  const isFacet = stage === 2;
+  const isPolish = stage === 3;
+  const isBrilliant = stage === 4;
+  const isSet = stage === 5;
+  const isChain = stage === 6;
 
   return (
     <div
-      className={`relative select-none flex flex-col items-center justify-center transition-transform duration-300 ease-out ${className}`}
+      className={`relative select-none flex items-center justify-center transition-transform duration-300 ease-out ${className}`}
       style={{
         width: size,
-        height: size + 40,
-        transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        height: size,
+        transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
       }}
     >
-      {/* Soft Top-Left Spotlight Cone */}
+      {/* Void Glow Radial Backdrop */}
       <div
-        className="absolute -top-12 -left-12 w-[340px] h-[340px] pointer-events-none rounded-full"
+        className="absolute inset-0 rounded-full pointer-events-none transition-all duration-700"
         style={{
-          background: 'radial-gradient(circle at 35% 35%, rgba(193,233,194,0.14) 0%, rgba(85,137,194,0.1) 45%, rgba(0,0,0,0) 70%)',
-          filter: 'blur(30px)',
+          background: isBrilliant || isSet || isChain
+            ? 'radial-gradient(circle, rgba(111,216,255,0.22) 0%, rgba(155,124,255,0.12) 40%, rgba(5,6,10,0) 70%)'
+            : isPolish
+            ? 'radial-gradient(circle, rgba(47,168,230,0.18) 0%, rgba(5,6,10,0) 65%)'
+            : 'radial-gradient(circle, rgba(14,18,38,0.45) 0%, rgba(5,6,10,0) 60%)',
+          filter: 'blur(32px)',
+          transform: 'scale(1.2)',
         }}
       />
 
-      {/* Main Vector Diamond Visual */}
-      <div className="relative w-full h-full flex items-center justify-center">
-        {/* STAGE 0: ROUGH STONE */}
-        {isRough ? (
-          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_16px_32px_rgba(0,0,0,0.9)] animate-pulse">
+      {/* STAGE 0: ROUGH STONE */}
+      {isRough && (
+        <svg
+          viewBox="0 0 100 100"
+          className="w-full h-full drop-shadow-[0_12px_28px_rgba(5,6,10,0.8)] animate-pulse"
+          style={{ animationDuration: '4s' }}
+        >
+          <polygon
+            points="22,30 38,18 68,22 84,38 78,74 54,88 26,78 16,50"
+            fill="#0E1226"
+            stroke="#2FA8E6"
+            strokeWidth="1.5"
+            strokeOpacity="0.4"
+          />
+          <polygon points="22,30 50,42 38,18" fill="#161B36" fillOpacity="0.6" />
+          <polygon points="38,18 50,42 68,22" fill="#0E1226" fillOpacity="0.8" />
+          <polygon points="68,22 50,42 84,38" fill="#161B36" fillOpacity="0.5" />
+          <polygon points="84,38 50,42 78,74" fill="#0E1226" fillOpacity="0.9" />
+          <polygon points="78,74 50,42 54,88" fill="#161B36" fillOpacity="0.7" />
+          <polygon points="54,88 50,42 26,78" fill="#0B0E1A" fillOpacity="0.9" />
+          <polygon points="26,78 50,42 16,50" fill="#161B36" fillOpacity="0.5" />
+          <polygon points="16,50 50,42 22,30" fill="#0E1226" fillOpacity="0.8" />
+        </svg>
+      )}
+
+      {/* STAGE 1: CLEAVE (Split Seam) */}
+      {isCleave && (
+        <svg viewBox="0 0 100 100" className="w-full h-full">
+          {/* Left Cleaved Half */}
+          <g transform="translate(-3, 0)">
             <polygon
-              points="22,30 38,18 68,22 84,38 78,74 54,88 26,78 16,50"
-              fill="#0B121D"
-              stroke="#5589C2"
-              strokeWidth="1.2"
-              strokeOpacity="0.4"
+              points="10,38 28,16 50,16 50,92 10,38"
+              fill="#0E1226"
+              stroke="#6FD8FF"
+              strokeWidth="1.5"
+              strokeOpacity="0.7"
             />
-            <polygon points="22,30 50,42 38,18" fill="#121C2E" fillOpacity="0.6" />
-            <polygon points="38,18 50,42 68,22" fill="#04070C" fillOpacity="0.9" />
-            <polygon points="68,22 50,42 84,38" fill="#1B3556" fillOpacity="0.5" />
-            <polygon points="84,38 50,42 78,74" fill="#070B12" fillOpacity="0.95" />
-            <polygon points="78,74 50,42 54,88" fill="#121C2E" fillOpacity="0.7" />
-            <polygon points="54,88 50,42 26,78" fill="#04070C" fillOpacity="0.9" />
-          </svg>
-        ) : isCleave ? (
-          <svg viewBox="0 0 100 100" className="w-full h-full">
-            <g transform="translate(-3, 0)">
-              <polygon points="10,38 28,16 50,16 50,92 10,38" fill="#0B121D" stroke="#5589C2" strokeWidth="1.2" />
-              <polygon points="28,16 50,16 38,38" fill="#5589C2" fillOpacity="0.5" />
-              <polygon points="10,38 28,16 38,38" fill="#C1E9C2" fillOpacity="0.3" />
+            <polygon points="28,16 50,16 38,38" fill="#2FA8E6" fillOpacity="0.4" />
+            <polygon points="10,38 28,16 38,38" fill="#BDE7FF" fillOpacity="0.25" />
+            <polygon points="10,38 38,38 50,92" fill="#0E1226" fillOpacity="0.8" />
+          </g>
+          {/* Glowing Laser Cleave Seam */}
+          <line
+            x1="50"
+            y1="10"
+            x2="50"
+            y2="95"
+            stroke="#6FD8FF"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            className="animate-pulse"
+          />
+          {/* Right Cleaved Half */}
+          <g transform="translate(3, 0)">
+            <polygon
+              points="50,16 72,16 90,38 50,92"
+              fill="#0E1226"
+              stroke="#6FD8FF"
+              strokeWidth="1.5"
+              strokeOpacity="0.7"
+            />
+            <polygon points="50,16 72,16 62,38" fill="#2FA8E6" fillOpacity="0.3" />
+            <polygon points="72,16 90,38 62,38" fill="#BDE7FF" fillOpacity="0.2" />
+            <polygon points="62,38 90,38 50,92" fill="#0B0E1A" fillOpacity="0.8" />
+          </g>
+        </svg>
+      )}
+
+      {/* STAGES 2 to 6: MASTER BRILLIANT GEM GEOMETRY */}
+      {!isRough && !isCleave && (
+        <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible">
+          <defs>
+            {/* Table Sheen Gradient */}
+            <linearGradient id="gemTable" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity={isFacet ? 0.2 : 0.95} />
+              <stop offset="60%" stopColor="#BDE7FF" stopOpacity={isFacet ? 0.15 : 0.85} />
+              <stop offset="100%" stopColor="#6FD8FF" stopOpacity={isFacet ? 0.1 : 0.7} />
+            </linearGradient>
+
+            {/* Facet Gradients */}
+            <linearGradient id="facetLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#F4FBFF" stopOpacity={isFacet ? 0.2 : 0.8} />
+              <stop offset="100%" stopColor="#BDE7FF" stopOpacity={isFacet ? 0.1 : 0.5} />
+            </linearGradient>
+
+            <linearGradient id="facetMidLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#8FD3FF" stopOpacity={isFacet ? 0.15 : 0.75} />
+              <stop offset="100%" stopColor="#6FB6F2" stopOpacity={isFacet ? 0.1 : 0.6} />
+            </linearGradient>
+
+            <linearGradient id="facetMidRight" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#6FB6F2" stopOpacity={isFacet ? 0.15 : 0.65} />
+              <stop offset="100%" stopColor="#4C9BE0" stopOpacity={isFacet ? 0.1 : 0.5} />
+            </linearGradient>
+
+            <linearGradient id="facetRight" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#4C9BE0" stopOpacity={isFacet ? 0.15 : 0.55} />
+              <stop offset="100%" stopColor="#2FA8E6" stopOpacity={isFacet ? 0.1 : 0.4} />
+            </linearGradient>
+
+            {/* Pavilion Gradients */}
+            <linearGradient id="pavilionLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#6FD8FF" stopOpacity={isFacet ? 0.1 : 0.7} />
+              <stop offset="100%" stopColor="#2FA8E6" stopOpacity={isFacet ? 0.05 : 0.85} />
+            </linearGradient>
+
+            <linearGradient id="pavilionCenter" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#2FA8E6" stopOpacity={isFacet ? 0.15 : 0.85} />
+              <stop offset="100%" stopColor="#1B5FAE" stopOpacity={isFacet ? 0.1 : 0.95} />
+            </linearGradient>
+
+            <linearGradient id="pavilionRight" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#14478A" stopOpacity={isFacet ? 0.1 : 0.85} />
+              <stop offset="100%" stopColor="#0E1226" stopOpacity={isFacet ? 0.2 : 0.95} />
+            </linearGradient>
+
+            {/* Gold Setting Gradient */}
+            <linearGradient id="goldSetting" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#FFE49A" />
+              <stop offset="50%" stopColor="#F2C14E" />
+              <stop offset="100%" stopColor="#B8862B" />
+            </linearGradient>
+          </defs>
+
+          {/* Master Diamond Geometry Base */}
+          <polygon
+            points="10,38 28,16 72,16 90,38 50,92"
+            fill="#07080C"
+            stroke={isFacet ? '#BDE7FF' : '#F4FBFF'}
+            strokeWidth={isFacet ? '1.5' : '1'}
+            strokeOpacity={isFacet ? 0.6 : 0.8}
+          />
+
+          {/* Table (Top central polygon) */}
+          <polygon
+            points="28,16 72,16 62,38 38,38"
+            fill="url(#gemTable)"
+            stroke="#F4FBFF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.7 : 0.9}
+          />
+
+          {/* Crown Facets */}
+          <polygon
+            points="10,38 28,16 38,38"
+            fill="url(#facetLeft)"
+            stroke="#BDE7FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.7 : 0.6}
+          />
+          <polygon
+            points="28,16 50,16 38,38"
+            fill="url(#facetMidLeft)"
+            stroke="#BDE7FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.7 : 0.6}
+          />
+          <polygon
+            points="50,16 72,16 62,38"
+            fill="url(#facetMidRight)"
+            stroke="#BDE7FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.7 : 0.6}
+          />
+          <polygon
+            points="72,16 90,38 62,38"
+            fill="url(#facetRight)"
+            stroke="#BDE7FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.7 : 0.6}
+          />
+
+          {/* Girdle Dividing Line */}
+          <line
+            x1="10"
+            y1="38"
+            x2="90"
+            y2="38"
+            stroke="#F4FBFF"
+            strokeWidth="1.2"
+            strokeOpacity={isFacet ? 0.7 : 0.85}
+          />
+
+          {/* Pavilion Facets */}
+          <polygon
+            points="10,38 38,38 50,92"
+            fill="url(#pavilionLeft)"
+            stroke="#6FD8FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.6 : 0.5}
+          />
+          <polygon
+            points="38,38 50,38 50,92"
+            fill="url(#pavilionCenter)"
+            stroke="#6FD8FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.6 : 0.5}
+          />
+          <polygon
+            points="50,38 62,38 50,92"
+            fill="url(#pavilionCenter)"
+            stroke="#6FD8FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.6 : 0.5}
+          />
+          <polygon
+            points="62,38 90,38 50,92"
+            fill="url(#pavilionRight)"
+            stroke="#6FD8FF"
+            strokeWidth="0.8"
+            strokeOpacity={isFacet ? 0.6 : 0.5}
+          />
+
+          {/* STAGE 3: POLISH (Heartbeat specular gleam) */}
+          {isPolish && (
+            <circle
+              cx="50"
+              cy="38"
+              r="24"
+              fill="url(#gemTable)"
+              opacity="0.3"
+              className="animate-pulse"
+            />
+          )}
+
+          {/* STAGE 5 & 6: GOLD PRONGS & SETTING */}
+          {(isSet || isChain) && (
+            <g className="transition-all duration-700">
+              {/* Four Gold Prongs */}
+              <circle cx="10" cy="38" r="3.5" fill="url(#goldSetting)" stroke="#05060A" strokeWidth="0.8" />
+              <circle cx="28" cy="16" r="3.5" fill="url(#goldSetting)" stroke="#05060A" strokeWidth="0.8" />
+              <circle cx="72" cy="16" r="3.5" fill="url(#goldSetting)" stroke="#05060A" strokeWidth="0.8" />
+              <circle cx="90" cy="38" r="3.5" fill="url(#goldSetting)" stroke="#05060A" strokeWidth="0.8" />
+              <circle cx="50" cy="92" r="3.5" fill="url(#goldSetting)" stroke="#05060A" strokeWidth="0.8" />
+              
+              {/* Lower Gold Mounting Band */}
+              <path
+                d="M 20,44 Q 50,70 80,44"
+                fill="none"
+                stroke="url(#goldSetting)"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+              />
+              {/* Mini Gold F Coin Emblem */}
+              <circle cx="50" cy="58" r="5" fill="url(#goldSetting)" stroke="#05060A" strokeWidth="0.8" />
+              <text
+                x="50"
+                y="61"
+                textAnchor="middle"
+                fontSize="6"
+                fontWeight="bold"
+                fill="#05060A"
+                fontFamily="sans-serif"
+              >
+                F
+              </text>
             </g>
-            <line x1="50" y1="12" x2="50" y2="94" stroke="#FFFFFF" strokeWidth="2.5" className="animate-pulse" />
-            <g transform="translate(3, 0)">
-              <polygon points="50,16 72,16 90,38 50,92" fill="#070B12" stroke="#5589C2" strokeWidth="1.2" />
-              <polygon points="50,16 72,16 62,38" fill="#1B3556" fillOpacity="0.8" />
-              <polygon points="72,16 90,38 62,38" fill="#3F6EA3" fillOpacity="0.4" />
+          )}
+
+          {/* STAGE 6: CHAIN LINKS */}
+          {isChain && (
+            <g className="transition-all duration-500">
+              <line x1="50" y1="16" x2="50" y2="2" stroke="url(#goldSetting)" strokeWidth="2" strokeDasharray="3,2" />
+              <circle cx="50" cy="2" r="3" fill="url(#goldSetting)" />
             </g>
-          </svg>
-        ) : (
-          /* HIGH-CONTRAST EXPENSIVE MASTER FACET MAP (Patch Section 5) */
-          <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)]">
-            <defs>
-              {/* Crown Facet Gradients */}
-              <linearGradient id="crownLeftKite" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#C5DAF0" />
-                <stop offset="100%" stopColor="#5589C2" />
-              </linearGradient>
+          )}
+        </svg>
+      )}
 
-              <linearGradient id="crownTopLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FFFFFF" />
-                <stop offset="100%" stopColor="#C1E9C2" />
-              </linearGradient>
-
-              {/* Center Dark Contrast Triangle */}
-              <linearGradient id="crownCenterDark" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#1B3556" />
-                <stop offset="100%" stopColor="#5589C2" />
-              </linearGradient>
-
-              <linearGradient id="crownTopRight" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#9DBFE3" />
-                <stop offset="100%" stopColor="#FFFFFF" />
-              </linearGradient>
-
-              <linearGradient id="crownRightKite" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3F6EA3" />
-                <stop offset="100%" stopColor="#1B3556" />
-              </linearGradient>
-
-              {/* Pavilion Facet Gradients */}
-              <linearGradient id="pavilionLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#5589C2" />
-                <stop offset="100%" stopColor="#0B121D" />
-              </linearGradient>
-
-              <linearGradient id="pavilionCenterLeft" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#C1E9C2" />
-                <stop offset="100%" stopColor="#3F6EA3" />
-              </linearGradient>
-
-              {/* Center Right Darkest Pavilion */}
-              <linearGradient id="pavilionCenterRightDark" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#1B3556" />
-                <stop offset="100%" stopColor="#070B12" />
-              </linearGradient>
-
-              <linearGradient id="pavilionRight" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#3F6EA3" />
-                <stop offset="100%" stopColor="#0B121D" />
-              </linearGradient>
-
-              {/* Table Top Surface Gradient */}
-              <linearGradient id="gemTableLuxury" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                <stop offset="45%" stopColor="#C1E9C2" stopOpacity="0.8" />
-                <stop offset="85%" stopColor="#9DBFE3" stopOpacity="0.85" />
-                <stop offset="100%" stopColor="#1B3556" stopOpacity="0.9" />
-              </linearGradient>
-            </defs>
-
-            {/* Base Outline & Rim Light (offset 0.5px dispersion) */}
-            <polygon
-              points="10,38 28,16 72,16 90,38 50,92"
-              fill="#000000"
-              stroke="#5589C2"
-              strokeWidth="0.75"
-              strokeOpacity="0.9"
-            />
-
-            {/* Dispersion Fringe (Brand Green offset) */}
-            <polygon
-              points="9.6,38 27.6,15.6 72.4,15.6 90.4,38 50,92.4"
-              fill="none"
-              stroke="#C1E9C2"
-              strokeWidth="0.4"
-              strokeOpacity="0.5"
-            />
-
-            {/* Table Surface */}
-            <polygon
-              points="28,16 72,16 62,38 38,38"
-              fill="url(#gemTableLuxury)"
-              stroke="#FFFFFF"
-              strokeWidth="0.6"
-              strokeOpacity="0.8"
-            />
-
-            {/* Crown Facets (High Contrast) */}
-            <polygon points="10,38 28,16 38,38" fill="url(#crownLeftKite)" stroke="#9DBFE3" strokeWidth="0.5" />
-            <polygon points="28,16 50,16 38,38" fill="url(#crownTopLeft)" stroke="#FFFFFF" strokeWidth="0.5" />
-            <polygon points="50,16 62,38 38,38" fill="url(#crownCenterDark)" stroke="#1B3556" strokeWidth="0.5" />
-            <polygon points="50,16 72,16 62,38" fill="url(#crownTopRight)" stroke="#FFFFFF" strokeWidth="0.5" />
-            <polygon points="72,16 90,38 62,38" fill="url(#crownRightKite)" stroke="#3F6EA3" strokeWidth="0.5" />
-
-            {/* Girdle Dividing Line */}
-            <line x1="10" y1="38" x2="90" y2="38" stroke="#FFFFFF" strokeWidth="0.9" strokeOpacity="0.85" />
-
-            {/* Pavilion Facets */}
-            <polygon points="10,38 38,38 50,92" fill="url(#pavilionLeft)" stroke="#3F6EA3" strokeWidth="0.5" />
-            <polygon points="38,38 50,38 50,92" fill="url(#pavilionCenterLeft)" stroke="#5589C2" strokeWidth="0.5" />
-            <polygon points="50,38 62,38 50,92" fill="url(#pavilionCenterRightDark)" stroke="#1B3556" strokeWidth="0.5" />
-            <polygon points="62,38 90,38 50,92" fill="url(#pavilionRight)" stroke="#3F6EA3" strokeWidth="0.5" />
-
-            {/* Internal Reflection (Scaled Lower Facets at 20% opacity) */}
-            <polygon
-              points="38,38 50,56 62,38"
-              fill="#FFFFFF"
-              fillOpacity="0.16"
-              stroke="#9DBFE3"
-              strokeWidth="0.3"
-            />
-
-            {/* Three Master Specular Hot Spots (Patch Section 5) */}
-            {/* Hot Spot 1: near (33, 22) */}
-            <circle cx="33" cy="22" r="2.2" fill="#FFFFFF" filter="drop-shadow(0 0 3px #FFFFFF)" />
-            {/* Hot Spot 2: near (44, 52) */}
-            <circle cx="44" cy="52" r="1.6" fill="#FFFFFF" filter="drop-shadow(0 0 2px #C1E9C2)" />
-            {/* Hot Spot 3: near (78, 40) */}
-            <circle cx="78" cy="40" r="1.8" fill="#FFFFFF" filter="drop-shadow(0 0 2px #5589C2)" />
-
-            {/* Right Edge Rim Light in Brand Blue */}
-            <path d="M 72,16 L 90,38 L 50,92" fill="none" stroke="#5589C2" strokeWidth="1.2" strokeOpacity="0.8" />
-          </svg>
-        )}
-      </div>
-
-      {/* Ground Shadow & Mirrored Reflection Fading within 60px */}
-      <div className="w-3/5 h-8 mt-1 relative flex items-center justify-center pointer-events-none">
-        <div className="w-full h-3 rounded-full bg-black/90 blur-sm" />
-        <div
-          className="absolute top-1 w-2/3 h-5 opacity-15 ground-reflection"
-          style={{
-            background: 'linear-gradient(to bottom, #5589C2 0%, rgba(0,0,0,0) 100%)',
-          }}
-        />
-      </div>
+      {/* STAGE 4: BRILLIANT (Four-point star sparkles & light burst) */}
+      {(isBrilliant || isSet || isChain) && (
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Top-Right Sparkle */}
+          <div className="absolute -top-3 -right-3 animate-pulse" style={{ animationDuration: '1.8s' }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 0L14 9L23 12L14 15L12 24L10 15L1 12L10 9L12 0Z" fill="#F4FBFF" />
+            </svg>
+          </div>
+          {/* Bottom-Left Sparkle */}
+          <div className="absolute -bottom-2 -left-2 animate-pulse" style={{ animationDuration: '2.4s', animationDelay: '0.6s' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M12 0L14 9L23 12L14 15L12 24L10 15L1 12L10 9L12 0Z" fill="#BDE7FF" />
+            </svg>
+          </div>
+          {/* Top-Left Prism Sparkle */}
+          <div className="absolute top-1/4 -left-4 animate-pulse" style={{ animationDuration: '2s', animationDelay: '1.1s' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 0L14 9L23 12L14 15L12 24L10 15L1 12L10 9L12 0Z" fill="#FF7AD9" />
+            </svg>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
