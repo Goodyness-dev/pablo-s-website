@@ -64,6 +64,26 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     heroImage: '/assets/ether-archive-poster.jpg',
     verifiedQuote: "This is just the beginning. We're looking forward to creating more opportunities and growing together in Web3."
+  },
+  {
+    id: 'rents-due',
+    title: 'The Fundraiser 🤝 Rents Due ($RENT)',
+    tagline: 'Partnership Confirmed: More Memes. Bigger Community. Higher Dreams.',
+    tags: ['STRATEGIC PARTNERSHIP', 'MEME CULTURE', 'COMMUNITY EXPANSION', '$RENT NARRATIVE'],
+    date: 'OCTOBER 2026',
+    link: 'https://t.me/Senor_Izyche',
+    stats: [
+      { value: '$RENT', label: 'Official Ticker', verified: true, highlight: true },
+      { value: 'THE MOON', label: 'Is Forever', verified: true },
+      { value: 'CONFIRMED', label: 'Strategic Alliance', verified: true }
+    ],
+    deliverables: [
+      'Official collaboration confirmed between The Fundraiser and Rents Due',
+      'Uniting high-conviction meme culture, degen community power, and raid velocity',
+      'Expanding reach across crypto Twitter and decentralized trading channels'
+    ],
+    heroImage: '/assets/rents-due-poster.jpg',
+    verifiedQuote: "Rent is temporary. The moon is forever. More memes, bigger community, higher dreams."
   }
 ];
 

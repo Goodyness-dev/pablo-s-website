@@ -59,6 +59,7 @@ export interface ServiceItem {
   description: string;
   icon: string;
   highlights: string[];
+  imageSrc?: string;
 }
 
 export interface ReviewQuote {

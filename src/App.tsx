@@ -9,6 +9,7 @@ import { ChapterSection } from './components/ChapterSection';
 import { CaseStudyClover } from './components/CaseStudyClover';
 import { CaseStudyWojak } from './components/CaseStudyWojak';
 import { PartnerEtherArchive } from './components/PartnerEtherArchive';
+import { PartnerRentsDue } from './components/PartnerRentsDue';
 import { PnlCarousel } from './components/PnlCarousel';
 import { FundraiserEraHeader } from './components/FundraiserEraHeader';
 import { ServicesGrid } from './components/ServicesGrid';
@@ -265,6 +266,9 @@ export const App: React.FC = () => {
 
             {/* Ether Archive Alliance (belongs to Chapter 06) */}
             <PartnerEtherArchive onOpenLightbox={handleOpenSingleImage} />
+
+            {/* Rents Due Partnership ($RENT) */}
+            <PartnerRentsDue onOpenLightbox={handleOpenSingleImage} />
           </div>
 
         </section>
