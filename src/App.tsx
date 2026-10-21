@@ -274,7 +274,7 @@ export const App: React.FC = () => {
         </section>
 
         {/* 4. Agency Services */}
-        <ServicesGrid />
+        <ServicesGrid onOpenLightbox={handleOpenSingleImage} />
 
         {/* 7. Client & Founder Reviews */}
         <Reviews />
