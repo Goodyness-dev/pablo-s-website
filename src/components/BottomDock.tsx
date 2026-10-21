@@ -1,5 +1,4 @@
 import React from 'react';
-import { RealDiamondIcon } from './RealDiamondIcon';
 
 interface BottomDockProps {
   activeSection: string;
@@ -11,7 +10,11 @@ export const BottomDock: React.FC<BottomDockProps> = ({ activeSection }) => {
       id: 'story',
       label: 'Story',
       href: '#story',
-      icon: <RealDiamondIcon size={14} glow={false} />,
+      icon: (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="12 2 2 9 12 22 22 9 12 2" />
+        </svg>
+      ),
     },
     {
       id: 'work',

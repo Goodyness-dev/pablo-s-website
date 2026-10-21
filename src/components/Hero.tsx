@@ -1,6 +1,5 @@
 import React from 'react';
 import { VectorDiamond } from './VectorDiamond';
-import { RealDiamondIcon } from './RealDiamondIcon';
 
 interface HeroProps {
   onWatchCut: () => void;
@@ -31,8 +30,7 @@ export const Hero: React.FC<HeroProps> = ({ onWatchCut }) => {
               />
               {/* Floating Monogram Chip (OpenCircle Style) */}
               <div className="absolute -bottom-2 right-4 sm:right-8 px-3.5 py-1.5 rounded-full bg-[#0C101B]/90 backdrop-blur-xl border border-white/15 flex items-center gap-2 shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
-                <RealDiamondIcon size={14} glow={true} />
-                <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-ping" />
+                <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping" />
                 <span className="font-mono text-xs text-[#F8FAFC]">@IZYCHE_ · ACTIVE</span>
               </div>
             </div>

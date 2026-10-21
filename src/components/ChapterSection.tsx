@@ -1,7 +1,6 @@
 import React from 'react';
 import { Chapter } from '../types';
 import { LightboxItem } from './ImageLightbox';
-import { RealDiamondIcon } from './RealDiamondIcon';
 
 interface ChapterSectionProps {
   chapter: Chapter;
@@ -79,7 +78,7 @@ export const ChapterSection: React.FC<ChapterSectionProps> = ({
                   key={idx}
                   className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0D111D] border border-white/10 text-xs font-mono text-[#F8FAFC] shadow-sm"
                 >
-                  <RealDiamondIcon size={12} glow={false} />
+                  <span className="w-1.5 h-1.5 rotate-45 bg-[#6FD8FF]" />
                   <span>{note}</span>
                 </div>
               ))}

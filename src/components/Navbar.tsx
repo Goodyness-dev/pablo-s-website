@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { RealDiamondIcon } from './RealDiamondIcon';
 
 interface NavbarProps {
   soundEnabled: boolean;
@@ -104,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 {isActive && (
-                  <RealDiamondIcon size={11} glow={true} className="mr-1.5" />
+                  <span className="inline-block w-1.5 h-1.5 rotate-45 bg-[#6FD8FF] mr-1.5 shadow-[0_0_6px_#6FD8FF]" />
                 )}
                 {link.name}
               </a>
@@ -199,7 +198,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="font-mono text-xs uppercase tracking-wider text-[#F8FAFC] hover:text-[#6FD8FF] py-2.5 px-3 rounded-xl hover:bg-white/5 flex items-center justify-between border-b border-white/5"
               >
                 <span>{link.name}</span>
-                <RealDiamondIcon size={12} glow={false} />
+                <span className="w-1.5 h-1.5 rotate-45 bg-[#6FD8FF]" />
               </a>
             ))}
             <a

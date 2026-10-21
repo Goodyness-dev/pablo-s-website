@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { RealDiamondIcon } from './RealDiamondIcon';
 
 export const WhoIsFundraiser: React.FC = () => {
   const [winked, setWinked] = useState(false);
@@ -56,17 +55,17 @@ export const WhoIsFundraiser: React.FC = () => {
             {/* 3-Item Credential Strip */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
               <div className="flex items-center justify-center md:justify-start gap-2.5 px-3.5 py-2.5 rounded-full bg-[#0C101C] border border-white/10 shadow-sm">
-                <RealDiamondIcon size={14} glow={true} />
+                <span className="w-2 h-2 rotate-45 bg-[#6FD8FF] shrink-0" />
                 <span className="font-mono text-xs text-[#F8FAFC]">Channel since Mar 2025</span>
               </div>
 
               <div className="flex items-center justify-center md:justify-start gap-2.5 px-3.5 py-2.5 rounded-full bg-[#0C101C] border border-white/10 shadow-sm">
-                <RealDiamondIcon size={14} glow={true} />
+                <span className="w-2 h-2 rotate-45 bg-[#6FD8FF] shrink-0" />
                 <span className="font-mono text-xs text-[#F8FAFC]">Hosts Live X Spaces</span>
               </div>
 
               <div className="flex items-center justify-center md:justify-start gap-2.5 px-3.5 py-2.5 rounded-full bg-[#0C101C] border border-white/10 shadow-sm">
-                <RealDiamondIcon size={14} glow={true} />
+                <span className="w-2 h-2 rotate-45 bg-[#FFE49A] shrink-0" />
                 <span className="font-mono text-xs text-[#F8FAFC]">Verified Raids</span>
               </div>
             </div>

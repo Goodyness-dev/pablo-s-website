@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { RealDiamondIcon } from './RealDiamondIcon';
 
 export const ContactChain: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -33,7 +32,7 @@ export const ContactChain: React.FC = () => {
         
         {/* Eyebrow Pill */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0D111D] border border-[#FFE49A]/30 text-[#FFE49A] font-mono text-xs uppercase tracking-wider mb-4 shadow-sm">
-          <RealDiamondIcon size={13} glow={true} />
+          <span className="w-1.5 h-1.5 rotate-45 bg-[#FFE49A]" />
           <span>STAGE 07 · THE DIAMOND CHAIN</span>
         </div>
 
@@ -52,11 +51,9 @@ export const ContactChain: React.FC = () => {
           <div className="flex items-center justify-center gap-2 sm:gap-3 mb-5">
             {[0, 1, 2, 3, 4, 5, 6].map((i) => (
               <React.Fragment key={i}>
-                <div className="p-1 rounded-full bg-[#0D111D] border border-[#FFE49A]/50 shadow-[0_0_10px_rgba(242,193,78,0.4)] transform transition-transform hover:scale-135">
-                  <RealDiamondIcon size={16} glow={true} pulse={i === 3} />
-                </div>
+                <div className="w-3 h-3 rotate-45 bg-[#FFE49A] border border-[#B8862B] shadow-[0_0_8px_rgba(242,193,78,0.5)] transform transition-transform hover:scale-125" />
                 {i < 6 && (
-                  <div className="w-3 sm:w-5 h-[1.5px] bg-gradient-to-r from-[#FFE49A] to-[#F2C14E]" />
+                  <div className="w-3 sm:w-5 h-[1px] bg-gradient-to-r from-[#FFE49A] to-[#F2C14E]" />
                 )}
               </React.Fragment>
             ))}
@@ -67,9 +64,9 @@ export const ContactChain: React.FC = () => {
             href="https://t.me/Senor_Izyche"
             target="_blank"
             rel="noopener noreferrer"
-            className="metallic-pill-primary px-8 sm:px-10 py-4 text-sm sm:text-base font-body font-bold min-h-[52px] shadow-2xl group flex items-center justify-center"
+            className="metallic-pill-primary px-8 sm:px-10 py-4 text-sm sm:text-base font-body font-bold min-h-[52px] shadow-2xl group"
           >
-            <RealDiamondIcon size={16} glow={true} className="mr-3" />
+            <span className="w-2 h-2 rotate-45 bg-[#6FD8FF] mr-3 shadow-[0_0_8px_#6FD8FF]" />
             <span>Message on Telegram (@Senor_Izyche)</span>
             <span className="ml-2 text-[#6FD8FF] group-hover:translate-x-1 transition-transform">→</span>
           </a>
