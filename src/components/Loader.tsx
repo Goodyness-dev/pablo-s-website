@@ -70,23 +70,21 @@ export const Loader: React.FC<LoaderProps> = ({ onComplete }) => {
           </div>
         )}
 
-        {/* Step 2: Facet crystallization */}
+        {/* Step 2: Facet crystallization -> Real Brilliant Cut Diamond */}
         {step >= 2 && (
-          <svg
-            viewBox="0 0 100 100"
-            className="absolute inset-0 w-full h-full animate-in zoom-in-95 duration-500 drop-shadow-[0_0_24px_rgba(111,216,255,0.8)]"
-          >
-            <polygon
-              points="10,38 28,16 72,16 90,38 50,92"
-              fill="#0E1226"
-              stroke="#BDE7FF"
-              strokeWidth="2"
-            />
-            <polygon points="28,16 72,16 62,38 38,38" fill="#F4FBFF" fillOpacity="0.95" />
-            <polygon points="10,38 28,16 38,38" fill="#BDE7FF" fillOpacity="0.8" />
-            <polygon points="72,16 90,38 62,38" fill="#6FD8FF" fillOpacity="0.7" />
-            <polygon points="38,38 50,92 62,38" fill="#2FA8E6" fillOpacity="0.9" />
-          </svg>
+          <div className="absolute inset-0 flex items-center justify-center animate-in zoom-in-95 duration-500">
+            <div className="relative w-44 h-44 flex items-center justify-center">
+              <img
+                src="/assets/diamond-icon.jpg"
+                alt="Real Diamond Brilliant Cut"
+                className="w-full h-full object-contain filter drop-shadow-[0_0_28px_rgba(111,216,255,0.7)]"
+                style={{ mixBlendMode: 'screen' }}
+              />
+              <div className="absolute top-[28%] left-[48%] -translate-x-1/2 -translate-y-1/2 animate-ping pointer-events-none">
+                <div className="w-2 h-2 rounded-full bg-white shadow-[0_0_12px_#FFF]" />
+              </div>
+            </div>
+          </div>
         )}
       </div>
 

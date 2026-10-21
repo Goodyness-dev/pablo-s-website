@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
+import { RealDiamondIcon } from './RealDiamondIcon';
 
 export const FooterTicker: React.FC = () => {
   const [clickCount, setClickCount] = useState<number>(0);
@@ -55,12 +56,10 @@ export const FooterTicker: React.FC = () => {
               type="button"
               onClick={handleDiamondEasterEgg}
               aria-label="Clickable Diamond Easter Egg"
-              className="p-3 rounded-full hover:bg-white/5 transition-transform active:scale-90 focus:outline-none"
+              className="p-2.5 rounded-full hover:bg-white/10 transition-transform active:scale-90 focus:outline-none ring-1 ring-[#6FD8FF]/40 bg-[#0C101C] shadow-[0_0_16px_rgba(111,216,255,0.3)]"
               title="Click 7 times for fam toast"
             >
-              <div className="w-5 h-5 rotate-45 bg-[#0C101C] border-2 border-[#6FD8FF] shadow-[0_0_12px_rgba(111,216,255,0.4)] flex items-center justify-center">
-                <span className="w-1.5 h-1.5 bg-[#FFE49A]" />
-              </div>
+              <RealDiamondIcon size={22} glow={true} pulse={clickCount > 0} />
             </button>
             <span className="font-street text-xs text-[#FFE49A] mt-1">
               You dig?

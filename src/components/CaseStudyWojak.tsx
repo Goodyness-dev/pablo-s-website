@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { CASE_STUDIES } from '../data/projects';
 import { LightboxItem } from './ImageLightbox';
+import { RealDiamondIcon } from './RealDiamondIcon';
 
 interface CaseStudyWojakProps {
   onOpenLightbox?: (item: LightboxItem) => void;
@@ -145,8 +146,8 @@ export const CaseStudyWojak: React.FC<CaseStudyWojakProps> = ({ onOpenLightbox }
               className="absolute top-0 bottom-0 w-[2px] bg-[#6FD8FF] shadow-[0_0_12px_#6FD8FF] pointer-events-none z-30"
               style={{ left: `${sliderPos}%` }}
             >
-              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#0A0D16] border-2 border-[#6FD8FF] flex items-center justify-center shadow-[0_0_16px_rgba(111,216,255,0.7)]">
-                <span className="w-2 h-2 bg-[#F8FAFC] rotate-45" />
+              <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#0A0D16] border-2 border-[#6FD8FF] flex items-center justify-center shadow-[0_0_16px_rgba(111,216,255,0.7)] p-1">
+                <RealDiamondIcon size={16} glow={true} />
               </div>
             </div>
           </div>
