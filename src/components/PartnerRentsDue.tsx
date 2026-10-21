@@ -1,5 +1,6 @@
 import React from 'react';
 import { LightboxItem } from './ImageLightbox';
+import { AnimatedStat } from './AnimatedStat';
 
 interface PartnerRentsDueProps {
   onOpenLightbox?: (item: LightboxItem) => void;
@@ -56,20 +57,24 @@ export const PartnerRentsDue: React.FC<PartnerRentsDueProps> = ({ onOpenLightbox
               The Fundraiser joins forces with <strong className="text-[#F8FAFC]">Rents Due ($RENT)</strong> — the culture-first meme powerhouse born in the trading trenches. Built on the unbreakable belief that <em>rent is temporary, but the moon is forever</em>, this alliance unites viral meme engines, community raid velocity, and long-term momentum.
             </p>
 
-            {/* 3 Metric Wells */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              <div className="metallic-well p-3 rounded-xl text-center border-amber-500/20">
-                <div className="font-display font-extrabold text-xl sm:text-2xl text-[#F2C14E]">$RENT</div>
-                <div className="font-mono text-[10px] text-[#94A3B8] uppercase mt-1">Official Ticker</div>
-              </div>
-              <div className="metallic-well p-3 rounded-xl text-center">
-                <div className="font-display font-extrabold text-xl sm:text-2xl text-[#F8FAFC]">THE MOON</div>
-                <div className="font-mono text-[10px] text-[#94A3B8] uppercase mt-1">Is Forever</div>
-              </div>
-              <div className="metallic-well p-3 rounded-xl text-center border-emerald-500/20">
-                <div className="font-display font-extrabold text-xl sm:text-2xl text-[#22C55E]">ALLIANCE</div>
-                <div className="font-mono text-[10px] text-[#94A3B8] uppercase mt-1">Confirmed</div>
-              </div>
+            {/* 3 Metric Wells with GSAP Animated Counters */}
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3 mb-6">
+              <AnimatedStat
+                value="$RENT"
+                label="Official Ticker"
+                highlight
+                delayMs={0}
+              />
+              <AnimatedStat
+                value="THE MOON"
+                label="Is Forever"
+                delayMs={120}
+              />
+              <AnimatedStat
+                value="ALLIANCE"
+                label="Confirmed"
+                delayMs={240}
+              />
             </div>
 
             {/* Street Lore Quote */}

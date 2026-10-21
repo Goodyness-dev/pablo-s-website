@@ -1,5 +1,6 @@
 import React from 'react';
 import { LightboxItem } from './ImageLightbox';
+import { AnimatedStat } from './AnimatedStat';
 
 interface PartnerEtherArchiveProps {
   onOpenLightbox?: (item: LightboxItem) => void;
@@ -45,20 +46,24 @@ export const PartnerEtherArchive: React.FC<PartnerEtherArchiveProps> = ({ onOpen
               We partnered with <strong className="text-[#F8FAFC]">Ether Archive</strong> — an exclusive historical Ethereum collection of 4,088 unique 1/1 digital artifacts. As part of this alliance, we secured 10 whitelist spots exclusively for our core community members.
             </p>
 
-            {/* 3 Metric Wells */}
-            <div className="grid grid-cols-3 gap-3 mb-6">
-              <div className="metallic-well p-3 rounded-xl text-center">
-                <div className="font-display font-extrabold text-xl sm:text-2xl gold-text">10</div>
-                <div className="font-mono text-[10px] text-[#94A3B8] uppercase mt-1">WL Spots</div>
-              </div>
-              <div className="metallic-well p-3 rounded-xl text-center">
-                <div className="font-display font-extrabold text-xl sm:text-2xl text-[#F8FAFC]">4,088</div>
-                <div className="font-mono text-[10px] text-[#94A3B8] uppercase mt-1">1/1 NFTs</div>
-              </div>
-              <div className="metallic-well p-3 rounded-xl text-center">
-                <div className="font-display font-extrabold text-xl sm:text-2xl text-[#6FD8FF]">31 OCT</div>
-                <div className="font-mono text-[10px] text-[#94A3B8] uppercase mt-1">Mint Date</div>
-              </div>
+            {/* 3 Metric Wells with GSAP Animated Counters */}
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-3 mb-6">
+              <AnimatedStat
+                value="10"
+                label="WL Spots"
+                highlight
+                delayMs={0}
+              />
+              <AnimatedStat
+                value="4,088"
+                label="1/1 NFTs"
+                delayMs={120}
+              />
+              <AnimatedStat
+                value="31 OCT"
+                label="Mint Date"
+                delayMs={240}
+              />
             </div>
 
             {/* Quote */}

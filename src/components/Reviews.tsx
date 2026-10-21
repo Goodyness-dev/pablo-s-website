@@ -1,5 +1,6 @@
 import React from 'react';
 import { REVIEWS } from '../data/projects';
+import { ScrollReveal } from './ScrollReveal';
 
 export const Reviews: React.FC = () => {
   return (
@@ -20,36 +21,38 @@ export const Reviews: React.FC = () => {
         </div>
 
         {/* 3 Review Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-          {REVIEWS.map((review, idx) => (
-            <div
-              key={idx}
-              className="metallic-card p-6 md:p-8 rounded-2xl sm:rounded-3xl flex flex-col justify-between hover:border-[#6FD8FF]/30 transition-all shadow-lg"
-            >
-              <div>
-                {/* Large Ice Quote Glyph */}
-                <div className="font-display font-bold text-4xl text-[#6FD8FF]/30 leading-none mb-3">
-                  “
-                </div>
-                <blockquote className="font-body text-sm sm:text-base text-[#F8FAFC] leading-relaxed mb-6">
-                  {review.quote}
-                </blockquote>
-              </div>
-
-              <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+        <ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            {REVIEWS.map((review, idx) => (
+              <div
+                key={idx}
+                className="metallic-card p-6 md:p-8 rounded-2xl sm:rounded-3xl flex flex-col justify-between hover:border-[#6FD8FF]/30 transition-all shadow-lg"
+              >
                 <div>
-                  <div className="font-display font-semibold text-sm text-[#F8FAFC]">
-                    {review.author}
+                  {/* Large Ice Quote Glyph */}
+                  <div className="font-display font-bold text-4xl text-[#6FD8FF]/30 leading-none mb-3">
+                    “
                   </div>
-                  <div className="font-mono text-xs text-[#94A3B8]">
-                    {review.role}
-                  </div>
+                  <blockquote className="font-body text-sm sm:text-base text-[#F8FAFC] leading-relaxed mb-6">
+                    {review.quote}
+                  </blockquote>
                 </div>
-                <span className="w-2 h-2 rotate-45 bg-[#6FD8FF] shadow-[0_0_8px_#6FD8FF]" />
+
+                <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                  <div>
+                    <div className="font-display font-semibold text-sm text-[#F8FAFC]">
+                      {review.author}
+                    </div>
+                    <div className="font-mono text-xs text-[#94A3B8]">
+                      {review.role}
+                    </div>
+                  </div>
+                  <span className="w-2 h-2 rotate-45 bg-[#6FD8FF] shadow-[0_0_8px_#6FD8FF]" />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>
