@@ -14,9 +14,6 @@ export const STORY_CHAPTERS: Chapter[] = [
     imageSrc: '/assets/avatar-origin.jpg',
     imageAlt: 'Original Web 3 gains genesis avatar from March 2025',
     caption: 'Original Web 3 gains genesis avatar, 29 March 2025',
-    secondaryImageSrc: '/assets/etf-snipe.jpg',
-    secondaryImageAlt: 'ETF Token Snipe receipt, 31 March 2025',
-    secondaryCaption: 'First documented channel call: ETF snipe (+207% day)',
   },
   {
     id: 2,
@@ -28,9 +25,9 @@ export const STORY_CHAPTERS: Chapter[] = [
     lead: 'The work moved beyond the calls.',
     body: 'We began coordinating raids and community campaigns. The channel became Pleased Devs, Passed Project.',
     tagline: 'View the campaign records ↗',
-    imageSrc: '/assets/tlc-raid.jpg',
-    imageAlt: 'Early TLC raid manager receipt',
-    caption: 'TLC 13-minute raid leaderboard entry, April 2025',
+    imageSrc: '/assets/pleased-devs.png',
+    imageAlt: 'VLT 14.9x call record by Senor Izyche via RickBurpBot',
+    caption: 'VLT 14.9x multiplier record: entry at $10.3K reaching $153.8K peak — Senor Izyche',
   },
   {
     id: 3,

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { SERVICES, PROCESS_STEPS } from '../data/services';
+import { useLightbox } from '../context/LightboxContext';
 
 export const ServicesSection: React.FC = () => {
+  const { openLightbox } = useLightbox();
   const [expandedId, setExpandedId] = useState<string | null>('campaigns');
 
   const toggleRow = (id: string) => {
@@ -104,8 +106,8 @@ export const ServicesSection: React.FC = () => {
                         {/* Preserved Capability Artwork (Full Width, No Inspect Option) */}
                         {service.imageSrc && (
                           <div className="md:col-span-4">
-                            <div className="border border-[#33332F] bg-[#0A0A09] p-2 rounded-[2px]">
-                              <div className="relative aspect-[16/10] overflow-hidden rounded-[2px]">
+                            <div className="border border-[#33332F] bg-[#0A0A09] rounded-[2px] overflow-hidden">
+                              <div className="relative aspect-[16/10] overflow-hidden w-full">
                                 <img
                                   src={service.imageSrc}
                                   alt={service.imageAlt || service.title}

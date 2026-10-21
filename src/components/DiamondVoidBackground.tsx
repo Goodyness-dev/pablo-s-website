@@ -230,6 +230,66 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       startLoop();
     };
 
+    // Mobile touch interaction
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const normX = (touch.clientX - cx) / cx;
+        const normY = (touch.clientY - cy) / cy;
+
+        targetRef.current = {
+          x: Math.max(-1, Math.min(1, normX)) * 20,
+          y: Math.max(-1, Math.min(1, normY)) * 20,
+        };
+
+        startLoop();
+      }
+    };
+
+    const handleTouchEnd = () => {
+      targetRef.current = { x: 0, y: 0 };
+      startLoop();
+    };
+
+    // Scroll parallax dynamic impulse (for mobile and desktop)
+    let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+    let scrollTimeout: number | null = null;
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const deltaY = scrollY - lastScrollY;
+      lastScrollY = scrollY;
+
+      // React to scroll velocity
+      const clampedDelta = Math.max(-20, Math.min(20, deltaY * 0.35));
+      targetRef.current = {
+        x: targetRef.current.x,
+        y: clampedDelta,
+      };
+      startLoop();
+
+      if (scrollTimeout) window.clearTimeout(scrollTimeout);
+      scrollTimeout = window.setTimeout(() => {
+        targetRef.current = { x: targetRef.current.x, y: 0 };
+        startLoop();
+      }, 150);
+    };
+
+    // Device orientation tilt (gyroscope on mobile)
+    const handleOrientation = (e: DeviceOrientationEvent) => {
+      if (e.gamma !== null && e.beta !== null) {
+        const normX = Math.max(-1, Math.min(1, e.gamma / 25));
+        const normY = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+        targetRef.current = {
+          x: normX * 16,
+          y: normY * 16,
+        };
+        startLoop();
+      }
+    };
+
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
         if (rafIdRef.current) {
@@ -244,13 +304,26 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
     document.addEventListener('mouseleave', handlePointerLeave);
     window.addEventListener('blur', handlePointerLeave);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    if (typeof window !== 'undefined' && 'DeviceOrientationEvent' in window) {
+      window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+    }
     document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       window.removeEventListener('mousemove', handlePointerMove);
       document.removeEventListener('mouseleave', handlePointerLeave);
       window.removeEventListener('blur', handlePointerLeave);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('scroll', handleScroll);
+      if (typeof window !== 'undefined' && 'DeviceOrientationEvent' in window) {
+        window.removeEventListener('deviceorientation', handleOrientation);
+      }
       document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (scrollTimeout) window.clearTimeout(scrollTimeout);
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
         rafIdRef.current = null;
@@ -368,7 +441,7 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
           return (
             <div
               key={diamond.id}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 will-change-transform ${diamond.className || ''}`}
+              className={`diamond-node-${diamond.id} absolute -translate-x-1/2 -translate-y-1/2 will-change-transform ${diamond.className || ''}`}
               style={{
                 left: diamond.desktop.left,
                 top: diamond.desktop.top,
@@ -412,11 +485,11 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
           ${DIAMOND_CONFIGS.filter((d) => d.mobile)
             .map(
               (d) => `
-            [style*="left: ${d.desktop.left}"][style*="top: ${d.desktop.top}"] {
+            .diamond-node-${d.id} {
               left: ${d.mobile!.left} !important;
               top: ${d.mobile!.top} !important;
             }
-            [style*="left: ${d.desktop.left}"][style*="top: ${d.desktop.top}"] img {
+            .diamond-node-${d.id} img {
               width: ${d.mobile!.width}px !important;
               opacity: ${d.mobile!.opacity} !important;
             }

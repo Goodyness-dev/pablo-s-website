@@ -34,7 +34,7 @@ export const PartnerLedger: React.FC = () => {
                       <img
                         src={partner.imageSrc}
                         alt={partner.imageAlt || partner.name}
-                        className="w-full h-full object-cover sm:object-contain object-top filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
+                        className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
                         loading="lazy"
                       />
                     </div>
