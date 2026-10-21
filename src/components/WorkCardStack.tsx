@@ -16,7 +16,7 @@
  * normal document flow.
  */
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 interface WorkCardStackProps {
   children: React.ReactNode[];
@@ -29,6 +29,67 @@ const STICKY_TOP = 88;
 export const WorkCardStack: React.FC<WorkCardStackProps> = ({ children }) => {
   const cards = React.Children.toArray(children);
   const total = cards.length;
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Dynamically fade out previous card as next incoming card reveals over it
+  useEffect(() => {
+    let ticking = false;
+
+    const updateOpacities = () => {
+      const vh = window.innerHeight;
+      const isDesktop = window.innerWidth >= 768;
+
+      for (let i = 0; i < total; i++) {
+        const currentEl = cardRefs.current[i];
+        if (!currentEl) continue;
+
+        // The final card stays fully visible
+        if (i === total - 1) {
+          currentEl.style.opacity = '1';
+          currentEl.style.pointerEvents = 'auto';
+          continue;
+        }
+
+        const nextEl = cardRefs.current[i + 1];
+        if (!nextEl) continue;
+
+        const nextRect = nextEl.getBoundingClientRect();
+
+        // On desktop, the next card climbs from the bottom up to STICKY_TOP (88px).
+        // startFade: next card begins entering the lower viewport
+        // endFade: next card has almost fully reached the sticky position
+        const startFade = isDesktop ? Math.min(vh * 0.9, STICKY_TOP + 560) : vh * 0.85;
+        const endFade = isDesktop ? STICKY_TOP + 80 : 120;
+
+        let progress = (nextRect.top - endFade) / (startFade - endFade);
+        progress = Math.max(0, Math.min(1, progress));
+
+        // Fade gradually from 1.0 down to near-zero (0.04)
+        const opacity = 0.04 + 0.96 * progress;
+
+        currentEl.style.opacity = opacity.toFixed(3);
+        currentEl.style.pointerEvents = opacity < 0.15 ? 'none' : 'auto';
+      }
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateOpacities);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    updateOpacities();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [total]);
 
   return (
     /**
@@ -42,10 +103,12 @@ export const WorkCardStack: React.FC<WorkCardStackProps> = ({ children }) => {
         return (
           <div
             key={i}
-            className={`relative md:sticky ${isLast ? 'mb-0' : 'mb-6 md:mb-3'}`}
+            ref={(el) => (cardRefs.current[i] = el)}
+            className={`relative md:sticky ${isLast ? 'mb-0' : 'mb-8 sm:mb-12 md:mb-16'} transition-opacity duration-100 ease-out`}
             style={{
               top: `${STICKY_TOP}px`,
               zIndex: 10 + i,
+              willChange: 'opacity',
             }}
           >
             {/* Metallic card surface */}

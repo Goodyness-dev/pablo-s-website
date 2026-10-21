@@ -212,7 +212,7 @@ export const App: React.FC = () => {
         <WhoIsFundraiser />
 
         {/* 3. Work Section — stacked chapter reveals, then sub-content below */}
-        <section id="work" className="relative scroll-mt-20 sm:scroll-mt-24">
+        <section id="work" className="relative py-12 sm:py-16 md:py-24 scroll-mt-20 sm:scroll-mt-24">
 
           {/* === STACKED CARD REVEAL: one ChapterSection per card === */}
           <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
