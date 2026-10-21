@@ -162,22 +162,22 @@ export const OriginStory: React.FC<OriginStoryProps> = ({ onOpenLightbox }) => {
                   </blockquote>
                 )}
 
-                {/* Mobile In-Flow Artifact Display */}
-                <div className="block lg:hidden mt-8 mb-4 border border-[#33332F] bg-[#111110] p-4 rounded-[2px]">
+                {/* Mobile In-Flow Artifact Display — Maximized Full Width */}
+                <div className="block lg:hidden mt-8 mb-4 border border-[#33332F] bg-[#111110] p-2 sm:p-4 rounded-[2px]">
                   {chapter.imageSrc && (
                     <button
                       type="button"
                       onClick={() => handleImageClick(chapter.imageSrc, chapter.imageAlt, chapter.caption)}
                       className="w-full text-left group"
                     >
-                      <div className="relative aspect-[16/10] bg-[#0A0A09] overflow-hidden mb-3">
+                      <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#0A0A09] overflow-hidden mb-3">
                         <img
                           src={chapter.imageSrc}
                           alt={chapter.imageAlt || chapter.title}
                           className="w-full h-full object-contain filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
                         />
                       </div>
-                      <div className="flex items-center justify-between text-xs text-[#A7A69F]">
+                      <div className="flex items-center justify-between text-xs text-[#A7A69F] px-1 pb-1">
                         <span>{chapter.caption || chapter.tagline}</span>
                         <span className="font-mono underline">Inspect ↗</span>
                       </div>
@@ -190,14 +190,14 @@ export const OriginStory: React.FC<OriginStoryProps> = ({ onOpenLightbox }) => {
                       onClick={() => handleImageClick(chapter.secondaryImageSrc, chapter.secondaryImageAlt, chapter.secondaryCaption)}
                       className="w-full text-left group mt-4 pt-4 border-t border-[#33332F]"
                     >
-                      <div className="relative aspect-[16/10] bg-[#0A0A09] overflow-hidden mb-3">
+                      <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#0A0A09] overflow-hidden mb-3">
                         <img
                           src={chapter.secondaryImageSrc}
                           alt={chapter.secondaryImageAlt || chapter.title}
                           className="w-full h-full object-contain filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
                         />
                       </div>
-                      <div className="flex items-center justify-between text-xs text-[#A7A69F]">
+                      <div className="flex items-center justify-between text-xs text-[#A7A69F] px-1 pb-1">
                         <span>{chapter.secondaryCaption}</span>
                         <span className="font-mono underline">Inspect ↗</span>
                       </div>

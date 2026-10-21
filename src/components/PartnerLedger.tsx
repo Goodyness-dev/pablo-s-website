@@ -42,27 +42,25 @@ export const PartnerLedger: React.FC<PartnerLedgerProps> = ({ onOpenLightbox }) 
               className="border border-[#33332F] bg-[#111110] rounded-[2px] flex flex-col justify-between overflow-hidden hover:border-[#77776F] transition-all duration-300 group"
             >
               <div>
-                {/* 1. Main Visual Asset on Top */}
+                {/* 1. Main Visual Asset on Top — Full Width of Card */}
                 {partner.imageSrc && (
-                  <div className="relative border-b border-[#33332F] bg-[#0A0A09] p-3 sm:p-4">
+                  <div className="relative border-b border-[#33332F] bg-[#0A0A09] w-full">
                     <button
                       type="button"
                       onClick={() => handleInspect(partner.imageSrc!, partner.name, partner.details)}
                       className="w-full text-left group/btn cursor-zoom-in block"
                     >
-                      <div className="relative aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden bg-[#000000] rounded-[2px] flex items-center justify-center">
+                      <div className="relative aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden bg-[#000000]">
                         <img
                           src={partner.imageSrc}
                           alt={partner.imageAlt || partner.name}
-                          className="w-full h-full object-contain filter contrast-105 group-hover/btn:scale-[1.02] transition-transform duration-300"
+                          className="w-full h-full object-cover sm:object-contain object-top filter contrast-105 group-hover/btn:scale-[1.02] transition-transform duration-300"
                           loading="lazy"
                         />
-                      </div>
-
-                      {/* Tap to Zoom Cue */}
-                      <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
-                        <span>Campaign Poster</span>
-                        <span className="underline group-hover/btn:text-[#F0EEE7]">Inspect ↗</span>
+                        <div className="absolute bottom-2 left-2 right-2 bg-[#000000]/85 border border-[#33332F] px-2.5 py-1 text-[11px] font-mono text-[#A7A69F] flex items-center justify-between">
+                          <span>Campaign Poster</span>
+                          <span className="underline group-hover/btn:text-[#F0EEE7]">Inspect / Zoom ↗</span>
+                        </div>
                       </div>
                     </button>
                   </div>

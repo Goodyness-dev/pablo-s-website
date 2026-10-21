@@ -325,9 +325,9 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onOpenLightbox }) =>
               </div>
             </div>
 
-            {/* Right: Active Evidence Frame */}
+            {/* Right: Active Evidence Frame — Full Width on Mobile */}
             <div className="lg:col-span-7">
-              <div className="border border-[#33332F] bg-[#111110] p-6 rounded-[2px]">
+              <div className="border border-[#33332F] bg-[#111110] p-3 sm:p-5 md:p-6 rounded-[2px]">
                 <div className="flex items-center justify-between border-b border-[#33332F] pb-3 mb-4 text-xs font-mono text-[#A7A69F]">
                   <span>{activeEvidence.title}</span>
                   <span>RECORD {activeCloverTab + 1} / {CLOVER_EVIDENCE_GALLERY.length}</span>
@@ -338,7 +338,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onOpenLightbox }) =>
                   onClick={() => handleOpenReceipt(activeEvidence.src, activeEvidence.title, activeEvidence.caption)}
                   className="w-full text-left group cursor-zoom-in block"
                 >
-                  <div className="relative aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-4 flex items-center justify-center p-2">
+                  <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-4 flex items-center justify-center w-full">
                     <img
                       key={activeEvidence.src}
                       src={activeEvidence.src}
@@ -387,17 +387,39 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onOpenLightbox }) =>
             </div>
 
             <div className="lg:col-span-4 flex flex-col justify-between items-start lg:items-end border-t lg:border-t-0 lg:border-l border-[#33332F] pt-6 lg:pt-0 lg:pl-8">
-              <div className="text-xs text-[#A7A69F] font-mono mb-4">
+              <div className="w-full flex items-center justify-between text-xs text-[#A7A69F] font-mono mb-4">
                 <span>UTILITY WEBSITE</span>
                 <a
                   href={wojakCase.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-sm text-[#F0EEE7] hover:underline mt-1"
+                  className="block text-sm text-[#F0EEE7] hover:underline"
                 >
                   {wojakCase.linkLabel} ↗
                 </a>
               </div>
+
+              {/* Wojak Mascot Visual on the Right */}
+              <div className="w-full my-3 flex justify-center lg:justify-end">
+                <button
+                  type="button"
+                  onClick={() => handleOpenReceipt('/assets/wojak-mascot.png', 'Wojak Meter 3D Mascot', 'Official 3D sentiment mascot for Wojak Meter utility')}
+                  className="group block text-left cursor-zoom-in w-full max-w-[280px]"
+                >
+                  <div className="relative aspect-square w-full rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09]">
+                    <img
+                      src="/assets/wojak-mascot.png"
+                      alt="Wojak Meter 3D Mascot"
+                      className="w-full h-full object-cover filter contrast-105 group-hover:scale-[1.03] transition-transform duration-300"
+                    />
+                    <div className="absolute bottom-2 left-2 right-2 bg-[#000000]/85 border border-[#33332F] px-2 py-1 text-[10px] font-mono text-[#A7A69F] flex items-center justify-between">
+                      <span>Wojak Mascot</span>
+                      <span className="underline group-hover:text-[#F0EEE7]">Zoom ↗</span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
               <blockquote className="text-xs sm:text-sm text-[#B8B6AD] italic border-l-2 border-[#77776F] pl-3 py-1 my-2">
                 “{wojakCase.verifiedQuote}”
               </blockquote>
@@ -443,8 +465,8 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onOpenLightbox }) =>
             </div>
           </div>
 
-          {/* Accessible Before / After Proof Comparison */}
-          <div className="border border-[#33332F] bg-[#111110] p-6 sm:p-8 rounded-[2px]">
+          {/* Accessible Before / After Proof Comparison — Full Width for Mobile Readability */}
+          <div className="border border-[#33332F] bg-[#111110] p-3 sm:p-6 md:p-8 rounded-[2px]">
             
             {/* Comparison Controls */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#33332F] mb-6">

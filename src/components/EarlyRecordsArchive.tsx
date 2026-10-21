@@ -72,7 +72,7 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
               {HISTORICAL_PNL_ARCHIVE.map((receipt) => (
                 <div
                   key={receipt.id}
-                  className="border border-[#33332F] bg-[#111110] p-5 rounded-[2px] flex flex-col justify-between hover:border-[#77776F] transition-colors"
+                  className="border border-[#33332F] bg-[#111110] p-3 sm:p-5 rounded-[2px] flex flex-col justify-between hover:border-[#77776F] transition-colors"
                 >
                   <div>
                     {/* Header: Ticker & Multiplier */}
@@ -95,13 +95,13 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
                       </div>
                     </div>
 
-                    {/* Receipt Image Frame */}
+                    {/* Receipt Image Frame — Edge to edge for mobile readability */}
                     <button
                       type="button"
                       onClick={() => handleInspect(receipt.imageSrc, `${receipt.ticker} — ${receipt.multiplier}`, receipt.caption, receipt.date)}
                       className="w-full text-left group cursor-zoom-in block"
                     >
-                      <div className="relative aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-3 p-2 flex items-center justify-center">
+                      <div className="relative aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-3 flex items-center justify-center">
                         <img
                           src={receipt.imageSrc}
                           alt={`${receipt.ticker} PNL Multiple`}
@@ -142,7 +142,7 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
             {RETRO_ARCHIVE.map((artifact) => (
               <div
                 key={artifact.id}
-                className="border border-[#33332F] bg-[#111110] p-5 rounded-[2px] flex flex-col justify-between hover:border-[#77776F] transition-colors"
+                className="border border-[#33332F] bg-[#111110] p-3 sm:p-5 rounded-[2px] flex flex-col justify-between hover:border-[#77776F] transition-colors"
               >
                 <div>
                   <div className="border-b border-[#33332F] pb-3 mb-4">
@@ -159,7 +159,7 @@ export const EarlyRecordsArchive: React.FC<EarlyRecordsArchiveProps> = ({ onOpen
                     onClick={() => handleInspect(artifact.imageSrc, artifact.title, artifact.description, artifact.date)}
                     className="w-full text-left group cursor-zoom-in block"
                   >
-                    <div className="relative aspect-[4/3] bg-[#080808] border border-[#222220] overflow-hidden mb-3 p-2 flex items-center justify-center">
+                    <div className="relative aspect-[4/3] bg-[#080808] border border-[#222220] overflow-hidden mb-3 flex items-center justify-center">
                       <img
                         src={artifact.imageSrc}
                         alt={artifact.alt || artifact.title}
