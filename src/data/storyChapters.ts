@@ -62,9 +62,9 @@ export const STORY_CHAPTERS: Chapter[] = [
     body: 'Fundraisers Web became the engine. Ambassador for Clover Boys, hosting X Spaces with 72 live listeners, delivering 30.2K organic impressions, and scaling Wojak Meter\'s utility to hundreds of daily traders. All organic. Zero fake volume.',
     quote: 'From less than a thousand overall impressions to this in less than a week.',
     tagline: 'Full brilliance. Proven in public.',
-    imageSrc: '/assets/clover-analytics.jpg',
-    imageAlt: 'Clover Boys account analytics: 30.2K impressions, 12.9% engagement rate',
-    badgeLabel: 'CLOVER BOYS · WOJAK METER · 30.2K IMPRESSIONS',
+    imageSrc: '/assets/fundraisers-web-cards.webp',
+    imageAlt: 'The Fundraiser / Fundraisers Web official brand cards',
+    badgeLabel: 'THE FUNDRAISER · AGENCY IDENTITY',
     verifiedNotes: ['30.2K Impressions (+16,000%)', '72 Live Space Listeners', '100+ Members brought in']
   }
 ];
