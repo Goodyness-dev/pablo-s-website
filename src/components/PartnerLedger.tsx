@@ -30,11 +30,19 @@ export const PartnerLedger: React.FC = () => {
                 {/* 1. Main Visual Asset on Top with Card Padding */}
                 {partner.imageSrc && (
                   <div className="relative border border-[#222220] bg-[#0A0A09] w-full rounded-[2px] overflow-hidden mb-5">
-                    <div className="relative aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden bg-[#000000]">
+                    <div
+                      className={`relative aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden flex items-center justify-center ${
+                        partner.id === 'funpump' ? 'bg-[#FFFFFF] p-6 sm:p-8' : 'bg-[#000000]'
+                      }`}
+                    >
                       <img
                         src={partner.imageSrc}
                         alt={partner.imageAlt || partner.name}
-                        className="w-full h-full object-cover object-top filter contrast-105 group-hover:scale-[1.02] transition-transform duration-300"
+                        className={`w-full h-full ${
+                          partner.id === 'funpump'
+                            ? 'object-contain max-h-[85%] max-w-[85%]'
+                            : 'object-cover object-top'
+                        } filter contrast-105 group-hover:scale-[1.03] transition-transform duration-300`}
                         loading="lazy"
                       />
                     </div>

@@ -174,8 +174,8 @@ export const PARTNERS_LEDGER = [
     relationship: 'Official Ambassador',
     date: '15 June 2026',
     details: 'Ambassador work, launchpad advisory, and promotion.',
-    imageSrc: '/assets/brand-card-gold-coin.jpg',
-    imageAlt: 'Funpump launchpad card',
+    imageSrc: '/assets/funpump.jpg',
+    imageAlt: 'Funpump launchpad mascot and ambassador badge',
     link: 'https://t.me/Senor_Izyche',
     linkLabel: 'View the role announcement ↗'
   },
