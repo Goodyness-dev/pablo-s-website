@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { SERVICES, PROCESS_STEPS } from '../data/services';
-import { useLightbox } from '../context/LightboxContext';
 
 export const ServicesSection: React.FC = () => {
-  const { openLightbox } = useLightbox();
   const [expandedId, setExpandedId] = useState<string | null>('campaigns');
 
   const toggleRow = (id: string) => {
@@ -106,29 +104,14 @@ export const ServicesSection: React.FC = () => {
                         {/* Preserved Capability Artwork */}
                         {service.imageSrc && (
                           <div className="md:col-span-4">
-                            <div
-                              className="border border-[#33332F] bg-[#0A0A09] rounded-[2px] overflow-hidden cursor-pointer group"
-                              onClick={() =>
-                                openLightbox([
-                                  {
-                                    src: service.imageSrc!,
-                                    alt: service.imageAlt || service.title,
-                                    title: service.title,
-                                    caption: service.summary,
-                                  },
-                                ])
-                              }
-                            >
-                              <div className="relative aspect-[16/10] overflow-hidden w-full">
+                            <div className="border border-[#33332F] bg-[#0A0A09] p-2 sm:p-2.5 rounded-[2px] overflow-hidden">
+                              <div className="relative aspect-[16/10] overflow-hidden w-full rounded-[1px] border border-[#222220]">
                                 <img
                                   src={service.imageSrc}
                                   alt={service.imageAlt || service.title}
-                                  className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
+                                  className="w-full h-full object-cover filter contrast-105"
                                   loading="lazy"
                                 />
-                                <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-0 group-hover:opacity-100 transition-opacity rounded-[2px]">
-                                  ⛶ Fullscreen
-                                </div>
                               </div>
                             </div>
                           </div>

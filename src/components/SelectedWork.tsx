@@ -2,38 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CASE_STUDIES, CLOVER_EVIDENCE_GALLERY } from '../data/projects';
-import { useLightbox } from '../context/LightboxContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 export const SelectedWork: React.FC = () => {
-  const { openLightbox } = useLightbox();
   const cloverCase = CASE_STUDIES[0];
   const wojakCase = CASE_STUDIES[1];
-
-  const cloverLightboxItems = CLOVER_EVIDENCE_GALLERY.map((item) => ({
-    src: item.src,
-    alt: item.alt,
-    title: `Clover Boys · ${item.title}`,
-    caption: item.caption,
-  }));
-
-  const wojakLightboxItems = [
-    {
-      src: '/assets/wojak-after.jpg',
-      alt: 'Wojak Meter after campaign (Peak Reach)',
-      title: 'Wojak Meter · Peak Campaign Reach',
-      caption: 'Peak engagement after campaign launch: 3.6K impressions and active community discussions.',
-    },
-    {
-      src: '/assets/wojak-before.jpg',
-      alt: 'Wojak Meter before campaign (Baseline)',
-      title: 'Wojak Meter · Baseline Reach',
-      caption: 'Pre-campaign engagement baseline before targeted thread campaign.',
-    },
-  ];
 
   // Clover Evidence Tab State
   const [activeCloverTab, setActiveCloverTab] = useState(0);
@@ -221,29 +197,16 @@ export const SelectedWork: React.FC = () => {
 
               {/* Clover Boys 3D Mascot Visual by the right */}
               <div className="w-full my-3 flex justify-center lg:justify-end">
-                <div
-                  className="relative aspect-square w-full rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09] cursor-pointer group"
-                  onClick={() =>
-                    openLightbox([
-                      {
-                        src: '/assets/clover-hoodie-character.png',
-                        alt: 'Clover Boys 3D Mascot',
-                        title: 'Clover Boys Mascot',
-                        caption: 'Official 3D character asset designed for Clover Boys campaign',
-                      },
-                    ])
-                  }
-                >
-                  <img
-                    src="/assets/clover-hoodie-character.png"
-                    alt="Clover Boys 3D Mascot"
-                    className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-0 group-hover:opacity-100 transition-opacity rounded-[2px]">
-                    ⛶ Fullscreen
-                  </div>
-                  <div className="absolute bottom-2 left-2 bg-[#000000]/85 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#A7A69F]">
-                    Clover Boys Mascot
+                <div className="relative aspect-square w-full max-w-[320px] rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09] p-2 sm:p-2.5">
+                  <div className="relative w-full h-full rounded-[1px] overflow-hidden">
+                    <img
+                      src="/assets/clover-hoodie-character.png"
+                      alt="Clover Boys 3D Mascot"
+                      className="w-full h-full object-cover filter contrast-105"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-[#000000]/85 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#A7A69F]">
+                      Clover Boys Mascot
+                    </div>
                   </div>
                 </div>
               </div>
@@ -344,40 +307,24 @@ export const SelectedWork: React.FC = () => {
 
             {/* Right: Active Evidence Frame */}
             <div className="lg:col-span-7">
-              <div className="border border-[#33332F] bg-[#111110] rounded-[2px] overflow-hidden">
-                <div className="flex items-center justify-between border-b border-[#33332F] p-4 sm:p-5 text-xs font-mono text-[#A7A69F]">
+              <div className="border border-[#33332F] bg-[#111110] p-4 sm:p-5 rounded-[2px]">
+                <div className="flex items-center justify-between border-b border-[#33332F] pb-3 mb-4 text-xs font-mono text-[#A7A69F]">
                   <span>{activeEvidence.title}</span>
-                  <div className="flex items-center gap-3">
-                    <span>RECORD {activeCloverTab + 1} / {CLOVER_EVIDENCE_GALLERY.length}</span>
-                    <button
-                      type="button"
-                      onClick={() => openLightbox(cloverLightboxItems, activeCloverTab)}
-                      className="text-[#F0EEE7] underline text-[11px] hover:text-white"
-                    >
-                      ⛶ Fullscreen
-                    </button>
-                  </div>
+                  <span>RECORD {activeCloverTab + 1} / {CLOVER_EVIDENCE_GALLERY.length}</span>
                 </div>
 
-                <div
-                  className="w-full block cursor-pointer group"
-                  onClick={() => openLightbox(cloverLightboxItems, activeCloverTab)}
-                >
-                  <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#080808] border-b border-[#33332F] overflow-hidden w-full">
+                <div className="w-full block">
+                  <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-3 w-full rounded-[2px]">
                     <img
                       key={activeEvidence.src}
                       src={activeEvidence.src}
                       alt={activeEvidence.alt}
-                      className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover filter contrast-105"
                       loading="lazy"
                     />
-                    <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity rounded-[2px] flex items-center gap-1 backdrop-blur-sm">
-                      <span>⛶</span>
-                      <span>Fullscreen</span>
-                    </div>
                   </div>
 
-                  <p className="text-xs text-[#B8B6AD] font-mono leading-relaxed p-4 sm:p-5">
+                  <p className="text-xs text-[#B8B6AD] font-mono leading-relaxed">
                     {activeEvidence.caption}
                   </p>
                 </div>
@@ -430,29 +377,16 @@ export const SelectedWork: React.FC = () => {
 
               {/* Wojak Mascot Visual on the Right */}
               <div className="w-full my-3 flex justify-center lg:justify-end">
-                <div
-                  className="relative aspect-square w-full rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09] cursor-pointer group"
-                  onClick={() =>
-                    openLightbox([
-                      {
-                        src: '/assets/wojak-mascot.png',
-                        alt: 'Wojak Meter 3D Mascot',
-                        title: 'Wojak Meter Mascot',
-                        caption: 'Official 3D character asset designed for Wojak Meter campaign',
-                      },
-                    ])
-                  }
-                >
-                  <img
-                    src="/assets/wojak-mascot.png"
-                    alt="Wojak Meter 3D Mascot"
-                    className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-0 group-hover:opacity-100 transition-opacity rounded-[2px]">
-                    ⛶ Fullscreen
-                  </div>
-                  <div className="absolute bottom-2 left-2 bg-[#000000]/85 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#A7A69F]">
-                    Wojak Meter Mascot
+                <div className="relative aspect-square w-full max-w-[320px] rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09] p-2 sm:p-2.5">
+                  <div className="relative w-full h-full rounded-[1px] overflow-hidden">
+                    <img
+                      src="/assets/wojak-mascot.png"
+                      alt="Wojak Meter 3D Mascot"
+                      className="w-full h-full object-cover filter contrast-105"
+                    />
+                    <div className="absolute bottom-2 left-2 bg-[#000000]/85 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#A7A69F]">
+                      Wojak Meter Mascot
+                    </div>
                   </div>
                 </div>
               </div>
@@ -487,10 +421,10 @@ export const SelectedWork: React.FC = () => {
           </div>
 
           {/* Accessible Before / After Proof Comparison */}
-          <div className="border border-[#33332F] bg-[#111110] rounded-[2px] overflow-hidden">
+          <div className="border border-[#33332F] bg-[#111110] p-4 sm:p-6 rounded-[2px]">
             
             {/* Comparison Controls */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6 border-b border-[#33332F]">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 mb-4 border-b border-[#33332F]">
               <div>
                 <span className="font-mono text-xs uppercase tracking-wider text-[#A7A69F] block mb-1">
                   Move the slider to compare the posts.
@@ -500,7 +434,7 @@ export const SelectedWork: React.FC = () => {
                 </p>
               </div>
 
-              {/* View Buttons (Compare / Before / After / Fullscreen) */}
+              {/* View Buttons (Compare / Before / After) */}
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -535,19 +469,11 @@ export const SelectedWork: React.FC = () => {
                 >
                   After
                 </button>
-                <button
-                  type="button"
-                  onClick={() => openLightbox(wojakLightboxItems, wojakViewMode === 'before' ? 1 : 0)}
-                  className="px-3 py-1.5 text-xs font-mono rounded-[2px] transition-colors border border-[#33332F] text-[#F0EEE7] hover:border-[#F0EEE7] bg-[#191917] flex items-center gap-1.5"
-                >
-                  <span>⛶</span>
-                  <span className="hidden sm:inline">Fullscreen</span>
-                </button>
               </div>
             </div>
 
-            {/* Visual Frame — Full Width Edge-to-Edge of Card */}
-            <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#080808] border-b border-[#33332F] overflow-hidden select-none w-full">
+            {/* Visual Frame — Clean Inner Frame inside Card */}
+            <div className="relative aspect-[4/3] sm:aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden select-none mb-4 w-full rounded-[2px]">
               
               {/* After Image (Background) */}
               <img
@@ -591,7 +517,7 @@ export const SelectedWork: React.FC = () => {
             </div>
 
             {/* Slider Control for Touch & Drag */}
-            <div className="p-4 sm:p-6 space-y-3">
+            <div className="space-y-3">
               {wojakViewMode === 'split' && (
                 <div className="flex items-center gap-4 py-1">
                   <label htmlFor="wojak-slider" className="sr-only">

@@ -10,7 +10,6 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { EarlyRecordsArchive } from './components/EarlyRecordsArchive';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { LightboxProvider } from './context/LightboxContext';
 
 export const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState('story');
@@ -43,53 +42,51 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <LightboxProvider>
-      <div className="relative min-h-screen bg-[#000000] text-[#F0EEE7] selection:bg-[#F0EEE7] selection:text-[#000000]">
-        
-        {/* Restrained Silver Diamond Void Background */}
-        <DiamondVoidBackground motionPaused={motionPaused} />
+    <div className="relative min-h-screen bg-[#000000] text-[#F0EEE7] selection:bg-[#F0EEE7] selection:text-[#000000]">
+      
+      {/* Restrained Silver Diamond Void Background */}
+      <DiamondVoidBackground motionPaused={motionPaused} />
 
-        {/* Sticky Editorial Navigation */}
-        <Navbar
-          motionPaused={motionPaused}
-          onToggleMotion={handleToggleMotion}
-          activeSection={activeSection}
-        />
+      {/* Sticky Editorial Navigation */}
+      <Navbar
+        motionPaused={motionPaused}
+        onToggleMotion={handleToggleMotion}
+        activeSection={activeSection}
+      />
 
-        {/* Main Editorial Stream */}
-        <main className="relative z-10">
-          {/* Thesis Statement Hero */}
-          <Hero />
+      {/* Main Editorial Stream */}
+      <main className="relative z-10">
+        {/* Thesis Statement Hero */}
+        <Hero />
 
-          {/* 01 / Origins Story: 4-Milestone Chronology + Typewriter + Pinned Evidence */}
-          <OriginStory />
+        {/* 01 / Origins Story: 4-Milestone Chronology + Typewriter + Pinned Evidence */}
+        <OriginStory />
 
-          {/* 02 / Selected Work: Clover Boys (Counters & Evidence) + Wojak Meter (Before/After) */}
-          <SelectedWork />
+        {/* 02 / Selected Work: Clover Boys (Counters & Evidence) + Wojak Meter (Before/After) */}
+        <SelectedWork />
 
-          {/* Partnerships & Collaborations Ledger */}
-          <PartnerLedger />
+        {/* Partnerships & Collaborations Ledger */}
+        <PartnerLedger />
 
-          {/* 03 / How We Work: 5 Numbered Rows & Deliverables + Process Strip */}
-          <ServicesSection />
+        {/* 03 / How We Work: 5 Numbered Rows & Deliverables + Process Strip */}
+        <ServicesSection />
 
-          {/* In Their Words: Editorial Testimonial Quotations */}
-          <TestimonialsSection />
+        {/* In Their Words: Editorial Testimonial Quotations */}
+        <TestimonialsSection />
 
-          {/* Historical Vault: Multipliers & Genesis Artifacts */}
-          <EarlyRecordsArchive />
+        {/* Historical Vault: Multipliers & Genesis Artifacts */}
+        <EarlyRecordsArchive />
 
-          {/* 04 / Your Next Chapter: Direct Telegram + Project Brief */}
-          <ContactSection />
-        </main>
+        {/* 04 / Your Next Chapter: Direct Telegram + Project Brief */}
+        <ContactSection />
+      </main>
 
-        {/* Editorial Footer with Motion Toggle & Mascot */}
-        <Footer
-          motionPaused={motionPaused}
-          onToggleMotion={handleToggleMotion}
-        />
+      {/* Editorial Footer with Motion Toggle & Mascot */}
+      <Footer
+        motionPaused={motionPaused}
+        onToggleMotion={handleToggleMotion}
+      />
 
-      </div>
-    </LightboxProvider>
+    </div>
   );
 };

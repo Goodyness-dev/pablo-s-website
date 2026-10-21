@@ -24,12 +24,12 @@ export const PartnerLedger: React.FC = () => {
           {PARTNERS_LEDGER.map((partner) => (
             <article
               key={partner.id}
-              className="border border-[#33332F] bg-[#111110] rounded-[2px] flex flex-col justify-between overflow-hidden hover:border-[#77776F] transition-all duration-300 group"
+              className="border border-[#33332F] bg-[#111110] p-4 sm:p-5 rounded-[2px] flex flex-col justify-between overflow-hidden hover:border-[#77776F] transition-all duration-300 group"
             >
               <div>
-                {/* 1. Main Visual Asset on Top — Full Width of Card */}
+                {/* 1. Main Visual Asset on Top with Card Padding */}
                 {partner.imageSrc && (
-                  <div className="relative border-b border-[#33332F] bg-[#0A0A09] w-full">
+                  <div className="relative border border-[#222220] bg-[#0A0A09] w-full rounded-[2px] overflow-hidden mb-5">
                     <div className="relative aspect-[4/5] sm:aspect-[3/4] w-full overflow-hidden bg-[#000000]">
                       <img
                         src={partner.imageSrc}
@@ -41,8 +41,8 @@ export const PartnerLedger: React.FC = () => {
                   </div>
                 )}
 
-                {/* 2. Project Details Directly Under the Image */}
-                <div className="p-6 sm:p-7">
+                {/* 2. Project Details */}
+                <div>
                   
                   {/* Category & Date Metadata */}
                   <div className="flex items-center justify-between text-xs font-mono text-[#A7A69F] mb-3">
@@ -63,7 +63,7 @@ export const PartnerLedger: React.FC = () => {
               </div>
 
               {/* 3. Actions at Bottom of Card */}
-              <div className="px-6 pb-6 pt-0 flex flex-col gap-2">
+              <div className="pt-2 flex flex-col gap-2">
                 <a
                   href={partner.link}
                   target="_blank"

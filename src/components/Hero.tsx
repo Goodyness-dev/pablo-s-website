@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { useLightbox } from '../context/LightboxContext';
 
 interface HeroProps {
   onReadStory?: () => void;
@@ -8,7 +7,6 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ onReadStory, onExploreWork }) => {
-  const { openLightbox } = useLightbox();
   const containerRef = useRef<HTMLElement>(null);
   const headlineLine1Ref = useRef<HTMLSpanElement>(null);
   const headlineLine2Ref = useRef<HTMLSpanElement>(null);
@@ -123,10 +121,10 @@ export const Hero: React.FC<HeroProps> = ({ onReadStory, onExploreWork }) => {
             <div className="relative w-full max-w-full sm:max-w-[380px]">
               
               {/* Clean Framed Container */}
-              <div className="relative border border-[#33332F] bg-[#111110] rounded-[2px] overflow-hidden transition-transform duration-300 hover:border-[#77776F]">
+              <div className="relative border border-[#33332F] bg-[#111110] p-4 sm:p-5 rounded-[2px] transition-transform duration-300 hover:border-[#77776F]">
                 
                 {/* Visual Label */}
-                <div className="flex items-center justify-between border-b border-[#33332F] p-4 sm:p-5 text-xs font-mono text-[#A7A69F]">
+                <div className="flex items-center justify-between border-b border-[#33332F] pb-3 mb-4 text-xs font-mono text-[#A7A69F]">
                   <span className="uppercase tracking-wider">
                     Identity mark
                   </span>
@@ -135,34 +133,18 @@ export const Hero: React.FC<HeroProps> = ({ onReadStory, onExploreWork }) => {
                   </span>
                 </div>
 
-                {/* Riley Image Preserved with Framing — Full Width of Card */}
-                <div
-                  className="relative aspect-square w-full overflow-hidden bg-[#0A0A09] border-b border-[#33332F] cursor-pointer group"
-                  onClick={() =>
-                    openLightbox([
-                      {
-                        src: '/assets/riley.png',
-                        alt: 'The Fundraiser Mascot - Riley',
-                        title: 'Riley / Senor Izyche',
-                        caption: 'The Fundraiser official identity mark and mascot, Est. 2025',
-                        date: '2025',
-                      },
-                    ])
-                  }
-                >
+                {/* Riley Image Preserved with Framing inside Card */}
+                <div className="relative aspect-square w-full overflow-hidden bg-[#0A0A09] border border-[#222220] rounded-[2px] mb-4">
                   <img
                     src="/assets/riley.png"
                     alt="The Fundraiser Mascot"
-                    className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover filter contrast-105"
                     loading="eager"
                   />
-                  <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-0 group-hover:opacity-100 transition-opacity rounded-[2px]">
-                    ⛶ Fullscreen
-                  </div>
                 </div>
 
                 {/* Caption */}
-                <div className="p-4 sm:p-5 flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
+                <div className="pt-3 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
                   <span>The Fundraiser</span>
                   <span>Est. 2025</span>
                 </div>

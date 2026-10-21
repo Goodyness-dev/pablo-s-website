@@ -1,26 +1,8 @@
 import React, { useState } from 'react';
 import { HISTORICAL_PNL_ARCHIVE, RETRO_ARCHIVE } from '../data/projects';
-import { useLightbox } from '../context/LightboxContext';
 
 export const EarlyRecordsArchive: React.FC = () => {
-  const { openLightbox } = useLightbox();
   const [activeTab, setActiveTab] = useState<'multipliers' | 'genesis'>('multipliers');
-
-  const multiplierLightboxItems = HISTORICAL_PNL_ARCHIVE.map((receipt) => ({
-    src: receipt.imageSrc,
-    alt: `${receipt.ticker} PNL Multiple`,
-    title: `${receipt.ticker} — ${receipt.multiplier} (${receipt.result})`,
-    caption: receipt.caption,
-    date: receipt.date,
-  }));
-
-  const genesisLightboxItems = RETRO_ARCHIVE.map((artifact) => ({
-    src: artifact.imageSrc,
-    alt: artifact.alt || artifact.title,
-    title: artifact.title,
-    caption: artifact.description,
-    date: artifact.date,
-  }));
 
   return (
     <section id="archive" className="relative py-24 md:py-36 border-b border-[#33332F]">
@@ -73,14 +55,14 @@ export const EarlyRecordsArchive: React.FC = () => {
         {activeTab === 'multipliers' && (
           <div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {HISTORICAL_PNL_ARCHIVE.map((receipt, idx) => (
+              {HISTORICAL_PNL_ARCHIVE.map((receipt) => (
                 <div
                   key={receipt.id}
-                  className="border border-[#33332F] bg-[#111110] rounded-[2px] overflow-hidden flex flex-col justify-between hover:border-[#77776F] transition-colors"
+                  className="border border-[#33332F] bg-[#111110] p-4 sm:p-5 rounded-[2px] flex flex-col justify-between hover:border-[#77776F] transition-colors"
                 >
                   <div>
                     {/* Header: Ticker & Multiplier */}
-                    <div className="flex items-start justify-between border-b border-[#33332F] p-4 sm:p-5">
+                    <div className="flex items-start justify-between border-b border-[#33332F] pb-3 mb-3">
                       <div>
                         <span className="font-display font-bold text-2xl uppercase tracking-tight text-[#F0EEE7]">
                           {receipt.ticker}
@@ -99,31 +81,22 @@ export const EarlyRecordsArchive: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Receipt Image Frame — full width edge-to-edge */}
-                    <div
-                      className="relative aspect-[16/10] bg-[#080808] border-b border-[#33332F] overflow-hidden w-full flex items-center justify-center cursor-pointer group"
-                      onClick={() => openLightbox(multiplierLightboxItems, idx)}
-                    >
+                    {/* Receipt Image Frame — Clean Inner Frame with Card Padding */}
+                    <div className="relative aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-3 w-full rounded-[2px] flex items-center justify-center">
                       <img
                         src={receipt.imageSrc}
                         alt={`${receipt.ticker} PNL Multiple`}
-                        className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover filter contrast-105"
                       />
-                      <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity rounded-[2px] flex items-center gap-1 backdrop-blur-sm">
-                        <span>⛶</span>
-                        <span>Fullscreen</span>
-                      </div>
                     </div>
 
-                    <div className="p-4 sm:p-5">
-                      <p className="font-body text-xs text-[#B8B6AD] leading-relaxed">
-                        {receipt.caption}
-                      </p>
-                    </div>
+                    <p className="font-body text-xs text-[#B8B6AD] leading-relaxed mb-4">
+                      {receipt.caption}
+                    </p>
                   </div>
 
                   {/* Metadata Footer */}
-                  <div className="p-4 sm:p-5 pt-3 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
+                  <div className="pt-3 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
                     <span>Called: {receipt.calledAt}</span>
                     <a
                       href="https://t.me/thefundraiserweb"
@@ -147,13 +120,13 @@ export const EarlyRecordsArchive: React.FC = () => {
         {/* Genesis Artifacts Grid */}
         {activeTab === 'genesis' && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {RETRO_ARCHIVE.map((artifact, idx) => (
+            {RETRO_ARCHIVE.map((artifact) => (
               <div
                 key={artifact.id}
-                className="border border-[#33332F] bg-[#111110] rounded-[2px] overflow-hidden flex flex-col justify-between hover:border-[#77776F] transition-colors"
+                className="border border-[#33332F] bg-[#111110] p-4 sm:p-5 rounded-[2px] flex flex-col justify-between hover:border-[#77776F] transition-colors"
               >
                 <div>
-                  <div className="border-b border-[#33332F] p-4 sm:p-5">
+                  <div className="border-b border-[#33332F] pb-3 mb-3">
                     <span className="font-mono text-[10px] text-[#A7A69F] uppercase block mb-1">
                       {artifact.date}
                     </span>
@@ -162,29 +135,20 @@ export const EarlyRecordsArchive: React.FC = () => {
                     </h3>
                   </div>
 
-                  <div
-                    className="relative aspect-[4/3] bg-[#080808] border-b border-[#33332F] overflow-hidden w-full flex items-center justify-center cursor-pointer group"
-                    onClick={() => openLightbox(genesisLightboxItems, idx)}
-                  >
+                  <div className="relative aspect-[4/3] bg-[#080808] border border-[#222220] overflow-hidden mb-3 w-full rounded-[2px] flex items-center justify-center">
                     <img
                       src={artifact.imageSrc}
                       alt={artifact.alt || artifact.title}
-                      className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover filter contrast-105"
                     />
-                    <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity rounded-[2px] flex items-center gap-1 backdrop-blur-sm">
-                      <span>⛶</span>
-                      <span>Fullscreen</span>
-                    </div>
                   </div>
 
-                  <div className="p-4 sm:p-5">
-                    <p className="font-body text-xs text-[#B8B6AD] leading-relaxed">
-                      {artifact.description}
-                    </p>
-                  </div>
+                  <p className="font-body text-xs text-[#B8B6AD] leading-relaxed mb-4">
+                    {artifact.description}
+                  </p>
                 </div>
 
-                <div className="p-4 sm:p-5 pt-3 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
+                <div className="pt-3 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
                   <span>{artifact.source}</span>
                   <a
                     href="https://t.me/thefundraiserweb"

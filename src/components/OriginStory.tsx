@@ -1,23 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { STORY_CHAPTERS } from '../data/storyChapters';
-import { useLightbox } from '../context/LightboxContext';
 
 export const OriginStory: React.FC = () => {
-  const { openLightbox } = useLightbox();
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [typewriterComplete, setTypewriterComplete] = useState(false);
   const typewriterRef = useRef<HTMLDivElement>(null);
   const fullTypewriterLine = 'Every diamond starts rough.';
-
-  const chapterLightboxItems = STORY_CHAPTERS.filter((ch) => !!ch.imageSrc).map((ch) => ({
-    src: ch.imageSrc!,
-    alt: ch.imageAlt || ch.title,
-    title: `Chapter ${ch.numeral} · ${ch.title}`,
-    caption: ch.caption,
-    date: ch.dateLabel,
-  }));
 
   // One-shot typewriter trigger
   useEffect(() => {
@@ -120,30 +110,12 @@ export const OriginStory: React.FC = () => {
             </div>
 
             <div className="md:col-span-4 flex md:justify-end">
-              <div
-                className="w-full max-w-[240px] aspect-square rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09] cursor-pointer group"
-                onClick={() =>
-                  openLightbox([
-                    {
-                      src: '/assets/avatar-origin.jpg',
-                      alt: 'Original Web 3 gains genesis avatar',
-                      title: 'Genesis Avatar · Web 3 gains',
-                      caption: 'Original Web 3 gains genesis avatar, 29 March 2025',
-                      date: '29 MARCH 2025',
-                    },
-                  ])
-                }
-              >
-                <div className="relative w-full h-full">
-                  <img
-                    src="/assets/avatar-origin.jpg"
-                    alt="Original Web 3 gains genesis avatar"
-                    className="w-full h-full object-cover filter contrast-105 group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-2 right-2 bg-black/80 border border-[#33332F] px-2 py-0.5 text-[10px] font-mono text-[#F0EEE7] opacity-0 group-hover:opacity-100 transition-opacity rounded-[2px]">
-                    ⛶ Fullscreen
-                  </div>
-                </div>
+              <div className="w-full max-w-[240px] aspect-square rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09]">
+                <img
+                  src="/assets/avatar-origin.jpg"
+                  alt="Original Web 3 gains genesis avatar"
+                  className="w-full h-full object-cover filter contrast-105"
+                />
               </div>
             </div>
           </div>
@@ -211,62 +183,35 @@ export const OriginStory: React.FC = () => {
                 </div>
 
                 {/* Mobile In-Flow Full-Width Artifact Display */}
-                <div className="block lg:hidden mt-6 mb-2 -mx-4 sm:mx-0 border-y sm:border border-[#33332F] bg-[#111110] sm:rounded-[2px] overflow-hidden">
+                <div className="block lg:hidden mt-6 mb-2 border border-[#33332F] bg-[#111110] p-3 sm:p-4 rounded-[2px]">
                   {chapter.imageSrc && (
-                    <div
-                      className="w-full cursor-pointer group"
-                      onClick={() => openLightbox(chapterLightboxItems, idx)}
-                    >
-                      <div className="relative w-full aspect-[16/10] bg-[#0A0A09] overflow-hidden border-b border-[#33332F]">
+                    <div className="w-full">
+                      <div className="relative w-full aspect-[16/10] bg-[#0A0A09] overflow-hidden mb-2 rounded-[2px] border border-[#222220]">
                         <img
                           src={chapter.imageSrc}
                           alt={chapter.imageAlt || chapter.title}
                           className="w-full h-full object-cover filter contrast-105"
                           loading="lazy"
                         />
-                        {/* Mobile full screen trigger badge */}
-                        <div className="absolute top-2 right-2 bg-black/85 border border-[#33332F] px-2 py-1 text-[10px] font-mono text-[#F0EEE7] flex items-center gap-1.5 backdrop-blur-sm rounded-[2px]">
-                          <span>⛶</span>
-                          <span>Full screen</span>
-                        </div>
                       </div>
-                      <div className="flex items-center justify-between text-xs text-[#A7A69F] font-mono p-3">
-                        <span className="truncate mr-2">{chapter.caption}</span>
-                        <span className="text-[#F0EEE7] underline text-[11px] flex-shrink-0">Tap to expand ↗</span>
+                      <div className="text-xs text-[#A7A69F] font-mono pt-1">
+                        {chapter.caption}
                       </div>
                     </div>
                   )}
 
                   {chapter.secondaryImageSrc && (
-                    <div className="w-full border-t border-[#33332F]">
-                      <div
-                        className="relative w-full aspect-[16/10] bg-[#0A0A09] overflow-hidden border-b border-[#33332F] cursor-pointer"
-                        onClick={() =>
-                          openLightbox([
-                            {
-                              src: chapter.secondaryImageSrc!,
-                              alt: chapter.secondaryImageAlt || chapter.title,
-                              title: `Chapter ${chapter.numeral} · Companion Record`,
-                              caption: chapter.secondaryCaption,
-                              date: chapter.dateLabel,
-                            },
-                          ])
-                        }
-                      >
+                    <div className="w-full mt-4 pt-4 border-t border-[#33332F]">
+                      <div className="relative w-full aspect-[16/10] bg-[#0A0A09] overflow-hidden mb-2 rounded-[2px] border border-[#222220]">
                         <img
                           src={chapter.secondaryImageSrc}
                           alt={chapter.secondaryImageAlt || chapter.title}
                           className="w-full h-full object-cover filter contrast-105"
                           loading="lazy"
                         />
-                        <div className="absolute top-2 right-2 bg-black/85 border border-[#33332F] px-2 py-1 text-[10px] font-mono text-[#F0EEE7] flex items-center gap-1.5 backdrop-blur-sm rounded-[2px]">
-                          <span>⛶</span>
-                          <span>Full screen</span>
-                        </div>
                       </div>
-                      <div className="flex items-center justify-between text-xs text-[#A7A69F] font-mono p-3">
-                        <span className="truncate mr-2">{chapter.secondaryCaption}</span>
-                        <span className="text-[#F0EEE7] underline text-[11px] flex-shrink-0">Tap to expand ↗</span>
+                      <div className="text-xs text-[#A7A69F] font-mono pt-1">
+                        {chapter.secondaryCaption}
                       </div>
                     </div>
                   )}
@@ -278,21 +223,18 @@ export const OriginStory: React.FC = () => {
 
           {/* Right Column: Desktop Pinned Evidence Stage */}
           <div className="hidden lg:block lg:col-span-5 sticky top-28 self-start">
-            <div className="border border-[#33332F] bg-[#111110] rounded-[2px] overflow-hidden">
+            <div className="border border-[#33332F] bg-[#111110] p-5 sm:p-6 rounded-[2px]">
               
               {/* Evidence Chrome Header */}
-              <div className="flex items-center justify-between border-b border-[#33332F] p-4 sm:p-5 text-xs font-mono text-[#A7A69F]">
+              <div className="flex items-center justify-between border-b border-[#33332F] pb-3 mb-4 text-xs font-mono text-[#A7A69F]">
                 <span>ARCHIVAL RECORD {activeChapter.numeral} / 04</span>
                 <span>{activeChapter.dateLabel}</span>
               </div>
 
               {/* Main Artifact Frame */}
               {activeChapter.imageSrc ? (
-                <div
-                  className="w-full block cursor-pointer group"
-                  onClick={() => openLightbox(chapterLightboxItems, activeChapterIndex)}
-                >
-                  <div className="relative aspect-[16/10] bg-[#080808] border-b border-[#33332F] overflow-hidden w-full">
+                <div className="w-full block">
+                  <div className="relative aspect-[16/10] bg-[#080808] border border-[#222220] overflow-hidden mb-3 w-full rounded-[2px]">
                     <img
                       key={activeChapter.imageSrc}
                       src={activeChapter.imageSrc}
@@ -300,27 +242,18 @@ export const OriginStory: React.FC = () => {
                       className="w-full h-full object-cover filter contrast-105"
                       loading="lazy"
                     />
-                    <div className="absolute top-3 right-3 bg-black/80 border border-[#33332F] px-2 py-1 text-[10px] font-mono text-[#F0EEE7] opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm rounded-[2px] flex items-center gap-1.5">
-                      <span>⛶</span>
-                      <span>View Full Screen</span>
-                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs font-mono p-4 sm:p-5">
-                    <p className="text-[#B8B6AD] truncate mr-2">
-                      {activeChapter.caption}
-                    </p>
-                    <span className="text-[#A7A69F] group-hover:text-[#F0EEE7] transition-colors flex-shrink-0">
-                      Expand ↗
-                    </span>
-                  </div>
+                  <p className="text-xs text-[#B8B6AD] font-mono">
+                    {activeChapter.caption}
+                  </p>
                 </div>
               ) : null}
 
               {/* Secondary Artifact if present */}
               {activeChapter.secondaryImageSrc && (
-                <div className="p-4 sm:p-5 pt-0 border-t border-[#33332F]">
-                  <div className="flex items-center gap-4 pt-4">
+                <div className="mt-5 pt-4 border-t border-[#33332F]">
+                  <div className="flex items-center gap-4">
                     <div className="w-16 h-16 bg-[#080808] border border-[#222220] flex-shrink-0 overflow-hidden rounded-[2px]">
                       <img
                         src={activeChapter.secondaryImageSrc}
@@ -337,7 +270,7 @@ export const OriginStory: React.FC = () => {
               )}
 
               {/* Progress Indicator */}
-              <div className="p-4 sm:p-5 pt-4 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
+              <div className="mt-6 pt-4 border-t border-[#33332F] flex items-center justify-between text-[11px] font-mono text-[#A7A69F]">
                 <span>CHAPTER {activeChapter.numeral} ACTIVE</span>
                 <div className="flex gap-1.5">
                   {STORY_CHAPTERS.map((ch, idx) => (
