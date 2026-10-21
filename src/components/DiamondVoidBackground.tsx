@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export interface DiamondVoidBackgroundProps {
   motionPaused?: boolean;
@@ -8,11 +8,10 @@ interface DiamondConfig {
   id: string;
   src: string;
   alt: string;
-  // Positioning in % of viewport
   desktop: {
     left: string;
     top: string;
-    width: number; // in px
+    width: number;
     opacity: number;
   };
   mobile?: {
@@ -21,17 +20,9 @@ interface DiamondConfig {
     width: number;
     opacity: number;
   };
-  // Interaction & Motion
-  depth: number; // 0.2 (distant) to 1.0 (foreground)
-  driftDuration: number; // seconds
-  driftDelay: number; // negative seconds to offset phase
-  driftRangeX: number; // px
-  driftRangeY: number; // px
-  rotateDuration: number; // seconds
-  rotateDelay: number; // negative seconds
-  rotateFrom: number; // degrees
-  rotateTo: number; // degrees
-  className?: string; // extra classes (e.g. hidden on mobile)
+  depth: number;
+  floatClass: string;
+  className?: string;
 }
 
 const DIAMOND_CONFIGS: DiamondConfig[] = [
@@ -53,14 +44,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       opacity: 0.9,
     },
     depth: 0.9,
-    driftDuration: 28,
-    driftDelay: -7,
-    driftRangeX: 18,
-    driftRangeY: 24,
-    rotateDuration: 38,
-    rotateDelay: -12,
-    rotateFrom: -6,
-    rotateTo: 4,
+    floatClass: 'animate-float-left',
     className: 'block',
   },
   // 2. Main Right Diamond — sharp, prominent, right-middle anchor with facet glint
@@ -81,14 +65,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       opacity: 0.9,
     },
     depth: 1.0,
-    driftDuration: 32,
-    driftDelay: -15,
-    driftRangeX: 22,
-    driftRangeY: 28,
-    rotateDuration: 44,
-    rotateDelay: -5,
-    rotateFrom: -4,
-    rotateTo: 6,
+    floatClass: 'animate-float-right',
     className: 'block',
   },
   // 3. Far Upper Diamond — dim, soft, provides vertical depth
@@ -109,14 +86,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       opacity: 0.65,
     },
     depth: 0.45,
-    driftDuration: 24,
-    driftDelay: -19,
-    driftRangeX: 12,
-    driftRangeY: 16,
-    rotateDuration: 34,
-    rotateDelay: -21,
-    rotateFrom: -5,
-    rotateTo: 5,
+    floatClass: 'animate-float-top',
     className: 'block',
   },
   // 4. Far Right Diamond — small and subtle
@@ -131,14 +101,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       opacity: 0.58,
     },
     depth: 0.3,
-    driftDuration: 22,
-    driftDelay: -9,
-    driftRangeX: 8,
-    driftRangeY: 12,
-    rotateDuration: 30,
-    rotateDelay: -14,
-    rotateFrom: -3,
-    rotateTo: 4,
+    floatClass: 'animate-float-side',
     className: 'hidden md:block',
   },
   // 5. Far Center Diamond — very subtle in the deep background
@@ -153,14 +116,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       opacity: 0.5,
     },
     depth: 0.25,
-    driftDuration: 30,
-    driftDelay: -23,
-    driftRangeX: 7,
-    driftRangeY: 10,
-    rotateDuration: 40,
-    rotateDelay: -8,
-    rotateFrom: -4,
-    rotateTo: 3,
+    floatClass: 'animate-float-top',
     className: 'hidden md:block',
   },
   // 6. Near Lower Right Diamond — soft, partly peripheral
@@ -175,14 +131,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       opacity: 0.75,
     },
     depth: 0.7,
-    driftDuration: 26,
-    driftDelay: -11,
-    driftRangeX: 16,
-    driftRangeY: 20,
-    rotateDuration: 36,
-    rotateDelay: -17,
-    rotateFrom: -6,
-    rotateTo: 5,
+    floatClass: 'animate-float-side',
     className: 'hidden lg:block',
   },
   // 7. Far Lower Left Diamond — soft and dim
@@ -197,14 +146,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       opacity: 0.55,
     },
     depth: 0.35,
-    driftDuration: 25,
-    driftDelay: -16,
-    driftRangeX: 9,
-    driftRangeY: 13,
-    rotateDuration: 32,
-    rotateDelay: -4,
-    rotateFrom: -4,
-    rotateTo: 4,
+    floatClass: 'animate-float-left',
     className: 'hidden md:block',
   },
 ];
@@ -217,25 +159,12 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
   const targetRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const currentRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  const [reducedMotion, setReducedMotion] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  });
-
-  // Track prefers-reduced-motion changes
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
-
   // Pointer parallax controller
   useEffect(() => {
-    if (reducedMotion || motionPaused) {
+    if (motionPaused) {
       if (containerRef.current) {
-        containerRef.current.style.setProperty('--pv-x', '0');
-        containerRef.current.style.setProperty('--pv-y', '0');
+        containerRef.current.style.setProperty('--pv-x', '0px');
+        containerRef.current.style.setProperty('--pv-y', '0px');
       }
       if (rafIdRef.current) {
         cancelAnimationFrame(rafIdRef.current);
@@ -243,9 +172,6 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       }
       return;
     }
-
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (!finePointer) return;
 
     const startLoop = () => {
       if (rafIdRef.current !== null) return;
@@ -255,24 +181,24 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         const current = currentRef.current;
 
         // Smooth asymptotic damping
-        current.x += (target.x - current.x) * 0.055;
-        current.y += (target.y - current.y) * 0.055;
+        current.x += (target.x - current.x) * 0.08;
+        current.y += (target.y - current.y) * 0.08;
 
         if (containerRef.current) {
-          containerRef.current.style.setProperty('--pv-x', current.x.toFixed(2));
-          containerRef.current.style.setProperty('--pv-y', current.y.toFixed(2));
+          containerRef.current.style.setProperty('--pv-x', `${current.x.toFixed(1)}px`);
+          containerRef.current.style.setProperty('--pv-y', `${current.y.toFixed(1)}px`);
         }
 
         // Stop loop when close to target
         if (
-          Math.abs(target.x - current.x) < 0.015 &&
-          Math.abs(target.y - current.y) < 0.015
+          Math.abs(target.x - current.x) < 0.02 &&
+          Math.abs(target.y - current.y) < 0.02
         ) {
           current.x = target.x;
           current.y = target.y;
           if (containerRef.current) {
-            containerRef.current.style.setProperty('--pv-x', current.x.toFixed(2));
-            containerRef.current.style.setProperty('--pv-y', current.y.toFixed(2));
+            containerRef.current.style.setProperty('--pv-x', `${current.x.toFixed(1)}px`);
+            containerRef.current.style.setProperty('--pv-y', `${current.y.toFixed(1)}px`);
           }
           rafIdRef.current = null;
           return;
@@ -287,13 +213,13 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
     const handlePointerMove = (e: MouseEvent) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
-      const normX = (e.clientX - cx) / cx; // -1 to 1
-      const normY = (e.clientY - cy) / cy; // -1 to 1
+      const normX = (e.clientX - cx) / cx;
+      const normY = (e.clientY - cy) / cy;
 
-      // Subtle parallax excursion: max ~16px
+      // Noticeable 3D parallax excursion: max ~22px
       targetRef.current = {
-        x: normX * 16,
-        y: normY * 16,
+        x: normX * 22,
+        y: normY * 22,
       };
 
       startLoop();
@@ -330,9 +256,7 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         rafIdRef.current = null;
       }
     };
-  }, [reducedMotion, motionPaused]);
-
-  const isMotionActive = !reducedMotion && !motionPaused;
+  }, [motionPaused]);
 
   return (
     <div
@@ -341,9 +265,8 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       role="presentation"
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#000000]"
       style={{
-        // Default CSS variables for pointer parallax
-        ['--pv-x' as string]: '0',
-        ['--pv-y' as string]: '0',
+        ['--pv-x' as string]: '0px',
+        ['--pv-y' as string]: '0px',
       }}
     >
       {/* 1. Deep Void Ambient Base: Pure Midnight Void (#000000) with faint radial depth */}
@@ -363,7 +286,6 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Curve 1 Highlight Gradient: Silver apex highlight fading into dark void */}
           <linearGradient
             id="dvb-silver-curve-1"
             x1="120"
@@ -381,7 +303,6 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
             <stop offset="100%" stopColor="#0F172A" stopOpacity="0" />
           </linearGradient>
 
-          {/* Curve 2 Highlight Gradient: Sweeps along the lower loop */}
           <linearGradient
             id="dvb-silver-curve-2"
             x1="100"
@@ -399,7 +320,6 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
             <stop offset="100%" stopColor="#0F172A" stopOpacity="0" />
           </linearGradient>
 
-          {/* Curve 3 Whisper Gradient: Deep background curve */}
           <linearGradient
             id="dvb-silver-curve-3"
             x1="200"
@@ -415,7 +335,6 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
           </linearGradient>
         </defs>
 
-        {/* Upper swooping curve with apex loop over top-left */}
         <path
           d="M -60 380 C 80 160 140 40 240 60 C 360 85 580 260 880 320 C 1120 370 1340 330 1520 280"
           stroke="url(#dvb-silver-curve-1)"
@@ -424,7 +343,6 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
           style={{ vectorEffect: 'non-scaling-stroke' }}
         />
 
-        {/* Lower dynamic swooping curve */}
         <path
           d="M -30 520 C 260 560 520 720 840 640 C 1080 575 1300 420 1480 340"
           stroke="url(#dvb-silver-curve-2)"
@@ -433,7 +351,6 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
           style={{ vectorEffect: 'non-scaling-stroke' }}
         />
 
-        {/* Whisper curve in deep space */}
         <path
           d="M 120 220 C 440 280 820 380 1320 360"
           stroke="url(#dvb-silver-curve-3)"
@@ -443,8 +360,8 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         />
       </svg>
 
-      {/* 3. Diamonds Composition Layer */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
+      {/* 3. Diamonds Layer with explicit floating classes */}
+      <div className="diamond-floating-layer absolute inset-0 w-full h-full pointer-events-none">
         {DIAMOND_CONFIGS.map((diamond) => {
           const depthFactor = diamond.depth;
 
@@ -457,27 +374,18 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
                 top: diamond.desktop.top,
               }}
             >
-              {/* Parallax Wrapper: translated by mouse offset proportional to depth */}
+              {/* Parallax Wrapper */}
               <div
                 className="will-change-transform"
                 style={{
-                  transform: `translate3d(calc(var(--pv-x, 0) * ${depthFactor} * 1px), calc(var(--pv-y, 0) * ${depthFactor} * 1px), 0)`,
-                  transition: isMotionActive ? 'none' : 'transform 0.4s ease-out',
+                  transform: `translate3d(calc(var(--pv-x, 0px) * ${depthFactor}), calc(var(--pv-y, 0px) * ${depthFactor}), 0)`,
+                  transition: motionPaused ? 'transform 0.4s ease-out' : 'none',
                 }}
               >
-                {/* Float Wrapper: Autonomous CSS drift */}
+                {/* Float & Rotation Wrapper */}
                 <div
-                  className="will-change-transform"
-                  style={{
-                    animationName: isMotionActive ? `dvbDrift_${diamond.id}` : 'none',
-                    animationDuration: `${diamond.driftDuration}s`,
-                    animationTimingFunction: 'ease-in-out',
-                    animationIterationCount: 'infinite',
-                    animationDirection: 'alternate',
-                    animationDelay: `${diamond.driftDelay}s`,
-                  }}
+                  className={`will-change-transform ${diamond.floatClass} ${motionPaused ? 'animation-paused' : ''}`}
                 >
-                  {/* Diamond Image: In-plane rotation + facet appearance */}
                   <img
                     src={diamond.src}
                     alt=""
@@ -485,16 +393,10 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
                     loading="eager"
                     decoding="async"
                     draggable={false}
-                    className="select-none pointer-events-none max-w-none transition-opacity duration-700"
+                    className="select-none pointer-events-none max-w-none"
                     style={{
                       width: `${diamond.desktop.width}px`,
                       opacity: diamond.desktop.opacity,
-                      animationName: isMotionActive ? `dvbRotate_${diamond.id}` : 'none',
-                      animationDuration: `${diamond.rotateDuration}s`,
-                      animationTimingFunction: 'ease-in-out',
-                      animationIterationCount: 'infinite',
-                      animationDirection: 'alternate',
-                      animationDelay: `${diamond.rotateDelay}s`,
                       filter: 'drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9))',
                     }}
                   />
@@ -505,32 +407,7 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         })}
       </div>
 
-      {/* Embedded Scoped Keyframes for Deterministic Floating & Rotation */}
       <style>{`
-        ${DIAMOND_CONFIGS.map(
-          (d) => `
-          @keyframes dvbDrift_${d.id} {
-            0% {
-              transform: translate3d(-${(d.driftRangeX / 2).toFixed(1)}px, -${(d.driftRangeY / 2).toFixed(1)}px, 0);
-            }
-            50% {
-              transform: translate3d(${(d.driftRangeX / 3).toFixed(1)}px, ${(d.driftRangeY / 2.5).toFixed(1)}px, 0);
-            }
-            100% {
-              transform: translate3d(${(d.driftRangeX / 2).toFixed(1)}px, ${(d.driftRangeY / 2).toFixed(1)}px, 0);
-            }
-          }
-          @keyframes dvbRotate_${d.id} {
-            0% {
-              transform: rotate(${d.rotateFrom}deg);
-            }
-            100% {
-              transform: rotate(${d.rotateTo}deg);
-            }
-          }
-        `
-        ).join('\n')}
-
         @media (max-width: 768px) {
           ${DIAMOND_CONFIGS.filter((d) => d.mobile)
             .map(

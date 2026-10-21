@@ -512,9 +512,9 @@ body {
   scrollbar-width: none;
 }
 
-/* Accessibility: Respect Reduced Motion */
+/* Accessibility: Respect Reduced Motion (allow explicit animated background unless paused) */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *:not(.diamond-floating-layer):not(.diamond-floating-layer *) {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -527,6 +527,71 @@ body {
   .metallic-card:hover {
     transform: none !important;
   }
+}
+
+/* ==========================================================================
+   DIAMOND VOID BACKGROUND FLOATING ANIMATIONS
+   ========================================================================== */
+@keyframes float-main-left {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(-5deg);
+  }
+  33% {
+    transform: translate3d(14px, -24px, 0px) rotate(-1deg);
+  }
+  66% {
+    transform: translate3d(-10px, 16px, 0px) rotate(3deg);
+  }
+}
+
+@keyframes float-main-right {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(4deg);
+  }
+  38% {
+    transform: translate3d(-18px, -26px, 0px) rotate(-2deg);
+  }
+  72% {
+    transform: translate3d(14px, 18px, 0px) rotate(6deg);
+  }
+}
+
+@keyframes float-distant-top {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(-3deg);
+  }
+  50% {
+    transform: translate3d(10px, -18px, 0px) rotate(4deg);
+  }
+}
+
+@keyframes float-distant-side {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(2deg);
+  }
+  50% {
+    transform: translate3d(-12px, -16px, 0px) rotate(-4deg);
+  }
+}
+
+.animate-float-left {
+  animation: float-main-left 6.8s ease-in-out infinite;
+}
+
+.animate-float-right {
+  animation: float-main-right 7.8s ease-in-out infinite;
+}
+
+.animate-float-top {
+  animation: float-distant-top 5.6s ease-in-out infinite;
+}
+
+.animate-float-side {
+  animation: float-distant-side 6.4s ease-in-out infinite;
+}
+
+.animation-paused {
+  animation-play-state: paused !important;
 }
 
 /* Custom Scrollbar */
