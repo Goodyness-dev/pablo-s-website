@@ -1,5 +1,4 @@
 import React from 'react';
-import { VectorDiamond } from './VectorDiamond';
 
 interface HeroProps {
   onWatchCut: () => void;
@@ -19,19 +18,20 @@ export const Hero: React.FC<HeroProps> = ({ onWatchCut }) => {
       <div className="max-w-[1240px] w-full mx-auto px-4 sm:px-6 z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Mobile Diamond on Top / Desktop Right */}
+          {/* Hero Visual: Riley / The Fundraiser */}
           <div className="order-1 lg:order-2 lg:col-span-6 flex justify-center items-center py-4 lg:py-0">
-            <div className="relative">
-              <VectorDiamond
-                stage={4}
-                size={280}
-                className="w-[240px] h-[240px] sm:w-[300px] sm:h-[300px] md:w-[380px] md:h-[380px] lg:w-[440px] lg:h-[440px]"
-                interactive={true}
-              />
-              {/* Floating Monogram Chip (OpenCircle Style) */}
-              <div className="absolute -bottom-2 right-4 sm:right-8 px-3.5 py-1.5 rounded-full bg-[#0C101B]/90 backdrop-blur-xl border border-white/15 flex items-center gap-2 shadow-[0_8px_24px_rgba(0,0,0,0.6)]">
-                <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping" />
-                <span className="font-mono text-xs text-[#F8FAFC]">@IZYCHE_ · ACTIVE</span>
+            <div className="relative group flex items-center justify-center">
+              {/* Radial Specular Ambient Glow */}
+              <div className="absolute w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[420px] rounded-full bg-gradient-to-tr from-[#6FD8FF]/15 via-[#2FA8E6]/10 to-transparent blur-3xl pointer-events-none" />
+              
+              {/* Riley Face Artwork */}
+              <div className="relative z-10 p-2">
+                <img
+                  src="/assets/riley.png"
+                  alt="The Fundraiser"
+                  className="w-[240px] sm:w-[300px] md:w-[380px] lg:w-[420px] max-w-full h-auto object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.85)] drop-shadow-[0_0_25px_rgba(111,216,255,0.22)] transition-transform duration-500 hover:scale-[1.03]"
+                  loading="eager"
+                />
               </div>
             </div>
           </div>
@@ -76,12 +76,6 @@ export const Hero: React.FC<HeroProps> = ({ onWatchCut }) => {
                 </span>
               </button>
             </div>
-
-            {/* Micro Scroll Hint */}
-            <p className="font-mono text-xs text-[#64748B] uppercase tracking-wider mt-6 flex items-center gap-1.5">
-              <span>Scroll down to cut the stone</span>
-              <span className="animate-bounce">↓</span>
-            </p>
           </div>
 
         </div>

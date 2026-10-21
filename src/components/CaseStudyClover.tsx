@@ -90,14 +90,14 @@ export const CaseStudyClover: React.FC<CaseStudyCloverProps> = ({ onOpenLightbox
       </div>
 
       {/* Interactive Media Tab Switcher (OpenCircle Capsule Group) */}
-      <div className="mb-4 flex items-center gap-1.5 p-1 rounded-full bg-[#0A0D16] border border-white/10 w-fit max-w-full overflow-x-auto scrollbar-none">
+      <div className="mb-4 flex items-center gap-1.5 p-1 metallic-track w-fit max-w-full overflow-x-auto scrollbar-none">
         <button
           type="button"
           onClick={() => setActiveTab('analytics')}
-          className={`font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+          className={`font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 transition-all shrink-0 ${
             activeTab === 'analytics'
-              ? 'bg-gradient-to-b from-[#1C2337] to-[#121624] text-[#F8FAFC] border border-white/20 shadow-sm'
-              : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+              ? 'metallic-btn-active'
+              : 'metallic-btn-inactive'
           }`}
         >
           Analytics (+16K%)
@@ -105,10 +105,10 @@ export const CaseStudyClover: React.FC<CaseStudyCloverProps> = ({ onOpenLightbox
         <button
           type="button"
           onClick={() => setActiveTab('space')}
-          className={`font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+          className={`font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 transition-all shrink-0 ${
             activeTab === 'space'
-              ? 'bg-gradient-to-b from-[#1C2337] to-[#121624] text-[#F8FAFC] border border-white/20 shadow-sm'
-              : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+              ? 'metallic-btn-active'
+              : 'metallic-btn-inactive'
           }`}
         >
           X Space (72 Live)
@@ -116,10 +116,10 @@ export const CaseStudyClover: React.FC<CaseStudyCloverProps> = ({ onOpenLightbox
         <button
           type="button"
           onClick={() => setActiveTab('community')}
-          className={`font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
+          className={`font-mono text-xs uppercase tracking-wider px-3.5 py-1.5 transition-all shrink-0 ${
             activeTab === 'community'
-              ? 'bg-gradient-to-b from-[#1C2337] to-[#121624] text-[#F8FAFC] border border-white/20 shadow-sm'
-              : 'text-[#94A3B8] hover:text-[#F8FAFC]'
+              ? 'metallic-btn-active'
+              : 'metallic-btn-inactive'
           }`}
         >
           Community Traction

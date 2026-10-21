@@ -72,7 +72,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({ activeSection }) => {
         href="#root"
         onClick={(e) => handleLinkClick(e, '#root')}
         aria-label="Back to top"
-        className="flex items-center gap-2 px-2.5 py-1.5 rounded-full hover:bg-white/10 active:scale-95 transition-all text-xs font-display font-extrabold tracking-tight text-[#F8FAFC]"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 hover:border-white/25 bg-gradient-to-b from-white/8 to-white/0 hover:from-white/12 hover:to-white/3 active:scale-95 transition-all text-xs font-display font-extrabold tracking-tight text-[#F8FAFC] shadow-sm"
       >
         <div className="w-6 h-6 rounded-full overflow-hidden border border-[#BDE7FF]/40 bg-[#0E1226]">
           <img
@@ -81,7 +81,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({ activeSection }) => {
             className="w-full h-full object-cover"
           />
         </div>
-        <span className="hidden sm:inline">The Fundraiser</span>
+        <span className="hidden sm:inline">THE FUNDRAISER</span>
       </a>
 
       {/* Vertical Divider */}
@@ -97,10 +97,10 @@ export const BottomDock: React.FC<BottomDockProps> = ({ activeSection }) => {
               href={item.href}
               onClick={(e) => handleLinkClick(e, item.href)}
               aria-label={item.label}
-              className={`relative flex items-center gap-1.5 px-3 py-2 rounded-full font-mono text-xs transition-all ${
+              className={`relative flex items-center gap-1.5 px-3 py-2 font-mono text-xs transition-all ${
                 isActive
-                  ? 'bg-gradient-to-b from-[#1E263D] to-[#121626] text-[#F8FAFC] border border-white/20 shadow-md'
-                  : 'text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/5 active:scale-95'
+                  ? 'metallic-btn-active'
+                  : 'metallic-btn-inactive active:scale-95'
               }`}
             >
               {item.icon}
@@ -108,7 +108,7 @@ export const BottomDock: React.FC<BottomDockProps> = ({ activeSection }) => {
                 {item.label}
               </span>
               {isActive && (
-                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#6FD8FF] shadow-[0_0_6px_#6FD8FF]" />
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#6FD8FF] shadow-[0_0_8px_#6FD8FF]" />
               )}
             </a>
           );

@@ -41,7 +41,7 @@ export const FooterTicker: React.FC = () => {
                 />
               </div>
               <span className="font-display font-extrabold text-base text-[#F8FAFC]">
-                THE FUNDRAISER SHOW
+                THE FUNDRAISER
               </span>
             </div>
             <p className="font-mono text-xs text-[#64748B]">

@@ -88,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </a>
 
         {/* Desktop Anchor Navigation Pills */}
-        <nav className="hidden lg:flex items-center gap-1 p-1 rounded-full bg-[#0C101B]/80 border border-white/10 backdrop-blur-md">
+        <nav className="hidden lg:flex items-center gap-1 p-1 metallic-track">
           {navLinks.map((link) => {
             const isActive = activeSection === link.name.toLowerCase();
             return (
@@ -96,14 +96,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleLinkClick(e, link.href)}
-                className={`px-3.5 py-1.5 rounded-full font-mono text-xs uppercase tracking-wider transition-all relative ${
+                className={`px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider relative transition-all ${
                   isActive
-                    ? 'bg-gradient-to-b from-[#1C2337] to-[#121624] text-[#F8FAFC] border border-white/20 shadow-sm'
-                    : 'text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/5'
+                    ? 'metallic-btn-active'
+                    : 'metallic-btn-inactive'
                 }`}
               >
                 {isActive && (
-                  <span className="inline-block w-1.5 h-1.5 rotate-45 bg-[#6FD8FF] mr-1.5 shadow-[0_0_6px_#6FD8FF]" />
+                  <span className="inline-block w-1.5 h-1.5 rotate-45 bg-[#6FD8FF] mr-1.5 shadow-[0_0_8px_#6FD8FF]" />
                 )}
                 {link.name}
               </a>
@@ -113,12 +113,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Controls: Audio chime + Telegram CTA */}
         <div className="flex items-center gap-2 sm:gap-3">
-          
-          {/* Active Verified Pill Badge (OpenCircle Style) */}
-          <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0D111C] border border-white/10 text-xs font-mono text-[#94A3B8]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
-            <span>@IZYCHE_</span>
-          </div>
 
           {/* Audio Chime Toggle Pill */}
           <button

@@ -46,10 +46,10 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
           <div
             key={receipt.id}
             onClick={() => handleCardClick(idx)}
-            className="metallic-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl cursor-pointer group hover:border-[#6FD8FF]/40 transition-all min-w-[280px] sm:min-w-0 snap-center shrink-0 md:shrink shadow-lg"
+            className="metallic-card p-4 sm:p-5 rounded-2xl sm:rounded-3xl cursor-pointer group hover:border-[#6FD8FF]/40 transition-all w-[85vw] max-w-[320px] md:w-auto md:max-w-none snap-center shrink-0 md:shrink shadow-lg"
           >
             {/* Screenshot Frame with Ambient Backdrop & Exact 16:9 Aspect Ratio */}
-            <div className="relative rounded-xl overflow-hidden aspect-[16/9] bg-[#07090F] mb-3.5 border border-white/10 p-1 flex items-center justify-center">
+            <div className="relative w-full rounded-xl overflow-hidden aspect-[16/9] bg-[#07090F] mb-3.5 border border-white/10 p-1 flex items-center justify-center">
               
               {/* Ambient Glow Clone */}
               <div
@@ -64,7 +64,7 @@ export const PnlCarousel: React.FC<PnlCarouselProps> = ({ onOpenLightbox }) => {
               <img
                 src={receipt.imageSrc}
                 alt={`${receipt.ticker} Call Receipt`}
-                className="max-w-full max-h-full object-contain relative z-10"
+                className="max-w-full max-h-full w-auto h-auto object-contain relative z-10"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-[#2FA8E6]/10 mix-blend-multiply pointer-events-none z-10" />

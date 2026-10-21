@@ -42,13 +42,10 @@ export const WorkCardStack: React.FC<WorkCardStackProps> = ({ children }) => {
         return (
           <div
             key={i}
+            className={`relative md:sticky ${isLast ? 'mb-0' : 'mb-6 md:mb-3'}`}
             style={{
-              position: 'sticky',
               top: `${STICKY_TOP}px`,
               zIndex: 10 + i,
-              // Small bottom margin so the next card's top-edge peeks out
-              // below the current sticky card — gives the "deck of cards" hint
-              marginBottom: isLast ? 0 : 12,
             }}
           >
             {/* Metallic card surface */}

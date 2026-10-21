@@ -316,6 +316,67 @@ body {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
+/* ==========================================================================
+   METALLIC TRACKS & BUTTONS (Navbar, Dock, Tab Switchers)
+   ========================================================================== */
+
+/* Metallic Pill Track (Outer capsule container) */
+.metallic-track {
+  position: relative;
+  background: linear-gradient(180deg, #131929 0%, #07090F 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    inset 0 2px 6px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.50);
+  border-radius: 9999px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Active Metallic Button inside track */
+.metallic-btn-active {
+  position: relative;
+  background: linear-gradient(180deg, #2B354C 0%, #171E2E 50%, #0E121D 100%);
+  border: 1px solid rgba(255, 255, 255, 0.30);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.60),
+    inset 0 2px 4px rgba(255, 255, 255, 0.12),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.85),
+    0 4px 14px rgba(0, 0, 0, 0.60);
+  color: #FFFFFF;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.metallic-btn-active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%);
+  pointer-events: none;
+  border-radius: 9999px;
+}
+
+/* Inactive button hover inside track */
+.metallic-btn-inactive {
+  color: #94A3B8;
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.metallic-btn-inactive:hover {
+  color: #F8FAFC;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
 /* Floating Bottom Navigation Dock */
 .floating-bottom-dock {
   position: fixed;
@@ -323,19 +384,32 @@ body {
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;
-  background: linear-gradient(180deg, rgba(24, 30, 46, 0.94) 0%, rgba(10, 13, 20, 0.96) 100%);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, rgba(32, 40, 60, 0.96) 0%, rgba(13, 17, 26, 0.98) 100%);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.35),
-    0 20px 52px -8px rgba(0, 0, 0, 0.9);
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.85),
+    0 20px 52px -6px rgba(0, 0, 0, 0.95);
   border-radius: 9999px;
-  padding: 0.35rem 0.6rem;
+  padding: 0.35rem 0.65rem;
   display: flex;
   align-items: center;
   gap: 0.35rem;
   max-width: calc(100vw - 2rem);
+}
+
+.floating-bottom-dock::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+  pointer-events: none;
+  border-radius: 9999px;
 }
 
 @media (min-width: 640px) {
