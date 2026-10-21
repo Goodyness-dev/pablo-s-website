@@ -1,153 +1,154 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 
 export interface DiamondVoidBackgroundProps {
   motionPaused?: boolean;
 }
 
-interface DiamondConfig {
+interface DiamondLayer {
   id: string;
   src: string;
-  alt: string;
-  desktop: {
-    left: string;
-    top: string;
-    width: number;
-    opacity: number;
-  };
-  mobile?: {
-    left: string;
-    top: string;
-    width: number;
-    opacity: number;
-  };
+  leftDesktop: string;
+  topDesktop: string;
+  widthDesktop: number;
+  opacityDesktop: number;
+  leftMobile?: string;
+  topMobile?: string;
+  widthMobile?: number;
+  opacityMobile?: number;
+  isMobileVisible: boolean;
   depth: number;
-  floatClass: string;
-  className?: string;
+  driftX: number;
+  driftY: number;
+  rotation: number;
+  duration: number;
+  delay: number;
 }
 
-const DIAMOND_CONFIGS: DiamondConfig[] = [
-  // 1. Main Left Diamond — sharp, prominent, lower-left anchor
+const DIAMOND_LAYERS: DiamondLayer[] = [
+  // 1. Main Left Diamond
   {
-    id: 'main-left',
-    src: '/assets/diamonds/diamond-main-left.png',
-    alt: '',
-    desktop: {
-      left: '20%',
-      top: '61%',
-      width: 155,
-      opacity: 0.96,
-    },
-    mobile: {
-      left: '6%',
-      top: '68%',
-      width: 90,
-      opacity: 0.9,
-    },
+    id: 'diamond-layer-1',
+    src: '/assets/diamonds/diamond-1-main-left.png',
+    leftDesktop: '21%',
+    topDesktop: '61%',
+    widthDesktop: 155,
+    opacityDesktop: 0.98,
+    leftMobile: '7%',
+    topMobile: '68%',
+    widthMobile: 90,
+    opacityMobile: 0.92,
+    isMobileVisible: true,
     depth: 0.9,
-    floatClass: 'animate-float-left',
-    className: 'block',
+    driftX: 18,
+    driftY: -24,
+    rotation: 6,
+    duration: 7.2,
+    delay: 0,
   },
-  // 2. Main Right Diamond — sharp, prominent, right-middle anchor with facet glint
+  // 2. Main Right Diamond
   {
-    id: 'main-right',
-    src: '/assets/diamonds/diamond-main-right.png',
-    alt: '',
-    desktop: {
-      left: '73%',
-      top: '46%',
-      width: 175,
-      opacity: 0.98,
-    },
-    mobile: {
-      left: '78%',
-      top: '36%',
-      width: 95,
-      opacity: 0.9,
-    },
+    id: 'diamond-layer-2',
+    src: '/assets/diamonds/diamond-2-main-right.png',
+    leftDesktop: '72%',
+    topDesktop: '46%',
+    widthDesktop: 175,
+    opacityDesktop: 0.98,
+    leftMobile: '80%',
+    topMobile: '36%',
+    widthMobile: 95,
+    opacityMobile: 0.92,
+    isMobileVisible: true,
     depth: 1.0,
-    floatClass: 'animate-float-right',
-    className: 'block',
+    driftX: -22,
+    driftY: 26,
+    rotation: -5,
+    duration: 8.4,
+    delay: 1.2,
   },
-  // 3. Far Upper Diamond — dim, soft, provides vertical depth
+  // 3. Far Upper Diamond
   {
-    id: 'far-upper',
-    src: '/assets/diamonds/diamond-top.png',
-    alt: '',
-    desktop: {
-      left: '34%',
-      top: '20%',
-      width: 54,
-      opacity: 0.72,
-    },
-    mobile: {
-      left: '74%',
-      top: '16%',
-      width: 36,
-      opacity: 0.65,
-    },
+    id: 'diamond-layer-3',
+    src: '/assets/diamonds/diamond-3-far-upper.png',
+    leftDesktop: '34%',
+    topDesktop: '20%',
+    widthDesktop: 56,
+    opacityDesktop: 0.75,
+    leftMobile: '74%',
+    topMobile: '16%',
+    widthMobile: 38,
+    opacityMobile: 0.7,
+    isMobileVisible: true,
     depth: 0.45,
-    floatClass: 'animate-float-top',
-    className: 'block',
+    driftX: 12,
+    driftY: -16,
+    rotation: 4,
+    duration: 6.0,
+    delay: 2.1,
   },
-  // 4. Far Right Diamond — small and subtle
+  // 4. Far Right Diamond
   {
-    id: 'far-right',
-    src: '/assets/diamonds/diamond-top.png',
-    alt: '',
-    desktop: {
-      left: '92%',
-      top: '32%',
-      width: 38,
-      opacity: 0.58,
-    },
+    id: 'diamond-layer-4',
+    src: '/assets/diamonds/diamond-4-far-right.png',
+    leftDesktop: '92%',
+    topDesktop: '32%',
+    widthDesktop: 42,
+    opacityDesktop: 0.65,
+    isMobileVisible: false,
     depth: 0.3,
-    floatClass: 'animate-float-side',
-    className: 'hidden md:block',
+    driftX: -10,
+    driftY: 14,
+    rotation: -4,
+    duration: 6.8,
+    delay: 0.8,
   },
-  // 5. Far Center Diamond — very subtle in the deep background
+  // 5. Center Tiny Diamond
   {
-    id: 'far-center',
-    src: '/assets/diamonds/diamond-soft-peripheral.png',
-    alt: '',
-    desktop: {
-      left: '50%',
-      top: '70%',
-      width: 34,
-      opacity: 0.5,
-    },
+    id: 'diamond-layer-5',
+    src: '/assets/diamonds/diamond-5-center-tiny.png',
+    leftDesktop: '50%',
+    topDesktop: '70%',
+    widthDesktop: 36,
+    opacityDesktop: 0.55,
+    isMobileVisible: false,
     depth: 0.25,
-    floatClass: 'animate-float-top',
-    className: 'hidden md:block',
+    driftX: 8,
+    driftY: -10,
+    rotation: 3,
+    duration: 7.5,
+    delay: 3.0,
   },
-  // 6. Near Lower Right Diamond — soft, partly peripheral
+  // 6. Lower Right Diamond
   {
-    id: 'near-lower-right',
-    src: '/assets/diamonds/diamond-soft-peripheral.png',
-    alt: '',
-    desktop: {
-      left: '93%',
-      top: '76%',
-      width: 86,
-      opacity: 0.75,
-    },
+    id: 'diamond-layer-6',
+    src: '/assets/diamonds/diamond-6-lower-right.png',
+    leftDesktop: '94%',
+    topDesktop: '76%',
+    widthDesktop: 88,
+    opacityDesktop: 0.8,
+    isMobileVisible: false,
     depth: 0.7,
-    floatClass: 'animate-float-side',
-    className: 'hidden lg:block',
+    driftX: -16,
+    driftY: -20,
+    rotation: 5,
+    duration: 8.0,
+    delay: 1.5,
   },
-  // 7. Far Lower Left Diamond — soft and dim
+  // 7. Lower Left Diamond
   {
-    id: 'far-lower-left',
-    src: '/assets/diamonds/diamond-top.png',
-    alt: '',
-    desktop: {
-      left: '11%',
-      top: '86%',
-      width: 48,
-      opacity: 0.55,
-    },
+    id: 'diamond-layer-7',
+    src: '/assets/diamonds/diamond-7-lower-left.png',
+    leftDesktop: '11%',
+    topDesktop: '86%',
+    widthDesktop: 52,
+    opacityDesktop: 0.6,
+    isMobileVisible: false,
     depth: 0.35,
-    floatClass: 'animate-float-left',
-    className: 'hidden md:block',
+    driftX: 10,
+    driftY: 14,
+    rotation: -4,
+    duration: 6.4,
+    delay: 2.5,
   },
 ];
 
@@ -155,108 +156,122 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
   motionPaused = false,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const rafIdRef = useRef<number | null>(null);
-  const targetRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const currentRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const tweensRef = useRef<gsap.core.Tween[]>([]);
+  const [reducedMotion, setReducedMotion] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
 
-  // Pointer parallax controller
+  // Listen to prefers-reduced-motion changes
   useEffect(() => {
-    if (motionPaused) {
-      if (containerRef.current) {
-        containerRef.current.style.setProperty('--pv-x', '0px');
-        containerRef.current.style.setProperty('--pv-y', '0px');
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // GSAP floating animations for separate diamond layers
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    tweensRef.current.forEach((t) => t.kill());
+    tweensRef.current = [];
+
+    DIAMOND_LAYERS.forEach((d) => {
+      const el = document.getElementById(`${d.id}-float`);
+      if (!el) return;
+
+      const tween = gsap.to(el, {
+        x: d.driftX,
+        y: d.driftY,
+        rotation: d.rotation,
+        duration: d.duration,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: d.delay,
+        paused: motionPaused,
+      });
+
+      tweensRef.current.push(tween);
+    });
+
+    // Page Visibility API lifecycle
+    const handleVisibility = () => {
+      if (document.hidden) {
+        tweensRef.current.forEach((t) => t.pause());
+      } else if (!motionPaused) {
+        tweensRef.current.forEach((t) => t.resume());
       }
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
-      return;
-    }
-
-    const startLoop = () => {
-      if (rafIdRef.current !== null) return;
-
-      const update = () => {
-        const target = targetRef.current;
-        const current = currentRef.current;
-
-        // Smooth asymptotic damping
-        current.x += (target.x - current.x) * 0.08;
-        current.y += (target.y - current.y) * 0.08;
-
-        if (containerRef.current) {
-          containerRef.current.style.setProperty('--pv-x', `${current.x.toFixed(1)}px`);
-          containerRef.current.style.setProperty('--pv-y', `${current.y.toFixed(1)}px`);
-        }
-
-        // Stop loop when close to target
-        if (
-          Math.abs(target.x - current.x) < 0.02 &&
-          Math.abs(target.y - current.y) < 0.02
-        ) {
-          current.x = target.x;
-          current.y = target.y;
-          if (containerRef.current) {
-            containerRef.current.style.setProperty('--pv-x', `${current.x.toFixed(1)}px`);
-            containerRef.current.style.setProperty('--pv-y', `${current.y.toFixed(1)}px`);
-          }
-          rafIdRef.current = null;
-          return;
-        }
-
-        rafIdRef.current = requestAnimationFrame(update);
-      };
-
-      rafIdRef.current = requestAnimationFrame(update);
     };
 
-    const handlePointerMove = (e: MouseEvent) => {
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      tweensRef.current.forEach((t) => t.kill());
+      tweensRef.current = [];
+    };
+  }, [reducedMotion]);
+
+  // Sync motionPaused state with GSAP tweens
+  useEffect(() => {
+    if (motionPaused) {
+      tweensRef.current.forEach((t) => t.pause());
+    } else {
+      tweensRef.current.forEach((t) => t.resume());
+    }
+  }, [motionPaused]);
+
+  // Smooth pointer parallax with GSAP
+  useEffect(() => {
+    if (reducedMotion || motionPaused) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
       const normX = (e.clientX - cx) / cx;
       const normY = (e.clientY - cy) / cy;
 
-      // Noticeable 3D parallax excursion: max ~22px
-      targetRef.current = {
-        x: normX * 22,
-        y: normY * 22,
-      };
-
-      startLoop();
-    };
-
-    const handlePointerLeave = () => {
-      targetRef.current = { x: 0, y: 0 };
-      startLoop();
-    };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        if (rafIdRef.current) {
-          cancelAnimationFrame(rafIdRef.current);
-          rafIdRef.current = null;
+      DIAMOND_LAYERS.forEach((d) => {
+        const wrapper = document.getElementById(`${d.id}-parallax`);
+        if (wrapper) {
+          gsap.to(wrapper, {
+            x: normX * d.depth * 22,
+            y: normY * d.depth * 22,
+            duration: 1.2,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
         }
-      } else {
-        startLoop();
-      }
+      });
     };
 
-    window.addEventListener('mousemove', handlePointerMove, { passive: true });
-    document.addEventListener('mouseleave', handlePointerLeave);
-    window.addEventListener('blur', handlePointerLeave);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    const handleMouseLeave = () => {
+      DIAMOND_LAYERS.forEach((d) => {
+        const wrapper = document.getElementById(`${d.id}-parallax`);
+        if (wrapper) {
+          gsap.to(wrapper, {
+            x: 0,
+            y: 0,
+            duration: 1.5,
+            ease: 'power2.out',
+            overwrite: 'auto',
+          });
+        }
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('blur', handleMouseLeave);
 
     return () => {
-      window.removeEventListener('mousemove', handlePointerMove);
-      document.removeEventListener('mouseleave', handlePointerLeave);
-      window.removeEventListener('blur', handlePointerLeave);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('blur', handleMouseLeave);
     };
-  }, [motionPaused]);
+  }, [reducedMotion, motionPaused]);
 
   return (
     <div
@@ -264,127 +279,38 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       aria-hidden="true"
       role="presentation"
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none bg-[#000000]"
-      style={{
-        ['--pv-x' as string]: '0px',
-        ['--pv-y' as string]: '0px',
-      }}
     >
-      {/* 1. Deep Void Ambient Base: Pure Midnight Void (#000000) with faint radial depth */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-40"
-        style={{
-          background: 'radial-gradient(circle at 65% 45%, rgba(18, 23, 38, 0.45) 0%, rgba(0, 0, 0, 0.95) 70%, #000000 100%)',
-        }}
+      {/* 1. Clean void background retaining authentic black space and silver curves (all diamonds removed underneath) */}
+      <img
+        src="/assets/diamonds/void-curves-bg.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none opacity-90"
       />
 
-      {/* 2. Thin Silver Curves (Restrained, elegant SVG sweeps matching reference) */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-85"
-        viewBox="0 0 1440 900"
-        fill="none"
-        preserveAspectRatio="xMidYMid slice"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient
-            id="dvb-silver-curve-1"
-            x1="120"
-            y1="50"
-            x2="1100"
-            y2="550"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0%" stopColor="#1A2030" stopOpacity="0" />
-            <stop offset="10%" stopColor="#94A3B8" stopOpacity="0.4" />
-            <stop offset="18%" stopColor="#FFFFFF" stopOpacity="0.95" />
-            <stop offset="28%" stopColor="#D5DFEB" stopOpacity="0.8" />
-            <stop offset="45%" stopColor="#475569" stopOpacity="0.25" />
-            <stop offset="75%" stopColor="#1E293B" stopOpacity="0.1" />
-            <stop offset="100%" stopColor="#0F172A" stopOpacity="0" />
-          </linearGradient>
-
-          <linearGradient
-            id="dvb-silver-curve-2"
-            x1="100"
-            y1="650"
-            x2="1400"
-            y2="350"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0%" stopColor="#0F172A" stopOpacity="0" />
-            <stop offset="35%" stopColor="#475569" stopOpacity="0.15" />
-            <stop offset="55%" stopColor="#D5DFEB" stopOpacity="0.5" />
-            <stop offset="68%" stopColor="#FFFFFF" stopOpacity="0.95" />
-            <stop offset="78%" stopColor="#BDE7FF" stopOpacity="0.6" />
-            <stop offset="90%" stopColor="#334155" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#0F172A" stopOpacity="0" />
-          </linearGradient>
-
-          <linearGradient
-            id="dvb-silver-curve-3"
-            x1="200"
-            y1="250"
-            x2="1300"
-            y2="420"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0%" stopColor="#334155" stopOpacity="0" />
-            <stop offset="40%" stopColor="#64748B" stopOpacity="0.2" />
-            <stop offset="65%" stopColor="#94A3B8" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#1E293B" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-
-        <path
-          d="M -60 380 C 80 160 140 40 240 60 C 360 85 580 260 880 320 C 1120 370 1340 330 1520 280"
-          stroke="url(#dvb-silver-curve-1)"
-          strokeWidth="1.1"
-          strokeLinecap="round"
-          style={{ vectorEffect: 'non-scaling-stroke' }}
-        />
-
-        <path
-          d="M -30 520 C 260 560 520 720 840 640 C 1080 575 1300 420 1480 340"
-          stroke="url(#dvb-silver-curve-2)"
-          strokeWidth="1.0"
-          strokeLinecap="round"
-          style={{ vectorEffect: 'non-scaling-stroke' }}
-        />
-
-        <path
-          d="M 120 220 C 440 280 820 380 1320 360"
-          stroke="url(#dvb-silver-curve-3)"
-          strokeWidth="0.75"
-          strokeLinecap="round"
-          style={{ vectorEffect: 'non-scaling-stroke' }}
-        />
-      </svg>
-
-      {/* 3. Diamonds Layer with explicit floating classes */}
-      <div className="diamond-floating-layer absolute inset-0 w-full h-full pointer-events-none">
-        {DIAMOND_CONFIGS.map((diamond) => {
-          const depthFactor = diamond.depth;
-
+      {/* 2. Separate Animated Diamond Layers */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none">
+        {DIAMOND_LAYERS.map((diamond) => {
           return (
             <div
               key={diamond.id}
-              className={`absolute -translate-x-1/2 -translate-y-1/2 will-change-transform ${diamond.className || ''}`}
+              className={`absolute -translate-x-1/2 -translate-y-1/2 will-change-transform ${
+                diamond.isMobileVisible ? 'block' : 'hidden md:block'
+              }`}
               style={{
-                left: diamond.desktop.left,
-                top: diamond.desktop.top,
+                left: diamond.leftDesktop,
+                top: diamond.topDesktop,
               }}
             >
               {/* Parallax Wrapper */}
               <div
+                id={`${diamond.id}-parallax`}
                 className="will-change-transform"
-                style={{
-                  transform: `translate3d(calc(var(--pv-x, 0px) * ${depthFactor}), calc(var(--pv-y, 0px) * ${depthFactor}), 0)`,
-                  transition: motionPaused ? 'transform 0.4s ease-out' : 'none',
-                }}
               >
-                {/* Float & Rotation Wrapper */}
+                {/* Float & Rotation Wrapper controlled by GSAP */}
                 <div
-                  className={`will-change-transform ${diamond.floatClass} ${motionPaused ? 'animation-paused' : ''}`}
+                  id={`${diamond.id}-float`}
+                  className="will-change-transform"
                 >
                   <img
                     src={diamond.src}
@@ -395,8 +321,8 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
                     draggable={false}
                     className="select-none pointer-events-none max-w-none"
                     style={{
-                      width: `${diamond.desktop.width}px`,
-                      opacity: diamond.desktop.opacity,
+                      width: `${diamond.widthDesktop}px`,
+                      opacity: diamond.opacityDesktop,
                       filter: 'drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9))',
                     }}
                   />
@@ -407,18 +333,19 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         })}
       </div>
 
+      {/* Mobile composition styling */}
       <style>{`
         @media (max-width: 768px) {
-          ${DIAMOND_CONFIGS.filter((d) => d.mobile)
+          ${DIAMOND_LAYERS.filter((d) => d.isMobileVisible && d.leftMobile)
             .map(
               (d) => `
-            [style*="left: ${d.desktop.left}"][style*="top: ${d.desktop.top}"] {
-              left: ${d.mobile!.left} !important;
-              top: ${d.mobile!.top} !important;
+            [style*="left: ${d.leftDesktop}"][style*="top: ${d.topDesktop}"] {
+              left: ${d.leftMobile} !important;
+              top: ${d.topMobile} !important;
             }
-            [style*="left: ${d.desktop.left}"][style*="top: ${d.desktop.top}"] img {
-              width: ${d.mobile!.width}px !important;
-              opacity: ${d.mobile!.opacity} !important;
+            [style*="left: ${d.leftDesktop}"][style*="top: ${d.topDesktop}"] img {
+              width: ${d.widthMobile}px !important;
+              opacity: ${d.opacityMobile} !important;
             }
           `
             )
