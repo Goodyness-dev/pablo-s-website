@@ -217,7 +217,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
               type="button"
               onClick={handlePrev}
               aria-label="Previous receipt"
-              className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 border border-[#33332F] bg-[#111110]/90 text-[#F0EEE7] hover:border-[#F0EEE7] rounded-[2px] flex items-center justify-center transition-colors z-20 backdrop-blur-sm text-sm sm:text-base"
+              className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 border border-[#33332F] bg-[#111110]/90 text-[#F0EEE7] hover:border-transparent hover:bg-gradient-to-r hover:from-[#C1E9C2] hover:to-[#5589C2] hover:text-[#060B12] hover:shadow-[0_0_16px_rgba(193,233,194,0.5),0_0_24px_rgba(85,137,194,0.4)] rounded-[2px] flex items-center justify-center transition-all z-20 backdrop-blur-sm text-sm sm:text-base active:scale-95"
             >
               ←
             </button>
@@ -225,7 +225,7 @@ export const ImageLightbox: React.FC<ImageLightboxProps> = ({
               type="button"
               onClick={handleNext}
               aria-label="Next receipt"
-              className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 border border-[#33332F] bg-[#111110]/90 text-[#F0EEE7] hover:border-[#F0EEE7] rounded-[2px] flex items-center justify-center transition-colors z-20 backdrop-blur-sm text-sm sm:text-base"
+              className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 border border-[#33332F] bg-[#111110]/90 text-[#F0EEE7] hover:border-transparent hover:bg-gradient-to-r hover:from-[#C1E9C2] hover:to-[#5589C2] hover:text-[#060B12] hover:shadow-[0_0_16px_rgba(193,233,194,0.5),0_0_24px_rgba(85,137,194,0.4)] rounded-[2px] flex items-center justify-center transition-all z-20 backdrop-blur-sm text-sm sm:text-base active:scale-95"
             >
               →
             </button>

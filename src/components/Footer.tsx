@@ -31,11 +31,24 @@ export const Footer: React.FC<FooterProps> = ({
   };
 
   return (
-    <footer className="relative bg-[#000000] text-[#B8B6AD] py-16 border-t border-[#33332F]">
-      <div className="max-w-[1312px] mx-auto px-4 sm:px-6 md:px-8">
+    <footer className="relative overflow-hidden bg-[#000000] text-[#B8B6AD] py-16 sm:py-20 border-t border-[#33332F]/80">
+      {/* Background Image Container */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0">
+        <img
+          src="/assets/footer-bg.webp"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center filter brightness-95 contrast-[1.05]"
+        />
+        {/* Dark Editorial Vignette & Gradient Overlays for High Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000000]/80 via-[#000000]/65 to-[#000000]/85" />
+        <div className="absolute inset-0 bg-[#000000]/25 backdrop-blur-[1px]" />
+      </div>
+
+      <div className="relative z-10 max-w-[1312px] mx-auto px-4 sm:px-6 md:px-8">
         
         {/* Top Tier: Brand & Back to Top */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-12 border-b border-[#33332F]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pb-12 border-b border-[#33332F]/70">
           
           <div className="flex items-center gap-4">
             <button

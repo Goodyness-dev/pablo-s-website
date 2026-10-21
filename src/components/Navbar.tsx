@@ -134,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#contact"
             onClick={(e) => handleLinkClick(e, '#contact')}
-            className="text-xs font-medium bg-[#F0EEE7] text-[#000000] px-3 py-1.5 rounded-[2px]"
+            className="btn-primary text-xs py-1.5 px-3 tracking-wide"
           >
             Let's talk ↗
           </a>

@@ -64,7 +64,7 @@ export const TestimonialsSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={handlePrev}
-                  className="w-10 h-10 border border-[#33332F] bg-[#0A0A09] text-[#F0EEE7] hover:border-[#77776F] flex items-center justify-center rounded-[2px] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F0EEE7]"
+                  className="w-10 h-10 border border-[#33332F] bg-[#0A0A09] text-[#F0EEE7] hover:border-transparent hover:bg-gradient-to-r hover:from-[#C1E9C2] hover:to-[#5589C2] hover:text-[#060B12] hover:shadow-[0_0_16px_rgba(193,233,194,0.5),0_0_24px_rgba(85,137,194,0.4)] flex items-center justify-center rounded-[2px] transition-all focus:outline-none focus:ring-2 focus:ring-[#C1E9C2] active:scale-95"
                   aria-label="Previous quote"
                 >
                   ←
@@ -72,7 +72,7 @@ export const TestimonialsSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="w-10 h-10 border border-[#33332F] bg-[#0A0A09] text-[#F0EEE7] hover:border-[#77776F] flex items-center justify-center rounded-[2px] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F0EEE7]"
+                  className="w-10 h-10 border border-[#33332F] bg-[#0A0A09] text-[#F0EEE7] hover:border-transparent hover:bg-gradient-to-r hover:from-[#C1E9C2] hover:to-[#5589C2] hover:text-[#060B12] hover:shadow-[0_0_16px_rgba(193,233,194,0.5),0_0_24px_rgba(85,137,194,0.4)] flex items-center justify-center rounded-[2px] transition-all focus:outline-none focus:ring-2 focus:ring-[#C1E9C2] active:scale-95"
                   aria-label="Next quote"
                 >
                   →

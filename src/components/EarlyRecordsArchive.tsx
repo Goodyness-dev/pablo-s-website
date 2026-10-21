@@ -29,9 +29,9 @@ export const EarlyRecordsArchive: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveTab('multipliers')}
-              className={`px-4 py-2 text-xs font-mono rounded-[2px] transition-colors ${
+              className={`px-4 py-2 text-xs font-mono rounded-[2px] transition-all ${
                 activeTab === 'multipliers'
-                  ? 'bg-[#F0EEE7] text-[#000000] font-medium'
+                  ? 'bg-gradient-to-r from-[#C1E9C2] to-[#5589C2] text-[#060B12] font-semibold shadow-[0_0_14px_rgba(193,233,194,0.45),0_0_22px_rgba(85,137,194,0.35)]'
                   : 'text-[#B8B6AD] hover:text-[#F0EEE7]'
               }`}
             >
@@ -40,9 +40,9 @@ export const EarlyRecordsArchive: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveTab('genesis')}
-              className={`px-4 py-2 text-xs font-mono rounded-[2px] transition-colors ${
+              className={`px-4 py-2 text-xs font-mono rounded-[2px] transition-all ${
                 activeTab === 'genesis'
-                  ? 'bg-[#F0EEE7] text-[#000000] font-medium'
+                  ? 'bg-gradient-to-r from-[#C1E9C2] to-[#5589C2] text-[#060B12] font-semibold shadow-[0_0_14px_rgba(193,233,194,0.45),0_0_22px_rgba(85,137,194,0.35)]'
                   : 'text-[#B8B6AD] hover:text-[#F0EEE7]'
               }`}
             >

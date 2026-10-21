@@ -286,9 +286,9 @@ export const SelectedWork: React.FC = () => {
                       key={item.id}
                       type="button"
                       onClick={() => setActiveCloverTab(idx)}
-                      className={`text-left px-3.5 py-2.5 rounded-[2px] transition-colors flex items-center justify-between text-xs sm:text-sm ${
+                      className={`text-left px-3.5 py-2.5 rounded-[2px] transition-all flex items-center justify-between text-xs sm:text-sm ${
                         activeCloverTab === idx
-                          ? 'bg-[#F0EEE7] text-[#000000] font-medium'
+                          ? 'bg-gradient-to-r from-[#C1E9C2] to-[#5589C2] text-[#060B12] font-semibold shadow-[0_0_14px_rgba(193,233,194,0.45),0_0_24px_rgba(85,137,194,0.35)]'
                           : 'text-[#B8B6AD] hover:text-[#F0EEE7] hover:bg-[#191917]'
                       }`}
                     >
@@ -439,10 +439,10 @@ export const SelectedWork: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => { setWojakViewMode('split'); setSliderPos(50); }}
-                  className={`px-3 py-1.5 text-xs font-mono rounded-[2px] transition-colors border ${
+                  className={`px-3 py-1.5 text-xs font-mono rounded-[2px] transition-all border ${
                     wojakViewMode === 'split'
-                      ? 'bg-[#F0EEE7] text-[#000000] border-[#F0EEE7]'
-                      : 'border-[#33332F] text-[#B8B6AD] hover:text-[#F0EEE7]'
+                      ? 'bg-gradient-to-r from-[#C1E9C2] to-[#5589C2] text-[#060B12] font-semibold border-transparent shadow-[0_0_12px_rgba(193,233,194,0.45),0_0_20px_rgba(85,137,194,0.35)]'
+                      : 'border-[#33332F] text-[#B8B6AD] hover:text-[#F0EEE7] hover:border-[#5589C2]/50'
                   }`}
                 >
                   Compare
@@ -450,10 +450,10 @@ export const SelectedWork: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => { setWojakViewMode('before'); setSliderPos(0); }}
-                  className={`px-3 py-1.5 text-xs font-mono rounded-[2px] transition-colors border ${
+                  className={`px-3 py-1.5 text-xs font-mono rounded-[2px] transition-all border ${
                     wojakViewMode === 'before'
-                      ? 'bg-[#F0EEE7] text-[#000000] border-[#F0EEE7]'
-                      : 'border-[#33332F] text-[#B8B6AD] hover:text-[#F0EEE7]'
+                      ? 'bg-gradient-to-r from-[#C1E9C2] to-[#5589C2] text-[#060B12] font-semibold border-transparent shadow-[0_0_12px_rgba(193,233,194,0.45),0_0_20px_rgba(85,137,194,0.35)]'
+                      : 'border-[#33332F] text-[#B8B6AD] hover:text-[#F0EEE7] hover:border-[#5589C2]/50'
                   }`}
                 >
                   Before
@@ -461,10 +461,10 @@ export const SelectedWork: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => { setWojakViewMode('after'); setSliderPos(100); }}
-                  className={`px-3 py-1.5 text-xs font-mono rounded-[2px] transition-colors border ${
+                  className={`px-3 py-1.5 text-xs font-mono rounded-[2px] transition-all border ${
                     wojakViewMode === 'after'
-                      ? 'bg-[#F0EEE7] text-[#000000] border-[#F0EEE7]'
-                      : 'border-[#33332F] text-[#B8B6AD] hover:text-[#F0EEE7]'
+                      ? 'bg-gradient-to-r from-[#C1E9C2] to-[#5589C2] text-[#060B12] font-semibold border-transparent shadow-[0_0_12px_rgba(193,233,194,0.45),0_0_20px_rgba(85,137,194,0.35)]'
+                      : 'border-[#33332F] text-[#B8B6AD] hover:text-[#F0EEE7] hover:border-[#5589C2]/50'
                   }`}
                 >
                   After

@@ -27,7 +27,18 @@ export const FooterTicker: React.FC = () => {
 
   return (
     <footer className="relative bg-[#050608] border-t border-white/10 overflow-hidden pb-28 sm:pb-32">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 py-12 md:py-16">
+      {/* Background Image Container */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0">
+        <img
+          src="/assets/footer-bg.webp"
+          alt=""
+          aria-hidden="true"
+          className="w-full h-full object-cover object-center filter brightness-95 contrast-[1.05]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050608]/85 via-[#050608]/70 to-[#050608]/90 backdrop-blur-[1.5px]" />
+      </div>
+
+      <div className="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 py-12 md:py-16">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
           
           {/* Brand & Sign Off */}

@@ -110,11 +110,11 @@ export const OriginStory: React.FC = () => {
             </div>
 
             <div className="md:col-span-4 flex md:justify-end">
-              <div className="w-full max-w-[240px] aspect-square rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09]">
+              <div className="w-full max-w-[320px] aspect-video rounded-[2px] overflow-hidden border border-[#33332F] bg-[#0A0A09]">
                 <img
-                  src="/assets/avatar-origin.jpg"
-                  alt="Original Web 3 gains genesis avatar"
-                  className="w-full h-full object-cover filter contrast-105"
+                  src="/assets/fundraiser-browser.webp"
+                  alt="The Fundraiser"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
