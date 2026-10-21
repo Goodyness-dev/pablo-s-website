@@ -7,7 +7,7 @@ export interface Chapter {
   numeral: string;
   dateLabel: string;
   title: string;
-  sheenWord: string;
+  sheenWord?: string;
   lead: string;
   body: string;
   tagline?: string;
@@ -16,6 +16,24 @@ export interface Chapter {
   imageSrc?: string;
   imageAlt?: string;
   badgeLabel?: string;
+  caption?: string;
+  secondaryImageSrc?: string;
+  secondaryImageAlt?: string;
+  secondaryCaption?: string;
+}
+
+export interface MetricDefinition {
+  id: string;
+  label: string;
+  targetValue: number;
+  observedDisplay: string;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  unit?: string;
+  status: 'verified' | 'reported' | 'contextual';
+  periodLabel?: string;
+  sourceNote?: string;
 }
 
 export interface StatItem {
@@ -23,20 +41,33 @@ export interface StatItem {
   label: string;
   verified: boolean;
   highlight?: boolean;
+  targetNum?: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  statusNote?: string;
 }
 
 export interface CaseStudy {
   id: string;
   title: string;
+  scope: string;
   tagline: string;
   tags: string[];
   date: string;
   link?: string;
+  linkLabel?: string;
   stats: StatItem[];
   deliverables: string[];
   heroImage: string;
+  heroImageAlt?: string;
+  heroImageCaption?: string;
   secondaryImage?: string;
+  secondaryImageAlt?: string;
+  secondaryImageCaption?: string;
   verifiedQuote?: string;
+  qualifications?: string;
+  proofLinks?: { label: string; href: string }[];
 }
 
 export interface PnlReceipt {
@@ -50,21 +81,30 @@ export interface PnlReceipt {
   date: string;
   isCommunityTrade?: boolean;
   imageSrc: string;
+  caption?: string;
+  sourceNote?: string;
 }
 
 export interface ServiceItem {
   id: string;
+  number?: string;
   title: string;
-  punchline: string;
-  description: string;
-  icon: string;
-  highlights: string[];
+  summary?: string;
+  deliverables?: string[];
   imageSrc?: string;
+  imageAlt?: string;
+  punchline?: string;
+  description?: string;
+  highlights?: string[];
+  icon?: string;
 }
 
 export interface ReviewQuote {
+  id?: string;
   quote: string;
   author: string;
   role: string;
   context: string;
+  date?: string;
+  verifiedSource?: string;
 }

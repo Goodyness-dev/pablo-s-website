@@ -311,13 +311,13 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
             y2="350"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stopColor="#0F172A" stopOpacity="0" />
-            <stop offset="35%" stopColor="#475569" stopOpacity="0.15" />
-            <stop offset="55%" stopColor="#D5DFEB" stopOpacity="0.5" />
-            <stop offset="68%" stopColor="#FFFFFF" stopOpacity="0.95" />
-            <stop offset="78%" stopColor="#BDE7FF" stopOpacity="0.6" />
-            <stop offset="90%" stopColor="#334155" stopOpacity="0.2" />
-            <stop offset="100%" stopColor="#0F172A" stopOpacity="0" />
+            <stop offset="0%" stopColor="#0F0F0E" stopOpacity="0" />
+            <stop offset="35%" stopColor="#33332F" stopOpacity="0.15" />
+            <stop offset="55%" stopColor="#77776F" stopOpacity="0.5" />
+            <stop offset="68%" stopColor="#F0EEE7" stopOpacity="0.95" />
+            <stop offset="78%" stopColor="#D5D3CC" stopOpacity="0.6" />
+            <stop offset="90%" stopColor="#33332F" stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#0F0F0E" stopOpacity="0" />
           </linearGradient>
 
           <linearGradient

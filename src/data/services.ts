@@ -2,48 +2,80 @@ import { ServiceItem } from '../types';
 
 export const SERVICES: ServiceItem[] = [
   {
-    id: 'raids',
-    title: 'Raid Squad Operations',
-    punchline: 'Fast, clean, loud.',
-    description: 'Targeted, synchronized community raids that take over comment sections, push algorithm feeds, and put your launch in front of real crypto buyers.',
-    icon: 'raid',
-    highlights: ['Organized timeline takeovers', 'Real accounts, zero bot spam', 'Live raid leaderboards'],
-    imageSrc: '/assets/service-raids.jpg'
+    id: 'campaigns',
+    number: '01',
+    title: 'Community campaigns',
+    summary: 'Give coordinated community activity a clear brief, timeline, and measurable targets.',
+    deliverables: [
+      'Campaign roadmap and structured timeline',
+      'Community participation guidelines and raid briefs',
+      'Activity verification logs and engagement records',
+      'Post-campaign impact and analytics summary'
+    ],
+    imageSrc: '/assets/service-community.jpg',
+    imageAlt: 'Community campaign operations artwork'
   },
   {
-    id: 'community',
-    title: 'Community Building & Moderation',
-    punchline: 'A room that stays alive.',
-    description: 'Transform passive members into active advocates. We maintain 24/7 moderation, host community competitions, and keep morale high regardless of market conditions.',
-    icon: 'community',
-    highlights: ['High-energy culture building', 'Spam defense & scam filtration', 'Daily engagement rituals'],
-    imageSrc: '/assets/service-community.jpg'
-  },
-  {
-    id: 'ambassador',
-    title: 'Ambassador & Growth Roles',
-    punchline: 'A dedicated voice for your launch.',
-    description: 'Official representation across crypto networks. We put our brand and reputation behind your project, bridging trust between devs and the trenches.',
-    icon: 'ambassador',
-    highlights: ['Trusted public advocate', 'Cross-community introductions', 'Direct investor trust'],
-    imageSrc: '/assets/service-ambassador.jpg'
+    id: 'operations',
+    number: '02',
+    title: 'Community operations & moderation',
+    summary: 'Keep the room informed, filtered, and active regardless of market conditions.',
+    deliverables: [
+      'Defined moderation coverage and escalation protocol',
+      'Scheduled project announcement and news cadence',
+      'Spam, scam, and malicious link filtration',
+      'Regular community engagement rituals and voice sessions'
+    ],
+    imageSrc: '/assets/service-raids.jpg',
+    imageAlt: 'Community moderation and raid squad visual'
   },
   {
     id: 'spaces',
-    title: 'X Spaces & Live Audio',
-    punchline: 'Hosted live, recorded, shared.',
-    description: 'Professional X Space hosting that commands attention. Deep-dive interviews, live AMAs, and high-energy shill sessions that convert casual listeners into holders.',
-    icon: 'spaces',
-    highlights: ['45-60 min high-energy hosting', 'Key CT guests & co-hosts', 'Recorded audio cutdowns'],
-    imageSrc: '/assets/service-spaces.jpg'
+    number: '03',
+    title: 'X Spaces & live conversations',
+    summary: 'Build a live audio conversation that holders, traders, and founders can join and follow.',
+    deliverables: [
+      'Topic curation and structured agenda preparation',
+      'Co-host and high-signal guest coordination',
+      '45–60 minute professional hosting by @IZYCHE_',
+      'Post-event audio cutdowns, highlights, and thread recap'
+    ],
+    imageSrc: '/assets/service-spaces.jpg',
+    imageAlt: 'X Spaces and live audio hosting visual'
   },
   {
-    id: 'vote-trending',
-    title: 'Vote Trending & Scanner Heat',
-    punchline: 'Eyes on the chart.',
-    description: 'Organic boost strategies that get your token noticed on top ranking scanners, DEX tools, and voting platforms right when liquidity is flowing.',
-    icon: 'trending',
-    highlights: ['Multi-platform trending rank', 'Coordinated voting sprints', 'Maximum launch visibility'],
-    imageSrc: '/assets/service-trending.jpg'
+    id: 'ambassador',
+    number: '04',
+    title: 'Ambassador representation',
+    summary: 'Put an accountable, recognized public voice behind the project across crypto networks.',
+    deliverables: [
+      'Documented ambassadorship scope and duration',
+      'Public representation on X Spaces and ecosystem stages',
+      'Regular project-focused content and commentary',
+      'Transparent milestone reporting to founding team'
+    ],
+    imageSrc: '/assets/service-ambassador.jpg',
+    imageAlt: 'Ambassador representation artwork'
+  },
+  {
+    id: 'positioning',
+    number: '05',
+    title: 'Content & utility positioning',
+    summary: 'Explain what the product actually does and why someone would hold or use it.',
+    deliverables: [
+      'Core narrative framework and relatable market hooks',
+      'High-conversion launch threads and educational breakdowns',
+      'DEX, scanner, and voting visibility strategies',
+      'Clear measurement methodology for traffic and retention'
+    ],
+    imageSrc: '/assets/service-trending.jpg',
+    imageAlt: 'Content and utility positioning visual'
   }
+];
+
+export const PROCESS_STEPS = [
+  { step: '01', title: 'Understand the project', description: 'Inspect the tokenomics, utility, community foundation, and current friction points.' },
+  { step: '02', title: 'Define the scope', description: 'Establish clear deliverables, communication cadence, and baseline metrics before kicking off.' },
+  { step: '03', title: 'Run the work', description: 'Execute coordinated campaigns, live Spaces, community operations, and public distribution.' },
+  { step: '04', title: 'Review the record', description: 'Deliver honest analytics, archive the receipts, and plan sustainable retention.' }
 ];

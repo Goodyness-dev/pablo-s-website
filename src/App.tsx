@@ -1,64 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { DiamondStage } from './types';
-import { STORY_CHAPTERS } from './data/storyChapters';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { DiamondVoidBackground } from './components/DiamondVoidBackground';
-import { Loader } from './components/Loader';
 import { Hero } from './components/Hero';
-import { WhoIsFundraiser } from './components/WhoIsFundraiser';
-import { ChapterSection } from './components/ChapterSection';
-import { CaseStudyClover } from './components/CaseStudyClover';
-import { CaseStudyWojak } from './components/CaseStudyWojak';
-import { PartnerEtherArchive } from './components/PartnerEtherArchive';
-import { PartnerRentsDue } from './components/PartnerRentsDue';
-import { PnlCarousel } from './components/PnlCarousel';
-import { FundraiserEraHeader } from './components/FundraiserEraHeader';
-import { ServicesGrid } from './components/ServicesGrid';
-import { Reviews } from './components/Reviews';
-import { ArchiveMasonry } from './components/ArchiveMasonry';
-import { ContactChain } from './components/ContactChain';
-import { FooterTicker } from './components/FooterTicker';
-import { ProgressRail } from './components/ProgressRail';
-import { BottomDock } from './components/BottomDock';
+import { OriginStory } from './components/OriginStory';
+import { SelectedWork } from './components/SelectedWork';
+import { PartnerLedger } from './components/PartnerLedger';
+import { ServicesSection } from './components/ServicesSection';
+import { TestimonialsSection } from './components/TestimonialsSection';
+import { EarlyRecordsArchive } from './components/EarlyRecordsArchive';
+import { ContactSection } from './components/ContactSection';
+import { Footer } from './components/Footer';
 import { ImageLightbox, LightboxItem } from './components/ImageLightbox';
-import { WorkCardStack } from './components/WorkCardStack';
 
 export const App: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [currentStage, setCurrentStage] = useState<DiamondStage>(0);
   const [activeSection, setActiveSection] = useState('story');
-  const [soundEnabled, setSoundEnabled] = useState(false);
   const [motionPaused, setMotionPaused] = useState(false);
-  const [hideTopNavbar, setHideTopNavbar] = useState(false);
-  const lastScrollY = useRef(0);
-  const audioCtxRef = useRef<AudioContext | null>(null);
 
-  const handleToggleMotion = () => {
-    setMotionPaused((prev) => !prev);
-  };
-
-  // Scroll direction detection: hide top navbar on scroll down
-  useEffect(() => {
-    const handleScroll = () => {
-      const current = window.scrollY;
-      if (current <= 30) {
-        setHideTopNavbar(false);
-      } else if (current > lastScrollY.current && current > 50) {
-        setHideTopNavbar(true);
-      } else if (current < lastScrollY.current - 12) {
-        setHideTopNavbar(false);
-      }
-      if (current <= 200) {
-        setActiveSection('story');
-      }
-      lastScrollY.current = current;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Unified Lightbox State
+  // Unified Lightbox State for high-resolution inspection
   const [lightboxState, setLightboxState] = useState<{
     isOpen: boolean;
     items: LightboxItem[];
@@ -69,7 +27,7 @@ export const App: React.FC = () => {
     initialIndex: 0,
   });
 
-  const handleOpenSingleImage = (item: LightboxItem) => {
+  const handleOpenLightbox = (item: LightboxItem) => {
     setLightboxState({
       isOpen: true,
       items: [item],
@@ -77,239 +35,90 @@ export const App: React.FC = () => {
     });
   };
 
-  const handleOpenGallery = (items: LightboxItem[], initialIndex = 0) => {
-    setLightboxState({
-      isOpen: true,
-      items,
-      initialIndex,
-    });
-  };
-
   const handleCloseLightbox = () => {
     setLightboxState((prev) => ({ ...prev, isOpen: false }));
   };
 
-  // Play subtle synthetic crystalline chime when sound is enabled
-  const playChime = (freq = 880) => {
-    if (!soundEnabled) return;
-    try {
-      if (!audioCtxRef.current) {
-        audioCtxRef.current = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-      }
-      const ctx = audioCtxRef.current;
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, ctx.currentTime);
-      gain.gain.setValueAtTime(0.04, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.6);
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 0.6);
-    } catch {
-      // Audio fallback silent
-    }
+  const handleToggleMotion = () => {
+    setMotionPaused((prev) => !prev);
   };
 
-  const handleToggleSound = () => {
-    const next = !soundEnabled;
-    setSoundEnabled(next);
-    if (next) {
-      setTimeout(() => playChime(1174.66), 50); // High D crystalline tone
-    }
-  };
-
-  // Scroll stage & active section tracking via IntersectionObserver
+  // Section Tracking for Navbar
   useEffect(() => {
-    const stageElements = [
-      { id: 'story', stage: 0 as DiamondStage, section: 'story' },
-      { id: 'chapter-01', stage: 0 as DiamondStage, section: 'work' },
-      { id: 'chapter-02', stage: 1 as DiamondStage, section: 'work' },
-      { id: 'chapter-03', stage: 2 as DiamondStage, section: 'work' },
-      { id: 'chapter-04', stage: 3 as DiamondStage, section: 'work' },
-      { id: 'services', stage: 3 as DiamondStage, section: 'services' },
-      { id: 'reviews', stage: 3 as DiamondStage, section: 'reviews' },
-      { id: 'contact', stage: 4 as DiamondStage, section: 'contact' },
-    ];
-
+    const sections = ['story', 'work', 'services', 'archive', 'testimonials', 'contact'];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const found = stageElements.find((item) => item.id === entry.target.id);
-            if (found) {
-              setCurrentStage((prev) => {
-                if (prev !== found.stage) {
-                  playChime(700 + found.stage * 100);
-                }
-                return found.stage;
-              });
-              setActiveSection(found.section);
-            }
+            setActiveSection(entry.target.id);
           }
         });
       },
-      { threshold: 0.05, rootMargin: '-80px 0px 0px 0px' }
+      { threshold: 0.25, rootMargin: '-60px 0px -40% 0px' }
     );
 
-    stageElements.forEach((item) => {
-      const el = document.getElementById(item.id);
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, [soundEnabled]);
-
-  const handleWatchCut = () => {
-    const el = document.getElementById('chapter-01');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleSelectStage = (stage: DiamondStage) => {
-    setCurrentStage(stage);
-    let targetId = 'chapter-01';
-    if (stage === 0) targetId = 'chapter-01';
-    else if (stage === 1) targetId = 'chapter-02';
-    else if (stage === 2) targetId = 'chapter-03';
-    else if (stage === 3) targetId = 'chapter-04';
-    else if (stage === 4) targetId = 'contact';
-
-    const el = document.getElementById(targetId);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#000000] text-[#F8FAFC] selection:bg-[#6FD8FF]/20 selection:text-[#BDE7FF]">
-      {/* 2.5D Animated Diamond Void Background */}
+    <div className="relative min-h-screen bg-[#000000] text-[#F0EEE7] selection:bg-[#F0EEE7] selection:text-[#000000]">
+      
+      {/* Restrained Silver Diamond Void Background */}
       <DiamondVoidBackground motionPaused={motionPaused} />
 
-      {/* 1.8s Stone Cutting Intro Loader */}
-      {loading && <Loader onComplete={() => setLoading(false)} />}
-
-      {/* Global Grain Texture Overlay */}
-      <div
-        className="fixed inset-0 pointer-events-none z-50 opacity-[0.025]"
-        style={{
-          backgroundImage:
-            'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")',
-        }}
-      />
-
-      {/* Sticky Top Navigation (Hides when user scrolls down) */}
+      {/* Sticky Editorial Navigation */}
       <Navbar
-        soundEnabled={soundEnabled}
-        onToggleSound={handleToggleSound}
         motionPaused={motionPaused}
         onToggleMotion={handleToggleMotion}
         activeSection={activeSection}
-        hidden={hideTopNavbar}
       />
 
-      {/* Progress Diamond Rail (Vertical on Desktop, Horizontal on Mobile) */}
-      <ProgressRail
-        currentStage={currentStage}
-        onSelectStage={handleSelectStage}
-        navbarHidden={hideTopNavbar}
-      />
-
-      {/* Main Content Stream */}
+      {/* Main Editorial Stream */}
       <main className="relative z-10">
-        {/* 1. Hero */}
-        <Hero onWatchCut={handleWatchCut} />
+        {/* Thesis Statement Hero */}
+        <Hero />
 
-        {/* 2. Story: Who is The Fundraiser (Story starts here) */}
-        <WhoIsFundraiser />
+        {/* 01 / Origins Story: 4-Milestone Chronology + Typewriter + Pinned Evidence */}
+        <OriginStory onOpenLightbox={handleOpenLightbox} />
 
-        {/* 3. Work Section — stacked chapter reveals, then sub-content below */}
-        <section id="work" className="relative py-12 sm:py-16 md:py-24 scroll-mt-20 sm:scroll-mt-24">
+        {/* 02 / Selected Work: Clover Boys (Counters & Evidence) + Wojak Meter (Before/After) */}
+        <SelectedWork onOpenLightbox={handleOpenLightbox} />
 
-          {/* === STACKED CARD REVEAL: one ChapterSection per card === */}
-          <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
-            <WorkCardStack>
-              {/* Card 01 — The Trenches */}
-              <ChapterSection
-                chapter={STORY_CHAPTERS[0]}
-                reverse={false}
-                onOpenLightbox={handleOpenSingleImage}
-                cardMode
-              />
-              {/* Card 02 — Pleased Devs */}
-              <ChapterSection
-                chapter={STORY_CHAPTERS[1]}
-                reverse={true}
-                onOpenLightbox={handleOpenSingleImage}
-                cardMode
-              />
-              {/* Card 03 — The Fundraiser */}
-              <ChapterSection
-                chapter={STORY_CHAPTERS[2]}
-                reverse={false}
-                onOpenLightbox={handleOpenSingleImage}
-                cardMode
-              />
-              {/* Card 04 — Fundraisers Web */}
-              <ChapterSection
-                chapter={STORY_CHAPTERS[3]}
-                reverse={true}
-                onOpenLightbox={handleOpenSingleImage}
-                cardMode
-              />
-            </WorkCardStack>
-          </div>
+        {/* Partnerships & Collaborations Ledger */}
+        <PartnerLedger onOpenLightbox={handleOpenLightbox} />
 
-          {/* === NORMAL FLOW: sub-content that belongs to the work section === */}
-          <div className="max-w-[1240px] mx-auto px-4 sm:px-6 mt-16">
-            {/* Section 1: Pleasing Devs Era Records */}
-            <PnlCarousel onOpenLightbox={handleOpenGallery} />
+        {/* 03 / How We Work: 5 Numbered Rows & Deliverables + Process Strip */}
+        <ServicesSection onOpenLightbox={handleOpenLightbox} />
 
-            {/* Section 2: The Fundraiser Era (Diamond-Inspired Theme Header) */}
-            <FundraiserEraHeader />
+        {/* In Their Words: Editorial Testimonial Quotations */}
+        <TestimonialsSection />
 
-            {/* Case Study A: Clover Boys */}
-            <CaseStudyClover onOpenLightbox={handleOpenSingleImage} />
+        {/* Historical Vault: Multipliers & Genesis Artifacts */}
+        <EarlyRecordsArchive onOpenLightbox={handleOpenLightbox} />
 
-            {/* Case Study B: Wojak Meter (belongs to Chapter 05) */}
-            <CaseStudyWojak onOpenLightbox={handleOpenSingleImage} />
-
-            {/* Ether Archive Alliance (belongs to Chapter 06) */}
-            <PartnerEtherArchive onOpenLightbox={handleOpenSingleImage} />
-
-            {/* Rents Due Partnership ($RENT) */}
-            <PartnerRentsDue onOpenLightbox={handleOpenSingleImage} />
-          </div>
-
-        </section>
-
-        {/* 4. Agency Services */}
-        <ServicesGrid onOpenLightbox={handleOpenSingleImage} />
-
-        {/* 7. Client & Founder Reviews */}
-        <Reviews />
-
-        {/* 8. The Historical Archive */}
-        <ArchiveMasonry onOpenLightbox={handleOpenGallery} />
-
-        {/* 9. Contact Chain Section */}
-        <ContactChain />
+        {/* 04 / Your Next Chapter: Direct Telegram + Project Brief */}
+        <ContactSection />
       </main>
 
-      {/* Floating Bottom Navigation Dock (OpenCircle Signature) */}
-      <BottomDock activeSection={activeSection} />
+      {/* Editorial Footer with Motion Toggle & Mascot */}
+      <Footer
+        motionPaused={motionPaused}
+        onToggleMotion={handleToggleMotion}
+      />
 
-      {/* 10. Footer with GM Ticker & 7-Click Easter Egg */}
-      <FooterTicker />
-
-      {/* Universal Touch-Native Lightbox & Zoom Viewer */}
+      {/* Touch-Native Image Lightbox */}
       <ImageLightbox
         isOpen={lightboxState.isOpen}
         onClose={handleCloseLightbox}
         items={lightboxState.items}
         initialIndex={lightboxState.initialIndex}
       />
+
     </div>
   );
 };

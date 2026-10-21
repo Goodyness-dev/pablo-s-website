@@ -77,7 +77,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onOpenLightbox }) =>
 
               {/* Minimalist Highlights */}
               <div className="space-y-1.5 pt-3 border-t border-white/[0.06]">
-                {service.highlights.map((h, i) => (
+                {service.highlights?.map((h: string, i: number) => (
                   <div key={i} className="flex items-center gap-2 font-mono text-[11px] text-[#CBD5E1]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#6FD8FF]/80 shrink-0" />
                     <span>{h}</span>
