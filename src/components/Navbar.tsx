@@ -76,8 +76,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-1.5">
-              <span className="font-display font-extrabold text-xs sm:text-sm tracking-tight text-[#F8FAFC] group-hover:text-[#BDE7FF] transition-colors">
+              <span className="font-display font-extrabold text-xs sm:text-sm tracking-tight text-[#F8FAFC] group-hover:text-[#BDE7FF] transition-colors flex items-center gap-1">
                 THE FUNDRAISER
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" className="text-[#6FD8FF] opacity-80 group-hover:opacity-100 transition-opacity">
+                  <path d="M6 3H18L22 9L12 21L2 9L6 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </span>
               <span className="hidden sm:inline-flex w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
             </div>

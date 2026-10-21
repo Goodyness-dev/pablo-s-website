@@ -39,6 +39,22 @@ export const Hero: React.FC<HeroProps> = ({ onWatchCut }) => {
           {/* Left Text Column */}
           <div className="order-2 lg:order-1 lg:col-span-6 flex flex-col text-center lg:text-left items-center lg:items-start">
             
+            {/* Diamond-Inspired "THE FUNDRAISER" Crest Badge */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#0C1222] via-[#10182E] to-[#0C1222] border border-[#6FD8FF]/35 shadow-[0_0_24px_rgba(111,216,255,0.2)] mb-4 sm:mb-5 group backdrop-blur-md">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" className="shrink-0 text-[#6FD8FF]">
+                <path d="M6 3H18L22 9L12 21L2 9L6 3Z" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M12 21L8 9L12 3L16 9L12 21Z" stroke="#BDE7FF" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M2 9H22" stroke="currentColor" strokeWidth="1.5"/>
+              </svg>
+              <span className="font-display font-extrabold text-xs tracking-wider text-[#F8FAFC]">
+                THE FUNDRAISER
+              </span>
+              <span className="w-[1px] h-3 bg-white/20" />
+              <span className="font-mono text-[10px] text-[#6FD8FF] uppercase tracking-wider font-semibold">
+                Diamond Grade
+              </span>
+            </div>
+
             {/* Main Headline */}
             <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] tracking-tight text-[#F8FAFC] mb-4 sm:mb-6">
               Pressure makes <br className="hidden sm:inline" />
