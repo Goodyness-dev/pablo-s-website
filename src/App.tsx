@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { DiamondStage } from './types';
 import { STORY_CHAPTERS } from './data/storyChapters';
 import { Navbar } from './components/Navbar';
+import { DiamondVoidBackground } from './components/DiamondVoidBackground';
 import { Loader } from './components/Loader';
 import { Hero } from './components/Hero';
 import { WhoIsFundraiser } from './components/WhoIsFundraiser';
@@ -27,9 +28,14 @@ export const App: React.FC = () => {
   const [currentStage, setCurrentStage] = useState<DiamondStage>(0);
   const [activeSection, setActiveSection] = useState('story');
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [motionPaused, setMotionPaused] = useState(false);
   const [hideTopNavbar, setHideTopNavbar] = useState(false);
   const lastScrollY = useRef(0);
   const audioCtxRef = useRef<AudioContext | null>(null);
+
+  const handleToggleMotion = () => {
+    setMotionPaused((prev) => !prev);
+  };
 
   // Scroll direction detection: hide top navbar on scroll down
   useEffect(() => {
@@ -177,7 +183,10 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#050608] text-[#F8FAFC] selection:bg-[#6FD8FF]/20 selection:text-[#BDE7FF]">
+    <div className="relative min-h-screen bg-[#000000] text-[#F8FAFC] selection:bg-[#6FD8FF]/20 selection:text-[#BDE7FF]">
+      {/* 2.5D Animated Diamond Void Background */}
+      <DiamondVoidBackground motionPaused={motionPaused} />
+
       {/* 1.8s Stone Cutting Intro Loader */}
       {loading && <Loader onComplete={() => setLoading(false)} />}
 
@@ -194,6 +203,8 @@ export const App: React.FC = () => {
       <Navbar
         soundEnabled={soundEnabled}
         onToggleSound={handleToggleSound}
+        motionPaused={motionPaused}
+        onToggleMotion={handleToggleMotion}
         activeSection={activeSection}
         hidden={hideTopNavbar}
       />

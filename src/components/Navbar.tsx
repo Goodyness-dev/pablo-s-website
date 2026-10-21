@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 interface NavbarProps {
   soundEnabled: boolean;
   onToggleSound: () => void;
+  motionPaused?: boolean;
+  onToggleMotion?: () => void;
   activeSection: string;
   hidden?: boolean;
 }
@@ -10,6 +12,8 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   soundEnabled,
   onToggleSound,
+  motionPaused = false,
+  onToggleMotion,
   activeSection,
   hidden = false,
 }) => {
@@ -148,6 +152,38 @@ export const Navbar: React.FC<NavbarProps> = ({
               </>
             )}
           </button>
+
+          {/* Accessible Background Motion Toggle Button */}
+          {onToggleMotion && (
+            <button
+              type="button"
+              onClick={onToggleMotion}
+              aria-label={motionPaused ? 'Resume background animation' : 'Pause background animation'}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-mono transition-all active:scale-95 ${
+                motionPaused
+                  ? 'bg-[#1a1710] border-amber-400/40 text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.2)]'
+                  : 'bg-[#0E1220]/70 border-white/10 text-[#94A3B8] hover:text-[#F8FAFC] hover:border-white/20'
+              }`}
+              title={motionPaused ? 'Background motion: Paused' : 'Background motion: Active'}
+            >
+              {motionPaused ? (
+                <>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  <span className="text-[11px] hidden sm:inline">Play</span>
+                </>
+              ) : (
+                <>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                    <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                  </svg>
+                  <span className="text-[11px] hidden sm:inline">Motion</span>
+                </>
+              )}
+            </button>
+          )}
 
           {/* Primary Metallic Action Button */}
           <a
