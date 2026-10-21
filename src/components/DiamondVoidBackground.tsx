@@ -43,7 +43,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       width: 90,
       opacity: 0.9,
     },
-    depth: 0.9,
+    depth: 1.2,
     floatClass: 'animate-float-left',
     className: 'block',
   },
@@ -64,7 +64,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       width: 95,
       opacity: 0.9,
     },
-    depth: 1.0,
+    depth: 1.35,
     floatClass: 'animate-float-right',
     className: 'block',
   },
@@ -85,7 +85,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       width: 36,
       opacity: 0.65,
     },
-    depth: 0.45,
+    depth: 0.7,
     floatClass: 'animate-float-top',
     className: 'block',
   },
@@ -100,7 +100,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       width: 38,
       opacity: 0.58,
     },
-    depth: 0.3,
+    depth: 0.5,
     floatClass: 'animate-float-side',
     className: 'hidden md:block',
   },
@@ -115,7 +115,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       width: 34,
       opacity: 0.5,
     },
-    depth: 0.25,
+    depth: 0.4,
     floatClass: 'animate-float-top',
     className: 'hidden md:block',
   },
@@ -130,7 +130,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       width: 86,
       opacity: 0.75,
     },
-    depth: 0.7,
+    depth: 1.0,
     floatClass: 'animate-float-side',
     className: 'hidden lg:block',
   },
@@ -145,7 +145,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
       width: 48,
       opacity: 0.55,
     },
-    depth: 0.35,
+    depth: 0.55,
     floatClass: 'animate-float-left',
     className: 'hidden md:block',
   },
@@ -180,9 +180,9 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         const target = targetRef.current;
         const current = currentRef.current;
 
-        // Smooth asymptotic damping
-        current.x += (target.x - current.x) * 0.08;
-        current.y += (target.y - current.y) * 0.08;
+        // Snappy, agile damping for rigorous responsiveness
+        current.x += (target.x - current.x) * 0.12;
+        current.y += (target.y - current.y) * 0.12;
 
         if (containerRef.current) {
           containerRef.current.style.setProperty('--pv-x', `${current.x.toFixed(1)}px`);
@@ -216,10 +216,10 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       const normX = (e.clientX - cx) / cx;
       const normY = (e.clientY - cy) / cy;
 
-      // Noticeable 3D parallax excursion: max ~22px
+      // Rigorous 3D parallax excursion: max ~48px
       targetRef.current = {
-        x: normX * 22,
-        y: normY * 22,
+        x: normX * 48,
+        y: normY * 48,
       };
 
       startLoop();
@@ -230,7 +230,7 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       startLoop();
     };
 
-    // Mobile touch interaction
+    // Mobile touch interaction: vigorous response on swipe
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches && e.touches.length > 0) {
         const touch = e.touches[0];
@@ -240,8 +240,8 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         const normY = (touch.clientY - cy) / cy;
 
         targetRef.current = {
-          x: Math.max(-1, Math.min(1, normX)) * 20,
-          y: Math.max(-1, Math.min(1, normY)) * 20,
+          x: Math.max(-1, Math.min(1, normX)) * 45,
+          y: Math.max(-1, Math.min(1, normY)) * 45,
         };
 
         startLoop();
@@ -253,7 +253,7 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       startLoop();
     };
 
-    // Scroll parallax dynamic impulse (for mobile and desktop)
+    // Scroll parallax dynamic impulse: energetic surge on scroll
     let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
     let scrollTimeout: number | null = null;
 
@@ -262,8 +262,8 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       const deltaY = scrollY - lastScrollY;
       lastScrollY = scrollY;
 
-      // React to scroll velocity
-      const clampedDelta = Math.max(-20, Math.min(20, deltaY * 0.35));
+      // Rigorous reaction to scroll velocity (surges up to ±55px)
+      const clampedDelta = Math.max(-55, Math.min(55, deltaY * 0.65));
       targetRef.current = {
         x: targetRef.current.x,
         y: clampedDelta,
@@ -274,17 +274,17 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
       scrollTimeout = window.setTimeout(() => {
         targetRef.current = { x: targetRef.current.x, y: 0 };
         startLoop();
-      }, 150);
+      }, 160);
     };
 
-    // Device orientation tilt (gyroscope on mobile)
+    // Device orientation tilt (gyroscope on mobile: rigorous ±36px range)
     const handleOrientation = (e: DeviceOrientationEvent) => {
       if (e.gamma !== null && e.beta !== null) {
-        const normX = Math.max(-1, Math.min(1, e.gamma / 25));
-        const normY = Math.max(-1, Math.min(1, (e.beta - 45) / 25));
+        const normX = Math.max(-1, Math.min(1, e.gamma / 22));
+        const normY = Math.max(-1, Math.min(1, (e.beta - 45) / 22));
         targetRef.current = {
-          x: normX * 16,
-          y: normY * 16,
+          x: normX * 36,
+          y: normY * 36,
         };
         startLoop();
       }
