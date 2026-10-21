@@ -140,6 +140,14 @@ export const CLOVER_EVIDENCE_GALLERY = [
     caption: 'Original character asset from the official campaign launch.'
   },
   {
+    id: 'clover-mascot-hoodie',
+    title: 'Clover Boys 3D Mascot',
+    category: 'Campaign Identity',
+    src: '/assets/clover-hoodie-character.png',
+    alt: 'Clover Boys 3D hoodie mascot character',
+    caption: 'Official 3D campaign mascot wearing signature Clover Boys hoodie.'
+  },
+  {
     id: 'clover-raid',
     title: 'Community Raid Engagement',
     category: 'Raid Sprint',
