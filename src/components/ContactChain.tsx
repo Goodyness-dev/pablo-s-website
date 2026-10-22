@@ -71,7 +71,14 @@ export const ContactChain: React.FC = () => {
             <span className="ml-2 text-[#6FD8FF] group-hover:translate-x-1 transition-transform">→</span>
           </a>
 
-          <div className="mt-4 flex items-center gap-3 text-xs font-mono text-[#94A3B8]">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-[#94A3B8]">
+            <a
+              href="mailto:zafundraiser007@gmail.com"
+              className="hover:text-[#6FD8FF] transition-colors"
+            >
+              Email (zafundraiser007@gmail.com) ↗
+            </a>
+            <span>·</span>
             <a
               href="https://x.com/IZYCHE_"
               target="_blank"

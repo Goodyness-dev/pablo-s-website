@@ -138,6 +138,12 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="pt-8 flex flex-col md:flex-row md:items-center justify-between gap-6 text-xs font-mono text-[#A7A69F]">
           <div className="flex flex-wrap gap-6 items-center">
             <a
+              href="mailto:zafundraiser007@gmail.com"
+              className="hover:text-[#F0EEE7] transition-colors"
+            >
+              Email ↗
+            </a>
+            <a
               href="https://x.com/IZYCHE_"
               target="_blank"
               rel="noopener noreferrer"
