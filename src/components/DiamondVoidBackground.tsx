@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 export interface DiamondVoidBackgroundProps {
   motionPaused?: boolean;
+  theme?: 'dark' | 'light';
 }
 
 interface DiamondConfig {
@@ -153,6 +154,7 @@ const DIAMOND_CONFIGS: DiamondConfig[] = [
 
 export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
   motionPaused = false,
+  theme = 'dark',
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rafIdRef = useRef<number | null>(null);
@@ -342,11 +344,15 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
         ['--pv-y' as string]: '0px',
       }}
     >
-      {/* 1. Deep Void Ambient Base: Pure Midnight Void (#000000) with faint radial depth */}
+      {/* 1. Deep Void Ambient Base: Midnight Void or Soft Stone */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-40"
+        className="absolute inset-0 pointer-events-none transition-opacity duration-300"
         style={{
-          background: 'radial-gradient(circle at 65% 45%, rgba(18, 23, 38, 0.45) 0%, rgba(0, 0, 0, 0.95) 70%, #000000 100%)',
+          background:
+            theme === 'light'
+              ? 'radial-gradient(circle at 65% 45%, rgba(193, 233, 194, 0.18) 0%, rgba(85, 137, 194, 0.12) 40%, rgba(248, 247, 244, 0.95) 75%, #F8F7F4 100%)'
+              : 'radial-gradient(circle at 65% 45%, rgba(18, 23, 38, 0.45) 0%, rgba(0, 0, 0, 0.95) 70%, #000000 100%)',
+          opacity: theme === 'light' ? 0.7 : 0.4,
         }}
       />
 
@@ -470,7 +476,10 @@ export const DiamondVoidBackground: React.FC<DiamondVoidBackgroundProps> = ({
                     style={{
                       width: `${diamond.desktop.width}px`,
                       opacity: diamond.desktop.opacity,
-                      filter: 'drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9))',
+                      filter:
+                        theme === 'light'
+                          ? 'drop-shadow(0 10px 22px rgba(0, 0, 0, 0.16))'
+                          : 'drop-shadow(0 15px 30px rgba(0, 0, 0, 0.9))',
                     }}
                   />
                 </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SERVICES, PROCESS_STEPS } from '../data/services';
 
 export const ServicesSection: React.FC = () => {
-  const [expandedId, setExpandedId] = useState<string | null>('campaigns');
+  const [expandedId, setExpandedId] = useState<string | null>('publicity-visibility');
 
   const toggleRow = (id: string) => {
     setExpandedId((prev) => (prev === id ? null : id));
