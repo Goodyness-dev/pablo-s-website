@@ -10,6 +10,7 @@ if (typeof window !== 'undefined') {
 export const SelectedWork: React.FC = () => {
   const cloverCase = CASE_STUDIES[0];
   const wojakCase = CASE_STUDIES[1];
+  const etherCase = CASE_STUDIES[2];
 
   // Clover Evidence Tab State
   const [activeCloverTab, setActiveCloverTab] = useState(0);
@@ -548,6 +549,153 @@ export const SelectedWork: React.FC = () => {
           </div>
 
         </article>
+
+        {/* =========================================================================
+            9. ETHER ARCHIVE
+           ========================================================================= */}
+        {etherCase && (
+          <article className="pt-24 border-t border-[#33332F] mt-24">
+            
+            {/* Header Info */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+              <div className="lg:col-span-8">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#A7A69F]">
+                    {etherCase.date} • ETHEREUM MAINNET
+                  </span>
+                </div>
+                <h3 className="font-display font-bold text-4xl sm:text-5xl uppercase tracking-tight text-[#F0EEE7] mb-2">
+                  {etherCase.title}
+                </h3>
+                <p className="font-mono text-sm text-[#F0EEE7] mb-4">
+                  {etherCase.scope}
+                </p>
+                <p className="font-body text-xl sm:text-2xl text-[#F0EEE7] leading-relaxed mb-4 font-medium">
+                  {etherCase.tagline}
+                </p>
+                <p className="font-body text-base sm:text-lg text-[#B8B6AD] leading-relaxed max-w-[700px]">
+                  A record of the Ethereum network. We spearheaded tech interface development and strategic community whitelist distribution for Ether Archive's interactive CLI dApp.
+                </p>
+              </div>
+
+              <div className="lg:col-span-4 flex flex-col justify-between items-start lg:items-end border-t lg:border-t-0 lg:border-l border-[#33332F] pt-6 lg:pt-0 lg:pl-8">
+                <div className="w-full flex items-center justify-between text-xs text-[#A7A69F] font-mono mb-3">
+                  <span>LIVE PLATFORM</span>
+                  <a
+                    href={etherCase.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-[#F0EEE7] hover:underline"
+                  >
+                    {etherCase.linkLabel}
+                  </a>
+                </div>
+
+                <div className="w-full my-3 flex flex-col gap-2 bg-[#0A0A09] border border-[#33332F] p-3 rounded-[2px] font-mono text-xs">
+                  <div className="flex items-center justify-between text-[#A7A69F]">
+                    <span>STATUS</span>
+                    <span className="text-[#10B981]">ONLINE // READY</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[#A7A69F]">
+                    <span>TERMINAL</span>
+                    <span className="text-[#F0EEE7]">5 COMMANDS</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[#A7A69F]">
+                    <span>NETWORK</span>
+                    <span className="text-[#F0EEE7]">ETHEREUM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Metrics Strip */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 py-6 border-y border-[#33332F] mb-12">
+              {etherCase.stats.map((stat, sIdx) => (
+                <div key={sIdx}>
+                  <span className="font-mono text-xs text-[#A7A69F] uppercase block mb-1">
+                    {stat.label}
+                  </span>
+                  <div className="font-display font-bold text-3xl sm:text-4xl text-[#F0EEE7] tabular-numbers leading-none mb-1">
+                    {stat.value}
+                  </div>
+                  <span className="font-mono text-[10px] text-[#A7A69F] block">
+                    {stat.statusNote}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Main Interactive Terminal Visual Showcase */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              
+              {/* Left Column: Scope and Deliverables */}
+              <div className="lg:col-span-5 border border-[#33332F] bg-[#111110] p-6 rounded-[2px]">
+                <span className="font-mono text-xs uppercase tracking-wider text-[#A7A69F] block mb-4">
+                  Delivered Scope &amp; Tech Architecture
+                </span>
+                <ul className="space-y-3 text-sm text-[#B8B6AD] mb-8">
+                  {etherCase.deliverables.map((item, dIdx) => (
+                    <li key={dIdx} className="flex items-start gap-2.5">
+                      <span className="text-[#F0EEE7] font-bold">—</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href={etherCase.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary w-full text-center flex items-center justify-center gap-2 text-xs"
+                >
+                  <span>Launch Live Terminal dApp</span>
+                  <span>↗</span>
+                </a>
+              </div>
+
+              {/* Right Column: Terminal Screenshot Frame */}
+              <div className="lg:col-span-7">
+                <div className="border border-[#33332F] bg-[#111110] p-4 sm:p-5 rounded-[2px]">
+                  <div className="flex items-center justify-between border-b border-[#33332F] pb-3 mb-4 text-xs font-mono text-[#A7A69F]">
+                    <span className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]/80 inline-block" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]/80 inline-block" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]/80 inline-block" />
+                      <span className="ml-2">STDOUT / ETHER ARCHIVE</span>
+                    </span>
+                    <span>etherarchive.xyz</span>
+                  </div>
+
+                  <a
+                    href={etherCase.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block relative aspect-[16/9] bg-[#050505] border border-[#222220] overflow-hidden rounded-[2px]"
+                  >
+                    <img
+                      src={etherCase.heroImage}
+                      alt={etherCase.heroImageAlt || etherCase.title}
+                      className="w-full h-full object-cover filter contrast-105 group-hover:scale-[1.02] transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                      <span className="font-mono text-xs text-[#F0EEE7] bg-[#000000]/90 px-3 py-1 border border-[#33332F]">
+                        Open interactive live site ↗
+                      </span>
+                    </div>
+                  </a>
+
+                  <p className="text-xs text-[#B8B6AD] font-mono leading-relaxed mt-3">
+                    {etherCase.heroImageCaption}
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </article>
+        )}
 
       </div>
     </section>

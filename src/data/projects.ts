@@ -98,6 +98,50 @@ export const CASE_STUDIES: CaseStudy[] = [
     secondaryImageAlt: 'Wojak Meter pre-campaign baseline',
     secondaryImageCaption: 'Before campaign: pre-campaign baseline',
     verifiedQuote: 'Price says one thing. Emotion says another. The utility without us and with us.'
+  },
+  {
+    id: 'ether-archive',
+    title: 'Ether Archive',
+    scope: 'Terminal Interface / Tech Development / Whitelist Campaigns',
+    tagline: 'Made of traces. Built to remember.',
+    tags: ['TECH DEVELOPMENT', 'WEB INTERFACE', 'COMMUNITY ALLIANCE'],
+    date: 'OCTOBER 2026',
+    link: 'https://etherarchive.xyz',
+    linkLabel: 'Launch etherarchive.xyz ↗',
+    stats: [
+      {
+        value: '100%',
+        targetNum: 100,
+        suffix: '%',
+        decimals: 0,
+        label: 'On-chain provenance',
+        verified: true,
+        highlight: true,
+        statusNote: 'Ethereum Mainnet'
+      },
+      {
+        value: '05',
+        label: 'CLI commands',
+        verified: true,
+        statusNote: 'Interactive terminal dApp'
+      },
+      {
+        value: 'Dec 2026',
+        label: 'Mint timeline',
+        verified: true,
+        statusNote: 'TBA Launch sequence'
+      }
+    ],
+    deliverables: [
+      'Interactive retro-terminal CLI web interface & dApp experience',
+      'Official community partnership and whitelist allocation campaign',
+      'Ethereum network archive documentation, whitepaper, and roadmap architecture',
+      'Cross-community distribution and strategic ecosystem announcement'
+    ],
+    heroImage: '/assets/ether-archive-terminal.png',
+    heroImageAlt: 'Ether Archive interactive CLI terminal interface',
+    heroImageCaption: 'Live terminal dApp: interactive CLI interface for Ether Archive on Ethereum Mainnet',
+    verifiedQuote: 'A record of the Ethereum network. Made of traces. Built to remember.'
   }
 ];
 
